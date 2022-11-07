@@ -1,0 +1,301 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Avenir Next Cyr', sans-serif;
+  font-style: normal;
+}
+
+body {
+  background: #F7F6F0;
+  color: #24282C;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 50px;
+  gap: 32px;
+}
+
+a {
+  text-decoration: none;
+  color: #24282C;
+}
+
+a:hover {
+  color: #AEC756;
+}
+
+.name-page {
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 24px;
+}
+
+.navs-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 50px;
+  gap: 32px;
+}
+
+.a-header {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 11px;
+}
+
+
+.a-img {
+  margin-right: 16px;
+}
+
+#icon-feed {
+  height: 10px;
+}
+
+.newPlace {
+  background: #F7F6F0;
+}
+
+#img-newPlace,
+.favorite-btn {
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+  width: 50px;
+  height: 50px;
+  background: #24282C;
+  border-radius: 25px;
+
+  flex: none;
+  order: 4;
+}
+
+.main {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.btn {
+  min-width: 160px;
+  background: #D3F36B;
+  border-radius: 25px;
+  padding: 14px 36px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+}
+
+.icon-btn,
+.icon-adress {
+  margin-right: 9px;
+}
+
+.search {
+  background: #ffff;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 25px;
+  align-items: center;
+  padding: 10px;
+}
+
+.search-icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 38px;
+  order: 1;
+}
+
+.search-field {
+  width: 85%;
+  margin-left: 35px;
+  border: 0;
+}
+
+.search-field:focus {
+  outline: none;
+}
+
+::placeholder {
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 13px;
+  color: rgba(60, 60, 67, 0.6);
+}
+
+.settings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setting {
+  margin: 35px 0px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: none;
+}
+
+.setting-icon,
+.rating-icon {
+  margin-right: 16px;
+}
+
+.card {
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: 375px 1fr;
+  grid-template-rows: 1fr;
+  border-radius: 25px;
+  height: 350px;
+}
+
+.card-child,
+.card-content-wrapping,
+.card-header {
+  border-radius: 25px;
+  background-color: #ffff;
+  border: none;
+}
+
+.card-content {
+  margin-left: -7%;
+  overflow: hidden;
+}
+
+.card-content-wrapping {
+  margin: 32px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+
+.card-adress {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.card-name {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 26px;
+}
+
+.card-disc {
+  margin-top: 16px;
+  font-family: 'Avenir Next';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: justify
+}
+
+.card-rating {
+  display: flex;
+  align-items: center;
+}
+
+.rating {
+  margin-right: 32px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 13px;
+}
+
+.footer {
+  height: 130px;
+  margin-top: 32px;
+  padding: 32px 128px;
+
+  background-color: #24282C;
+}
+
+.footer-wripping {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.info-version>p {
+  color: #FFFFFF;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 13px;
+}
+
+.footer-links {
+  display: flex;
+}
+
+.footer-link {
+  color: #ffff;
+  display: flex;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 13px;
+
+}
+
+.block {
+  margin-right: 40px;
+}
+
+.footer-link:first-child {
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 13px;
+  margin-bottom: 20px;
+}
+
+.info-version>p:last-child {
+  margin: 0;
+}
+
+
+
+
+
+@media (max-width: 1366px) {}
+
+@media (max-width: 992px) {}
+
+@media (max-width: 768px) {}
+
+@media (max-width: 578px) {}
+
+@media (max-width: 480px) {}
