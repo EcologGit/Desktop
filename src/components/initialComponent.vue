@@ -2,7 +2,13 @@
   <main class="main initial">
     <img src="../assets/imgs/initial_img.png" alt="" />
     <button class="single-button initial">
-      <img icon-btn src="../assets/imgs/signUp_icon.png" alt="" />
+      <img
+        height="18"
+        width="18"
+        icon-btn
+        src="../assets/imgs/signUp_icon.png"
+        alt=""
+      />
       Регистрация
     </button>
     <button class="button-text more" @click="visibleMore = !visibleMore">

@@ -51,9 +51,7 @@ export default {
           rating: 2,
         },
       ];
-      fetch(
-        `http://api.openweathermap.org/data/2.5/forecast?q=units=metric&cnt=10&lang=ru`
-      ).then((res) => {
+      fetch(`url`).then((res) => {
         if (res.status === 200 || res.status === 201) {
           res.json().then((json) => console.log(json));
         } else {

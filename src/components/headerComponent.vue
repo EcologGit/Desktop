@@ -28,28 +28,28 @@ import styles from './foo.module.css'
         <div>Обзор</div>
       </router-link>
 
-      <router-link to="/feed" class="a-header feed" @click="changePage">
+      <router-link to="/activity" class="a-header activity" @click="changePage">
         <img
-          id="icon-feed"
-          v-show="visiblePage != 'feed'"
+          id="icon-activity"
+          v-show="visiblePage != 'activity'"
           @click="changePage"
           width="18"
           height="9"
           class="a-img"
-          src="../assets/imgs/feed_black.png"
+          src="../assets/imgs/activity_black.png"
           alt="Иконка Лента"
         />
         <img
-          id="icon-feed"
-          v-show="visiblePage == 'feed'"
+          id="icon-activity"
+          v-show="visiblePage == 'activity'"
           @click="changePage"
           width="18"
           height="9"
           class="a-img"
-          src="../assets/imgs/feed.png"
+          src="../assets/imgs/activity.png"
           alt="Иконка Лента"
         />
-        <div>Лента</div>
+        <div>Активность</div>
       </router-link>
 
       <router-link to="/marks" class="a-header marks" @click="changePage">
@@ -97,7 +97,11 @@ import styles from './foo.module.css'
       </router-link>
       <div>
         <a class="a-circle-icon" style="border: none">
-          <img src="../assets/imgs/newPlace.png" alt="Добавить" />
+          <img
+            class="cirlce-img"
+            src="../assets/imgs/add_place.png"
+            alt="Добавить"
+          />
         </a>
       </div>
     </nav>
@@ -131,8 +135,8 @@ export default {
       if (target.classList.contains("review")) {
         this.visiblePage = "review";
         target.childNodes;
-      } else if (target.classList.contains("feed")) {
-        this.visiblePage = "feed";
+      } else if (target.classList.contains("activity")) {
+        this.visiblePage = "activity";
       } else if (target.classList.contains("marks")) {
         this.visiblePage = "marks";
       } else if (target.classList.contains("profile")) {

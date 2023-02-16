@@ -19,6 +19,7 @@
                   height="18"
                   src="../assets/imgs/map.png"
                   alt=""
+                  style="margin-left: 3px; margin-right: 11px"
                 />
                 Одинцово
               </div>
@@ -27,7 +28,7 @@
                   class="icon-margin"
                   width="18"
                   height="18"
-                  src="../assets/imgs/dob_icon.png"
+                  src="../assets/imgs/dob.png"
                   alt=""
                 />
                 08.09.1997
@@ -37,7 +38,7 @@
                   class="icon-margin"
                   width="18"
                   height="16"
-                  src="../assets/imgs/status_icon.png"
+                  src="../assets/imgs/status.png"
                   alt=""
                 />
                 Студент
@@ -45,10 +46,18 @@
             </div>
             <div class="btns-circle-icon">
               <router-link class="a-circle-icon" to="/profile/settings">
-                <img src="../assets/imgs/settings_button.png" alt="" />
+                <img
+                  class="cirlce-img"
+                  src="../assets/imgs/settings_button.png"
+                  alt=""
+                />
               </router-link>
               <a class="a-circle-icon">
-                <img src="../assets/imgs/logout_button.png" alt="" />
+                <img
+                  class="cirlce-img"
+                  src="../assets/imgs/logout_button.png"
+                  alt=""
+                />
               </a>
             </div>
           </div>
@@ -106,7 +115,7 @@
           <div class="user-date">
             <div class="user-info">
               <img
-                src="../assets/imgs/template_photo.png"
+                src="../assets/imgs/default_user_photo_small.png"
                 alt="User"
                 class="user-photo"
               />
@@ -130,7 +139,7 @@
                 class="icon-margin"
                 width="18"
                 height="18"
-                src="../assets/imgs/flag_black.png"
+                src="../assets/imgs/places.png"
                 alt=""
               />
               Имя места
@@ -141,22 +150,22 @@
           <div class="card-imgs">
             <img
               class="card-img profile"
-              src="../assets/imgs/template_photo.png"
+              src="../assets/imgs/default_activity.png"
               alt=""
             />
             <img
               class="card-img profile"
-              src="../assets/imgs/template_photo.png"
+              src="../assets/imgs/default_activity.png"
               alt=""
             />
             <img
               class="card-img profile"
-              src="../assets/imgs/template_photo.png"
+              src="../assets/imgs/default_activity.png"
               alt=""
             />
             <img
               class="card-img profile"
-              src="../assets/imgs/template_photo.png"
+              src="../assets/imgs/default_activity.png"
               alt=""
             />
           </div>
@@ -187,7 +196,7 @@
             <img
               src="../assets/imgs/plastic_trash_type.png"
               alt=""
-              class="rating-icon"
+              class="cirlce-img"
             />
             0,0 кг
           </div>
@@ -195,7 +204,7 @@
             <img
               src="../assets/imgs/glass_trash_type.png"
               alt=""
-              class="rating-icon"
+              class="cirlce-img"
             />
             0,0 кг
           </div>
@@ -203,7 +212,7 @@
             <img
               src="../assets/imgs/batteries_trash_type.png"
               alt=""
-              class="rating-icon"
+              class="cirlce-img"
             />
             0,0 кг
           </div>
@@ -211,7 +220,7 @@
             <img
               src="../assets/imgs/light_bulbs_trash_type.png"
               alt=""
-              class="rating-icon"
+              class="cirlce-img"
             />
             0,0 кг
           </div>
@@ -219,7 +228,7 @@
             <img
               src="../assets/imgs/paper_trash_type.png"
               alt=""
-              class="rating-icon"
+              class="cirlce-img"
             />
             0,0 кг
           </div>
@@ -227,23 +236,34 @@
             <img
               src="../assets/imgs/metal_trash_type.png"
               alt=""
-              class="rating-icon"
+              class="cirlce-img"
             />
             0,0 кг
           </div>
         </div>
-        <a href="#" class="a-edit">
-          <img
-            class="a-img"
-            width="18"
-            height="18"
-            src="../assets/imgs/edit_icon.png    "
-            alt="Иконка Обзор"
-          />Редактировать</a
-        >
+        <div class="post-action">
+          <a href="#" class="a-action-post">
+            <img
+              class="a-img"
+              width="16"
+              height="18"
+              src="../assets/imgs/publish.png    "
+              alt="Иконка Обзор"
+            />Опубликовать</a
+          >
+          <a href="#" class="a-action-post">
+            <img
+              class="a-img"
+              width="18"
+              height="18"
+              src="../assets/imgs/edit.png    "
+              alt="Иконка Обзор"
+            />Редактировать</a
+          >
+        </div>
       </div>
     </section>
-    <section v-show="visibleCards == 'statistics'" class="user-statistics">
+    <section v-show="visibleCards == 'statistics'" class="statistics">
       <div class="statistics-card collected-trash">
         Собранный отходы
         <div class="card-rating profile">
@@ -252,7 +272,7 @@
               <img
                 src="../assets/imgs/plastic_trash_type.png"
                 alt=""
-                class="rating-icon"
+                class="cirlce-img"
               />
               Пластик
             </div>
@@ -263,7 +283,7 @@
               <img
                 src="../assets/imgs/glass_trash_type.png"
                 alt=""
-                class="rating-icon"
+                class="cirlce-img"
               />
               Стекло
             </div>
@@ -274,7 +294,7 @@
               <img
                 src="../assets/imgs/batteries_trash_type.png"
                 alt=""
-                class="rating-icon"
+                class="cirlce-img"
               />
               Батарейки
             </div>
@@ -285,7 +305,7 @@
               <img
                 src="../assets/imgs/light_bulbs_trash_type.png"
                 alt=""
-                class="rating-icon"
+                class="cirlce-img"
               />
               Лампочки
             </div>
@@ -296,7 +316,7 @@
               <img
                 src="../assets/imgs/paper_trash_type.png"
                 alt=""
-                class="rating-icon"
+                class="cirlce-img"
               />
               Макулатура
             </div>
@@ -307,7 +327,7 @@
               <img
                 src="../assets/imgs/metal_trash_type.png"
                 alt=""
-                class="rating-icon"
+                class="cirlce-img"
               />
               Металл
             </div>
@@ -322,9 +342,9 @@
             <div class="rating profile">
               <div>
                 <img
-                  src="../assets/imgs/places_circle_icon.png"
+                  src="../assets/imgs/circle_places.png"
                   alt=""
-                  class="rating-icon"
+                  class="cirlce-img"
                 />
                 Места
               </div>
@@ -333,9 +353,9 @@
             <div class="rating profile">
               <div>
                 <img
-                  src="../assets/imgs/routes_circle_icon.png"
+                  src="../assets/imgs/circle_routes.png"
                   alt=""
-                  class="rating-icon"
+                  class="cirlce-img"
                 />
                 Маршруты
               </div>
@@ -344,9 +364,9 @@
             <div class="rating profile">
               <div>
                 <img
-                  src="../assets/imgs/events_circle_icon.png"
+                  src="../assets/imgs/circle_events.png"
                   alt=""
-                  class="rating-icon"
+                  class="cirlce-img"
                 />
                 Мероприятия
               </div>
@@ -355,9 +375,9 @@
             <div class="rating profile">
               <div>
                 <img
-                  src="../assets/imgs/sortPoints_circle_icon.png"
+                  src="../assets/imgs/circle_sortPoint.png"
                   alt=""
-                  class="rating-icon"
+                  class="cirlce-img"
                 />
                 Точки сортировки
               </div>
@@ -371,9 +391,9 @@
             <div class="rating profile">
               <div>
                 <img
-                  src="../assets/imgs/reports_circle_icon.png"
+                  src="../assets/imgs/circle_reports.png"
                   alt=""
-                  class="rating-icon"
+                  class="cirlce-img"
                 />
                 Отчеты
               </div>
@@ -382,9 +402,9 @@
             <div class="rating profile">
               <div>
                 <img
-                  src="../assets/imgs/grade_circle_icon.png"
+                  src="../assets/imgs/circle_grade.png"
                   alt=""
-                  class="rating-icon"
+                  class="cirlce-img"
                 />
                 Оценки
               </div>
@@ -393,9 +413,9 @@
             <div class="rating profile">
               <div>
                 <img
-                  src="../assets/imgs/photos_circle_icon.png"
+                  src="../assets/imgs/circle_photos.png"
                   alt=""
-                  class="rating-icon"
+                  class="cirlce-img"
                 />
                 Фотографии
               </div>

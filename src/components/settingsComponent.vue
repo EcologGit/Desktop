@@ -34,6 +34,16 @@
               </div>
             </div>
           </div>
+          <div class="personal-dob">
+            Дата рождения
+            <input
+              class="input settings"
+              align-items="middle"
+              type="date"
+              placeholder="Дата рождения"
+              value="2000-06-01"
+            />
+          </div>
 
           <div class="personal-KindOfActivity">
             Вид деятельности
@@ -51,16 +61,6 @@
               type="text"
             />
           </div>
-          <div class="personal-dob">
-            Дата рождения
-            <input
-              class="input settings"
-              align-items="middle"
-              type="date"
-              placeholder="Дата рождения"
-              value="2000-06-01"
-            />
-          </div>
         </div>
         <div class="login-options">
           Параметры входа
@@ -73,7 +73,7 @@
             <input
               class="input settings"
               type="tel"
-              placeholder="+71234567890"
+              placeholder="+7 (123) 456-78-90"
             />
           </div>
           <div class="personal-email">
@@ -120,7 +120,7 @@
         </div>
       </section>
       <button class="single-button save" @click="fetchData()">
-        <img icon-btn src="../assets/imgs/save_icon.png" alt="" />
+        <img width="18" height="18" src="../assets/imgs/save.png" alt="" />
         Сохранить
       </button>
     </form>

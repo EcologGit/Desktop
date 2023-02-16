@@ -48,13 +48,17 @@ img {
 }
 
 .a-header,
-.a-edit {
+.a-action-post {
   letter-spacing: 1px;
   text-transform: uppercase;
   font-weight: 600;
   font-size: 14px;
   line-height: 11px;
   line-height: inherit;
+}
+
+.a-action-post:first-child {
+  margin-right: 32px;
 }
 
 .a-header {
@@ -66,7 +70,7 @@ img {
   margin-right: 16px;
 }
 
-#icon-feed {
+#icon-activity {
   height: 10px;
 }
 
@@ -103,7 +107,7 @@ button {
   padding-bottom: 32px;
 }
 
-.buttons.feed {
+.buttons.activity {
   padding: 0;
 }
 
@@ -116,7 +120,7 @@ button {
 
 
 .btn,
-.btn-feed,
+.btn-activity,
 .btn-profile {
   min-width: 160px;
   background: #D3F36B;
@@ -133,7 +137,7 @@ button {
   border: none;
 }
 
-.btn-feed,
+.btn-activity,
 .btn-profile {
   width: 48%;
   border: none;
@@ -141,7 +145,7 @@ button {
 
 
 .btn.active,
-.btn-feed.active,
+.btn-activity.active,
 .btn-profile.active {
   background: #24282C;
   /* Green */
@@ -180,6 +184,25 @@ input.settings {
   height: 50px;
   background: #FFFFFF;
   border-radius: 25px;
+}
+
+input.settings:placeholder-shown {
+  text-align: center;
+}
+
+.cirlce-img {
+  width: 50px;
+  height: 50px;
+}
+
+.setting-icon:first-child {
+  width: 18px;
+  height: 15px;
+}
+
+.setting-icon:last-child {
+  width: 18px;
+  height: 18px;
 }
 
 .search-field {
@@ -316,7 +339,7 @@ input.settings {
   grid-template-columns: 350px 1fr;
 }
 
-.card.feed,
+.card.activity,
 .card.profile {
   display: flex;
   flex-direction: column;
@@ -351,14 +374,14 @@ input.settings {
   height: 350px;
 }
 
-.card-content.feed,
+.card-content.activity,
 .card-content.profile {
   margin: 0;
 }
 
 .card-content.marks {
   margin: 0;
-  margin-top: -7%;
+  margin-top: -20%;
 
 }
 
@@ -384,7 +407,7 @@ input.settings {
 }
 
 
-.card-header.feed,
+.card-header.activity,
 .card-header.profile {
   display: flex;
   width: 100%;
@@ -442,7 +465,12 @@ input.settings {
   justify-content: space-between;
 }
 
-.card-img.feed,
+.card-img.card-img {
+  width: 375px;
+  height: 350px;
+}
+
+.card-img.activity,
 .card-img.profile {
   width: 200px;
   height: 200px;
@@ -556,10 +584,11 @@ input.settings {
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
-
+  display: flex;
+  align-items: center;
 }
 
-.user-statistics {
+.statistics {
   display: flex;
   gap: 32px
 }
@@ -583,9 +612,9 @@ input.settings {
   margin-bottom: 32px;
 }
 
-.activity {
+/* .activity {
   height: 291px;
-}
+} */
 
 .settings-personal {
   display: flex;
@@ -686,7 +715,8 @@ input.settings {
 .password-control {
   width: 20px;
   height: 20px;
-  background: url(https://snipp.ru/demo/495/view.svg) 0 0 no-repeat;
+  background: url("../assets/imgs/visible_password.png") 0 0 no-repeat;
+  background-size: 18px 11px;
   order: 1;
   display: flex;
   margin-left: -42px;
@@ -694,7 +724,7 @@ input.settings {
 }
 
 .password-control.view {
-  background: url(https://snipp.ru/demo/495/no-view.svg) 0 0 no-repeat;
+  background: url("../assets/imgs/visible_password.png") 0 0 no-repeat;
   order: 1;
   display: flex;
   margin-left: -42px;

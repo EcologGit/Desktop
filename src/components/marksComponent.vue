@@ -122,7 +122,7 @@
     <section v-show="visibleCards == 'places'" class="cards marks">
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -146,7 +146,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -170,7 +170,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -194,7 +194,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -221,7 +221,7 @@
     <section v-show="visibleCards == 'routes'" class="cards marks routes">
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -255,7 +255,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -289,7 +289,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -323,7 +323,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -360,7 +360,7 @@
     <section v-show="visibleCards == 'events'" class="cards marks events">
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -384,7 +384,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/flag_black.png"
+                    src="../assets/imgs/places.png"
                     alt=""
                   />
                   Карьер “Песчаный”
@@ -418,7 +418,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -442,7 +442,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/flag_black.png"
+                    src="../assets/imgs/places.png"
                     alt=""
                   />
                   Карьер “Песчаный”
@@ -476,7 +476,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -500,7 +500,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/flag_black.png"
+                    src="../assets/imgs/places.png"
                     alt=""
                   />
                   Карьер “Песчаный”
@@ -534,7 +534,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -558,7 +558,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/flag_black.png"
+                    src="../assets/imgs/places.png"
                     alt=""
                   />
                   Карьер “Песчаный”
@@ -598,7 +598,7 @@
     >
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -636,7 +636,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -674,7 +674,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -712,7 +712,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/forest.png"
+          src="../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
