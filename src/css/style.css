@@ -137,9 +137,13 @@ button {
   border: none;
 }
 
+.links-width {
+  width: 48%;
+}
+
 .btn-activity,
 .btn-profile {
-  width: 48%;
+  width: 100%;
   border: none;
 }
 

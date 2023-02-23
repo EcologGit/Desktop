@@ -5,7 +5,7 @@
         <img
           v-show="!visibleNext"
           @click="visibleNext = !visibleNext"
-          src="../assets/imgs/default_review.png"
+          src="../../assets/imgs/default_review.png"
           alt=""
           width="940"
           height="470"
@@ -13,7 +13,7 @@
         <img
           v-show="visibleNext"
           @click="visibleNext = !visibleNext"
-          src="../assets/imgs/trash_big.png"
+          src="../../assets/imgs/trash_big.png"
           alt=""
           width="940"
           height="470"
@@ -22,13 +22,13 @@
     </section>
     <section class="buttons element">
       <button class="btn-circle-icon">
-        <img src="../assets/imgs/map_circle_button_white.png" alt="" />
+        <img src="../../assets/imgs/map_circle_button_white.png" alt="" />
       </button>
       <button class="btn-circle-icon">
-        <img src="../assets/imgs/circle_favorite_default.png" alt="" />
+        <img src="../../assets/imgs/circle_favorite_default.png" alt="" />
       </button>
       <button class="btn-circle-icon">
-        <img src="../assets/imgs/newPlace.png" alt="" />
+        <img src="../../assets/imgs/newPlace.png" alt="" />
       </button>
     </section>
     <section class="info-element">
@@ -40,7 +40,7 @@
               class="icon-margin"
               width="11"
               height="18"
-              src="../assets/imgs/map.png"
+              src="../../assets/imgs/map.png"
               alt=""
             />
             Можайский район
@@ -50,7 +50,7 @@
               class="icon-margin"
               width="18"
               height="18"
-              src="../assets/imgs/places.png"
+              src="../../assets/imgs/places.png"
               alt=""
             />
             Дубовая роща
@@ -60,7 +60,7 @@
               class="icon-margin"
               width="18"
               height="18"
-              src="../assets/imgs/coordinate.png"
+              src="../../assets/imgs/coordinate.png"
               alt=""
             />
             55.064767, 55.064767
@@ -72,7 +72,7 @@
               class="icon-margin"
               width="18"
               height="16"
-              src="../assets/imgs/calendar.png"
+              src="../../assets/imgs/calendar.png"
               alt=""
             />
             29.10.2022
@@ -82,7 +82,7 @@
               class="icon-margin"
               width="18"
               height="18"
-              src="../assets/imgs/clock.png  "
+              src="../../assets/imgs/clock.png  "
               alt=""
             />
             10:00
@@ -119,7 +119,7 @@
       Объект
       <div class="card review">
         <img
-          src="../assets/imgs/nature.png"
+          src="../../assets/imgs/nature.png"
           alt=""
           class="card-child card-img"
         />
@@ -130,14 +130,17 @@
                 <p class="card-name">Парк 50-летия Октября</p>
                 <div class="card-adress">
                   <img
-                    src="../assets/imgs/map.png"
+                    src="../../assets/imgs/map.png"
                     alt=""
                     class="icon-margin"
                   />Коломна
                 </div>
               </div>
               <button class="btn-circle-icon">
-                <img src="../assets/imgs/circle_favorite_default.png" alt="" />
+                <img
+                  src="../../assets/imgs/circle_favorite_default.png"
+                  alt=""
+                />
               </button>
             </div>
             <div class="card-disc">
@@ -154,7 +157,7 @@
             <div class="card-rating">
               <div class="rating">
                 <img
-                  src="../assets/imgs/circle_bus.png"
+                  src="../../assets/imgs/circle_bus.png"
                   alt=""
                   class="cirlce-img"
                 />
@@ -162,7 +165,7 @@
               </div>
               <div class="rating">
                 <img
-                  src="../assets/imgs/circle_trash.png"
+                  src="../../assets/imgs/circle_trash.png"
                   alt=""
                   class="cirlce-img"
                 />
@@ -170,7 +173,7 @@
               </div>
               <div class="rating">
                 <img
-                  src="../assets/imgs/circle_flower.png"
+                  src="../../assets/imgs/circle_flower.png"
                   alt=""
                   class="cirlce-img"
                 />
@@ -185,7 +188,7 @@
       Точка сортировки
       <div class="card review">
         <img
-          src="../assets/imgs/trash_picture.png"
+          src="../../assets/imgs/trash_picture.png"
           alt=""
           class="card-child card-img"
         />
@@ -200,7 +203,7 @@
                       class="icon-margin"
                       width="11"
                       height="18"
-                      src="../assets/imgs/map.png"
+                      src="../../assets/imgs/map.png"
                       alt=""
                     />
                     Location
@@ -210,7 +213,7 @@
                       class="icon-margin"
                       width="18"
                       height="18"
-                      src="../assets/imgs/places.png"
+                      src="../../assets/imgs/places.png"
                       alt=""
                     />
                     <span>00:00 - 00:00</span>
@@ -218,7 +221,10 @@
                 </div>
               </div>
               <button class="btn-circle-icon">
-                <img src="../assets/imgs/circle_favorite_default.png" alt="" />
+                <img
+                  src="../../assets/imgs/circle_favorite_default.png"
+                  alt=""
+                />
               </button>
             </div>
             <div class="card-disc">
@@ -234,7 +240,11 @@
             </div>
             <div class="card-rating">
               <div class="rating">
-                <img src="../assets/imgs/bus.png" alt="" class="cirlce-img" />
+                <img
+                  src="../../assets/imgs/bus.png"
+                  alt=""
+                  class="cirlce-img"
+                />
                 0.00
               </div>
             </div>

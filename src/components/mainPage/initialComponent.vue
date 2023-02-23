@@ -1,23 +1,28 @@
 <template>
   <main class="main initial">
-    <img src="../assets/imgs/initial_img.png" alt="" />
+    <img src="../../assets/imgs/initial_img.png" alt="" />
     <button class="single-button initial">
       <img
         height="18"
         width="18"
         icon-btn
-        src="../assets/imgs/signUp_icon.png"
+        src="../../assets/imgs/signUp_icon.png"
         alt=""
       />
       Регистрация
     </button>
     <button class="button-text more" @click="visibleMore = !visibleMore">
-      <img height="11" width="18" src="../assets/imgs/more_icon.png" alt="" />
+      <img
+        height="11"
+        width="18"
+        src="../../assets/imgs/more_icon.png"
+        alt=""
+      />
       Подробнее
     </button>
     <section v-show="visibleMore" class="section more">
       <div class="about us">
-        <img src="../assets/imgs/aboutUs_ims.png" alt="" />
+        <img src="../../assets/imgs/aboutUs_ims.png" alt="" />
         <div class="about-text">
           О нас
           <p>
@@ -50,10 +55,10 @@
             non ac sagittis, viverra diam. Auctor in convallis in viverra.
           </p>
         </div>
-        <img src="../assets/imgs/aboutProject_img.png" alt="" />
+        <img src="../../assets/imgs/aboutProject_img.png" alt="" />
       </div>
       <div class="about ecotourism">
-        <img src="../assets/imgs/aboutEcotourism_img.png" alt="" />
+        <img src="../../assets/imgs/aboutEcotourism_img.png" alt="" />
         <div class="about-text">
           Об экотуризме
           <p>

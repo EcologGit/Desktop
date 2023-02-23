@@ -8,7 +8,7 @@
           @click="changeCard"
           width="18"
           height="18"
-          src="../assets/imgs/places.png"
+          src="../../assets/imgs/places.png"
           alt="Places"
         />
         <img
@@ -17,7 +17,7 @@
           @click="changeCard"
           width="18"
           height="18"
-          src="../assets/imgs/places_white.png"
+          src="../../assets/imgs/places_white.png"
           alt="Places"
         />
         Места
@@ -29,7 +29,7 @@
           @click="changeCard"
           width="15"
           height="18"
-          src="../assets/imgs/routes.png"
+          src="../../assets/imgs/routes.png"
           alt="Places"
         />
         <img
@@ -38,7 +38,7 @@
           @click="changeCard"
           width="15"
           height="18"
-          src="../assets/imgs/routes_white.png"
+          src="../../assets/imgs/routes_white.png"
           alt="Places"
         />
         Маршруты
@@ -50,7 +50,7 @@
           @click="changeCard"
           width="18"
           height="18"
-          src="../assets/imgs/events.png"
+          src="../../assets/imgs/events.png"
           alt="Places"
         />
         <img
@@ -59,7 +59,7 @@
           @click="changeCard"
           width="18"
           height="18"
-          src="../assets/imgs/events_white.png"
+          src="../../assets/imgs/events_white.png"
           alt="Places"
         />
         Мероприятия
@@ -71,7 +71,7 @@
           @click="changeCard"
           width="16"
           height="18"
-          src="../assets/imgs/sortPoints.png"
+          src="../../assets/imgs/sortPoints.png"
           alt="Places"
         />
         <img
@@ -80,7 +80,7 @@
           @click="changeCard"
           width="16"
           height="18"
-          src="../assets/imgs/sortPoints_white.png"
+          src="../../assets/imgs/sortPoints_white.png"
           alt="Places"
         />
         Точки сортировки
@@ -93,7 +93,7 @@
         class="search-field"
         placeholder="Поиск адресов и мест"
       />
-      <img src="../assets/imgs/search.png" alt="" class="search-icon" />
+      <img src="../../assets/imgs/search.png" alt="" class="search-icon" />
     </section>
 
     <section class="settings">
@@ -103,7 +103,7 @@
           class="button-text setting dropbtn"
           @click="visibleDropdown = !visibleDropdown"
         >
-          <img src="../assets/imgs/setting1.png" alt="" class="setting-icon" />
+          <img src="../../assets/imgs/setting1.png" alt="" class="setting-icon" />
           Сортировка
         </button>
         <div v-show="visibleDropdown" class="dropdown-content">
@@ -114,7 +114,7 @@
         </div>
       </div>
       <button class="button-text setting">
-        <img src="../assets/imgs/setting2.png" alt="" class="setting-icon" />
+        <img src="../../assets/imgs/setting2.png" alt="" class="setting-icon" />
         Параметры
       </button>
     </section>
@@ -122,7 +122,7 @@
     <section v-show="visibleCards == 'places'" class="cards marks">
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -135,7 +135,7 @@
                   class="icon-margin"
                   width="11"
                   height="18"
-                  src="../assets/imgs/map.png"
+                  src="../../assets/imgs/map.png"
                   alt=""
                 />
                 Коломна
@@ -146,7 +146,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -159,7 +159,7 @@
                   class="icon-margin"
                   width="11"
                   height="18"
-                  src="../assets/imgs/map.png"
+                  src="../../assets/imgs/map.png"
                   alt=""
                 />
                 Коломна
@@ -170,7 +170,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -183,7 +183,7 @@
                   class="icon-margin"
                   width="11"
                   height="18"
-                  src="../assets/imgs/map.png"
+                  src="../../assets/imgs/map.png"
                   alt=""
                 />
                 Коломна
@@ -194,7 +194,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -207,7 +207,7 @@
                   class="icon-margin"
                   width="11"
                   height="18"
-                  src="../assets/imgs/map.png"
+                  src="../../assets/imgs/map.png"
                   alt=""
                 />
                 Коломна
@@ -221,7 +221,7 @@
     <section v-show="visibleCards == 'routes'" class="cards marks routes">
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -234,7 +234,7 @@
                   class="icon-margin"
                   width="18"
                   height="18"
-                  src="../assets/imgs/start.png"
+                  src="../../assets/imgs/start.png"
                   alt=""
                 />
                 Start
@@ -244,7 +244,7 @@
                   class="icon-margin"
                   width="18"
                   height="18"
-                  src="../assets/imgs/finish.png"
+                  src="../../assets/imgs/finish.png"
                   alt=""
                 />
                 Finish
@@ -255,7 +255,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -268,7 +268,7 @@
                   class="icon-margin"
                   width="18"
                   height="18"
-                  src="../assets/imgs/start.png"
+                  src="../../assets/imgs/start.png"
                   alt=""
                 />
                 Start
@@ -278,7 +278,7 @@
                   class="icon-margin"
                   width="18"
                   height="18"
-                  src="../assets/imgs/finish.png"
+                  src="../../assets/imgs/finish.png"
                   alt=""
                 />
                 Finish
@@ -289,7 +289,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -302,7 +302,7 @@
                   class="icon-margin"
                   width="18"
                   height="18"
-                  src="../assets/imgs/start.png"
+                  src="../../assets/imgs/start.png"
                   alt=""
                 />
                 Start
@@ -312,7 +312,7 @@
                   class="icon-margin"
                   width="18"
                   height="18"
-                  src="../assets/imgs/finish.png"
+                  src="../../assets/imgs/finish.png"
                   alt=""
                 />
                 Finish
@@ -323,7 +323,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -336,7 +336,7 @@
                   class="icon-margin"
                   width="18"
                   height="18"
-                  src="../assets/imgs/start.png"
+                  src="../../assets/imgs/start.png"
                   alt=""
                 />
                 Start
@@ -346,7 +346,7 @@
                   class="icon-margin"
                   width="18"
                   height="18"
-                  src="../assets/imgs/finish.png"
+                  src="../../assets/imgs/finish.png"
                   alt=""
                 />
                 Finish
@@ -360,7 +360,7 @@
     <section v-show="visibleCards == 'events'" class="cards marks events">
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -374,7 +374,7 @@
                     class="icon-margin"
                     width="11"
                     height="18"
-                    src="../assets/imgs/map.png"
+                    src="../../assets/imgs/map.png"
                     alt=""
                   />
                   Воскресенск
@@ -384,7 +384,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/places.png"
+                    src="../../assets/imgs/places.png"
                     alt=""
                   />
                   Карьер “Песчаный”
@@ -396,7 +396,7 @@
                     class="icon-margin"
                     width="18"
                     height="16"
-                    src="../assets/imgs/calendar.png"
+                    src="../../assets/imgs/calendar.png"
                     alt=""
                   />
                   29.10.2022
@@ -406,7 +406,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/clock.png  "
+                    src="../../assets/imgs/clock.png  "
                     alt=""
                   />
                   10:00
@@ -418,7 +418,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -432,7 +432,7 @@
                     class="icon-margin"
                     width="11"
                     height="18"
-                    src="../assets/imgs/map.png"
+                    src="../../assets/imgs/map.png"
                     alt=""
                   />
                   Воскресенск
@@ -442,7 +442,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/places.png"
+                    src="../../assets/imgs/places.png"
                     alt=""
                   />
                   Карьер “Песчаный”
@@ -454,7 +454,7 @@
                     class="icon-margin"
                     width="18"
                     height="16"
-                    src="../assets/imgs/calendar.png"
+                    src="../../assets/imgs/calendar.png"
                     alt=""
                   />
                   29.10.2022
@@ -464,7 +464,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/clock.png  "
+                    src="../../assets/imgs/clock.png  "
                     alt=""
                   />
                   10:00
@@ -476,7 +476,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -490,7 +490,7 @@
                     class="icon-margin"
                     width="11"
                     height="18"
-                    src="../assets/imgs/map.png"
+                    src="../../assets/imgs/map.png"
                     alt=""
                   />
                   Воскресенск
@@ -500,7 +500,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/places.png"
+                    src="../../assets/imgs/places.png"
                     alt=""
                   />
                   Карьер “Песчаный”
@@ -512,7 +512,7 @@
                     class="icon-margin"
                     width="18"
                     height="16"
-                    src="../assets/imgs/calendar.png"
+                    src="../../assets/imgs/calendar.png"
                     alt=""
                   />
                   29.10.2022
@@ -522,7 +522,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/clock.png  "
+                    src="../../assets/imgs/clock.png  "
                     alt=""
                   />
                   10:00
@@ -534,7 +534,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -548,7 +548,7 @@
                     class="icon-margin"
                     width="11"
                     height="18"
-                    src="../assets/imgs/map.png"
+                    src="../../assets/imgs/map.png"
                     alt=""
                   />
                   Воскресенск
@@ -558,7 +558,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/places.png"
+                    src="../../assets/imgs/places.png"
                     alt=""
                   />
                   Карьер “Песчаный”
@@ -570,7 +570,7 @@
                     class="icon-margin"
                     width="18"
                     height="16"
-                    src="../assets/imgs/calendar.png"
+                    src="../../assets/imgs/calendar.png"
                     alt=""
                   />
                   29.10.2022
@@ -580,7 +580,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/clock.png  "
+                    src="../../assets/imgs/clock.png  "
                     alt=""
                   />
                   10:00
@@ -598,7 +598,7 @@
     >
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -612,7 +612,7 @@
                     class="icon-margin"
                     width="11"
                     height="18"
-                    src="../assets/imgs/map.png"
+                    src="../../assets/imgs/map.png"
                     alt=""
                   />
                   Егорьевск
@@ -624,7 +624,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/clock.png  "
+                    src="../../assets/imgs/clock.png  "
                     alt=""
                   />
                   00:00 - 00:00
@@ -636,7 +636,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -650,7 +650,7 @@
                     class="icon-margin"
                     width="11"
                     height="18"
-                    src="../assets/imgs/map.png"
+                    src="../../assets/imgs/map.png"
                     alt=""
                   />
                   Егорьевск
@@ -662,7 +662,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/clock.png  "
+                    src="../../assets/imgs/clock.png  "
                     alt=""
                   />
                   00:00 - 00:00
@@ -674,7 +674,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -688,7 +688,7 @@
                     class="icon-margin"
                     width="11"
                     height="18"
-                    src="../assets/imgs/map.png"
+                    src="../../assets/imgs/map.png"
                     alt=""
                   />
                   Егорьевск
@@ -700,7 +700,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/clock.png  "
+                    src="../../assets/imgs/clock.png  "
                     alt=""
                   />
                   00:00 - 00:00
@@ -712,7 +712,7 @@
       </div>
       <div class="card marks">
         <img
-          src="../assets/imgs/default_marks.png"
+          src="../../assets/imgs/default_marks.png"
           alt=""
           class="card-child card-img marks"
         />
@@ -726,7 +726,7 @@
                     class="icon-margin"
                     width="11"
                     height="18"
-                    src="../assets/imgs/map.png"
+                    src="../../assets/imgs/map.png"
                     alt=""
                   />
                   Егорьевск
@@ -738,7 +738,7 @@
                     class="icon-margin"
                     width="18"
                     height="18"
-                    src="../assets/imgs/clock.png  "
+                    src="../../assets/imgs/clock.png  "
                     alt=""
                   />
                   00:00 - 00:00

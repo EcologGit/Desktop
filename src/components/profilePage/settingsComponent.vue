@@ -120,7 +120,7 @@
         </div>
       </section>
       <button class="single-button save" @click="fetchData()">
-        <img width="18" height="18" src="../assets/imgs/save.png" alt="" />
+        <img width="18" height="18" src="../../assets/imgs/save.png" alt="" />
         Сохранить
       </button>
     </form>

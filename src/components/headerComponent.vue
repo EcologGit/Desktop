@@ -6,7 +6,11 @@ import styles from './foo.module.css'
       <div class="active-page">{{ title }}</div>
     </router-link>
     <nav class="navs navs-header">
-      <router-link to="/review" class="a-header review" @click="changePage">
+      <router-link
+        to="/review/places"
+        class="a-header review"
+        @click="changePage"
+      >
         <img
           class="a-img"
           v-show="visiblePage != 'review'"
@@ -28,7 +32,11 @@ import styles from './foo.module.css'
         <div>Обзор</div>
       </router-link>
 
-      <router-link to="/activity" class="a-header activity" @click="changePage">
+      <router-link
+        to="/activity/reports"
+        class="a-header activity"
+        @click="changePage"
+      >
         <img
           id="icon-activity"
           v-show="visiblePage != 'activity'"

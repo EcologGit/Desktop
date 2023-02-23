@@ -1,90 +1,98 @@
 <template>
   <main class="main">
     <section class="buttons">
-      <button class="btn btn-places active" @click="changeCard">
-        <img
-          class="icon-btn"
-          v-show="visibleCards != 'places'"
-          @click="changeCard"
-          width="18"
-          height="18"
-          src="../../assets/imgs/places.png"
-          alt="Places"
-        />
-        <img
-          class="icon-btn"
-          v-show="visibleCards == 'places'"
-          @click="changeCard"
-          width="18"
-          height="18"
-          src="../../assets/imgs/places_white.png"
-          alt="Places"
-        />
-        Места
-      </button>
-      <button class="btn btn-routes" @click="changeCard">
-        <img
-          class="icon-btn"
-          v-show="visibleCards != 'routes'"
-          @click="changeCard"
-          width="15"
-          height="18"
-          src="../../assets/imgs/routes.png"
-          alt="Places"
-        />
-        <img
-          class="icon-btn"
-          v-show="visibleCards == 'routes'"
-          @click="changeCard"
-          width="15"
-          height="18"
-          src="../../assets/imgs/routes_white.png"
-          alt="Places"
-        />
-        Маршруты
-      </button>
-      <button class="btn btn-events" @click="changeCard">
-        <img
-          class="icon-btn"
-          v-show="visibleCards != 'events'"
-          @click="changeCard"
-          width="18"
-          height="18"
-          src="../../assets/imgs/events.png"
-          alt="Places"
-        />
-        <img
-          class="icon-btn"
-          v-show="visibleCards == 'events'"
-          @click="changeCard"
-          width="18"
-          height="18"
-          src="../../assets/imgs/events_white.png"
-          alt="Places"
-        />
-        Мероприятия
-      </button>
-      <button class="btn btn-sortPoints" @click="changeCard">
-        <img
-          class="icon-btn"
-          v-show="visibleCards != 'sortPoints'"
-          @click="changeCard"
-          width="16"
-          height="18"
-          src="../../assets/imgs/sortPoints.png"
-          alt="Places"
-        />
-        <img
-          class="icon-btn"
-          v-show="visibleCards == 'sortPoints'"
-          @click="changeCard"
-          width="16"
-          height="18"
-          src="../../assets/imgs/sortPoints_white.png"
-          alt="Places"
-        />
-        Точки сортировки
-      </button>
+      <router-link to="/review/places">
+        <button class="btn btn-places active" @click="changeCard">
+          <img
+            class="icon-btn"
+            v-show="visibleCards != 'places'"
+            @click="changeCard"
+            width="18"
+            height="18"
+            src="../../assets/imgs/places.png"
+            alt="Places"
+          />
+          <img
+            class="icon-btn"
+            v-show="visibleCards == 'places'"
+            @click="changeCard"
+            width="18"
+            height="18"
+            src="../../assets/imgs/places_white.png"
+            alt="Places"
+          />
+          Места
+        </button>
+      </router-link>
+      <router-link to="/review/routes"
+        ><button class="btn btn-routes" @click="changeCard">
+          <img
+            class="icon-btn"
+            v-show="visibleCards != 'routes'"
+            @click="changeCard"
+            width="15"
+            height="18"
+            src="../../assets/imgs/routes.png"
+            alt="Places"
+          />
+          <img
+            class="icon-btn"
+            v-show="visibleCards == 'routes'"
+            @click="changeCard"
+            width="15"
+            height="18"
+            src="../../assets/imgs/routes_white.png"
+            alt="Places"
+          />
+          Маршруты
+        </button>
+      </router-link>
+      <router-link to="/review/events">
+        <button class="btn btn-events" @click="changeCard">
+          <img
+            class="icon-btn"
+            v-show="visibleCards != 'events'"
+            @click="changeCard"
+            width="18"
+            height="18"
+            src="../../assets/imgs/events.png"
+            alt="Places"
+          />
+          <img
+            class="icon-btn"
+            v-show="visibleCards == 'events'"
+            @click="changeCard"
+            width="18"
+            height="18"
+            src="../../assets/imgs/events_white.png"
+            alt="Places"
+          />
+          Мероприятия
+        </button>
+      </router-link>
+      <router-link to="/review/sortPoints">
+        <button class="btn btn-sortPoints" @click="changeCard">
+          <img
+            class="icon-btn"
+            v-show="visibleCards != 'sortPoints'"
+            @click="changeCard"
+            width="16"
+            height="18"
+            src="../../assets/imgs/sortPoints.png"
+            alt="Places"
+          />
+          <img
+            class="icon-btn"
+            v-show="visibleCards == 'sortPoints'"
+            @click="changeCard"
+            width="16"
+            height="18"
+            src="../../assets/imgs/sortPoints_white.png"
+            alt="Places"
+          />
+          Точки сортировки
+        </button>
+      </router-link>
     </section>
 
     <section class="search">
@@ -122,330 +130,7 @@
         Параметры
       </button>
     </section>
-
-    <section
-      v-show="visibleCards == 'places'"
-      class="cards"
-      v-for="place in placeList"
-      v-bind:key="place.id"
-    >
-      <div class="card review">
-        <img
-          v-bind:src="place.imgUrl"
-          alt=""
-          class="card-child card-img review"
-        />
-        <div class="card-child card-content review">
-          <div class="card-content-wrapping">
-            <div class="card-header">
-              <div class="card-info">
-                <p class="card-name" @click="findPlace(place.id)">
-                  {{ place.namePlace }}
-                </p>
-                <div class="card-adress">
-                  <img
-                    width="11"
-                    height="18"
-                    src="../../assets/imgs/map.png"
-                    alt=""
-                    class="icon-margin"
-                  />
-                  {{ place.town }}
-                </div>
-              </div>
-              <a class="a-circle-icon">
-                <img
-                  class="cirlce-img"
-                  src="../../assets/imgs/circle_favorite_default.png"
-                  alt=""
-                />
-              </a>
-            </div>
-            <div class="card-desc">
-              {{ place.desc }}
-            </div>
-            <div class="card-rating">
-              <div class="rating">
-                <img
-                  src="../../assets/imgs/circle_bus.png"
-                  alt=""
-                  class="cirlce-img"
-                />
-                {{ place.bus }}
-              </div>
-              <div class="rating">
-                <img
-                  src="../../assets/imgs/circle_sortPoint.png"
-                  alt=""
-                  class="cirlce-img"
-                />
-                {{ place.trash }}
-              </div>
-              <div class="rating">
-                <img
-                  src="../../assets/imgs/circle_flower.png"
-                  alt=""
-                  class="cirlce-img"
-                />
-                {{ place.flowers }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      v-show="visibleCards == 'routes'"
-      class="cards"
-      v-for="route in routeList"
-      v-bind:key="route.id"
-    >
-      <div class="card review">
-        <img
-          v-bind:src="route.imgUrl"
-          alt=""
-          class="card-child card-img review"
-        />
-        <div class="card-child card-content review">
-          <div class="card-content-wrapping">
-            <div class="card-header">
-              <div class="card-info">
-                <p class="card-name">{{ route.nameRoute }}</p>
-                <div class="coordinates">
-                  <div class="coordinate">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/start.png"
-                      alt=""
-                    />
-                    {{ route.start }}
-                  </div>
-                  <div class="coordinate">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/finish.png"
-                      alt=""
-                    />
-                    {{ route.finish }}
-                  </div>
-                </div>
-                <div class="km-time">
-                  <div class="km">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="9"
-                      src="../../assets/imgs/ruler.png"
-                      alt=""
-                    />
-                    {{ route.length }} км
-                  </div>
-                  <div class="time">
-                    <img
-                      class="icon-margin"
-                      width="13"
-                      height="18"
-                      src="../../assets/imgs/hourglass.png  "
-                      alt=""
-                    />
-                    {{ route.duration }} ч
-                  </div>
-                </div>
-              </div>
-              <a class="a-circle-icon">
-                <img
-                  class="cirlce-img"
-                  src="../../assets/imgs/circle_favorite_default.png"
-                  alt=""
-                />
-              </a>
-            </div>
-            <div class="card-desc">
-              {{ route.desc }}
-            </div>
-            <div class="card-rating">
-              <div class="rating">
-                <img
-                  src="../../assets/imgs/circle_bus.png"
-                  alt=""
-                  class="cirlce-img"
-                />
-                {{ route.bus }}
-              </div>
-              <div class="rating">
-                <img
-                  src="../../assets/imgs/circle_sortPoint.png"
-                  alt=""
-                  class="cirlce-img"
-                />
-                {{ route.trash }}
-              </div>
-              <div class="rating">
-                <img
-                  src="../../assets/imgs/circle_flower.png"
-                  alt=""
-                  class="cirlce-img"
-                />
-                {{ route.flowers }}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section v-show="visibleCards == 'events'" class="cards">
-      <div class="card review">
-        <img
-          src="../../assets/imgs/default_review.png"
-          alt=""
-          class="card-child card-img review"
-        />
-        <div class="card-child card-content review">
-          <div class="card-content-wrapping">
-            <div class="card-header">
-              <div class="card-info">
-                <p class="card-name">Субботник в Дубовой роще</p>
-                <div class="coordinates">
-                  <div class="coordinate">
-                    <img
-                      class="icon-margin"
-                      width="11"
-                      height="18"
-                      src="../../assets/imgs/map.png"
-                      alt=""
-                    />
-                    Можайский район
-                  </div>
-                  <div class="coordinate">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/places.png"
-                      alt=""
-                    />
-                    Дубовая роща
-                  </div>
-                </div>
-                <div class="km-time">
-                  <div class="km">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="16"
-                      src="../../assets/imgs/calendar.png"
-                      alt=""
-                    />
-                    29.10.2022
-                  </div>
-                  <div class="time">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/clock.png  "
-                      alt=""
-                    />
-                    10:00
-                  </div>
-                </div>
-              </div>
-              <a class="a-circle-icon">
-                <img
-                  class="cirlce-img"
-                  src="../../assets/imgs/circle_favorite_default.png"
-                  alt=""
-                />
-              </a>
-            </div>
-            <div class="card-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor,
-              venenatis, elit enim feugiat natoque enim ullamcorper. Nulla
-              condimentum malesuada eget enim amet, mattis turpis. Vel, purus
-              consequat, tristique ut diam. Vulputate nam massa suspendisse
-              scelerisque. Urna, vitae tellus et, odio varius sit risus vitae
-              nunc. Dignissim sed felis nunc volutpat facilisi in non tellus.
-              Neque, ultrices at nibh risus auctor lectus nisi. Lacus hendrerit
-              volutpat eu nec mauris scelerisque. Senectus accumsan risus proin
-              posuere morbi facilisis et.
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section v-show="visibleCards == 'sortPoints'" class="cards">
-      <div class="card review">
-        <img
-          src="../../assets/imgs/default_review.png"
-          alt=""
-          class="card-child card-img review"
-        />
-        <div class="card-child card-content review">
-          <div class="card-content-wrapping">
-            <div class="card-header">
-              <div class="card-info">
-                <p class="card-name">Name</p>
-                <div class="coordinates">
-                  <div class="coordinate">
-                    <img
-                      class="icon-margin"
-                      width="11"
-                      height="18"
-                      src="../../assets/imgs/map.png"
-                      alt=""
-                    />
-                    Location
-                  </div>
-                  <div class="coordinate">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/places.png"
-                      alt=""
-                    />
-                    <span>00:00 - 00:00</span>
-                  </div>
-                </div>
-              </div>
-              <a class="a-circle-icon">
-                <img
-                  class="cirlce-img"
-                  src="../../assets/imgs/circle_favorite_default.png"
-                  alt=""
-                />
-              </a>
-            </div>
-            <div class="card-desc">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor,
-              venenatis, elit enim feugiat natoque enim ullamcorper. Nulla
-              condimentum malesuada eget enim amet, mattis turpis. Vel, purus
-              consequat, tristique ut diam. Vulputate nam massa suspendisse
-              scelerisque. Urna, vitae tellus et, odio varius sit risus vitae
-              nunc. Dignissim sed felis nunc volutpat facilisi in non tellus.
-              Neque, ultrices at nibh risus auctor lectus nisi. Lacus hendrerit
-              volutpat eu nec mauris scelerisque. Senectus accumsan risus proin
-              posuere morbi facilisis et.
-            </div>
-            <div class="card-rating">
-              <div class="rating">
-                <img
-                  src="../../assets/imgs/circle_bus.png"
-                  alt=""
-                  class="cirlce-img"
-                />
-                0.00
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <router-view></router-view>
   </main>
 </template>
 
@@ -503,14 +188,16 @@ export default {
   },
   methods: {
     changeCard(event) {
+      console.log(event.target);
       let target =
         event.target.className == "icon-btn"
           ? event.target.parentElement
           : event.target;
 
-      target.parentElement.childNodes.forEach((el) => {
-        if (el.matches(".active")) {
-          el.classList.remove("active");
+      target.parentElement.parentElement.childNodes.forEach((el) => {
+        let btn = el.firstChild;
+        if (btn.matches(".active")) {
+          btn.classList.remove("active");
         }
         if (target.classList.contains("btn-routes")) {
           this.visibleCards = "routes";
