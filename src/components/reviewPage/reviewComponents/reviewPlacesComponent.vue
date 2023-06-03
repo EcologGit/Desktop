@@ -1,39 +1,41 @@
 <template>
-  <section class="cards" v-for="place in placeList" v-bind:key="place.id">
+  <section
+    class="cards"
+    v-for="place in dataPlaceList"
+    v-bind:key="place.object_id"
+  >
     <div class="card review">
-      <img
-        v-bind:src="place.imgUrl"
-        alt=""
-        class="card-child card-img review"
-      />
+      <img v-bind:src="place.photo" alt="" class="card-child card-img review" />
       <div class="card-child card-content review">
         <div class="card-content-wrapping">
-          <div class="card-header">
-            <div class="card-info">
-              <p class="card-name" @click="findPlace(place.id)">
-                {{ place.namePlace }}
-              </p>
-              <div class="card-adress">
-                <img
-                  width="11"
-                  height="18"
-                  src="../../../assets/imgs/map.png"
-                  alt=""
-                  class="icon-margin"
-                />
-                {{ place.town }}
+          <div>
+            <div class="card-header">
+              <div class="card-info">
+                <p class="card-name" @click="findPlace(place.object_id)">
+                  {{ place.name }}
+                </p>
+                <div class="card-adress">
+                  <img
+                    width="11"
+                    height="18"
+                    src="../../../assets/imgs/map.png"
+                    alt=""
+                    class="icon-margin"
+                  />
+                  {{ place.locality }}
+                </div>
               </div>
+              <a class="a-circle-icon">
+                <img
+                  class="cirlce-img"
+                  src="../../../assets/imgs/circle_favorite_default.png"
+                  alt=""
+                />
+              </a>
             </div>
-            <a class="a-circle-icon">
-              <img
-                class="cirlce-img"
-                src="../../../assets/imgs/circle_favorite_default.png"
-                alt=""
-              />
-            </a>
-          </div>
-          <div class="card-desc">
-            {{ place.desc }}
+            <div class="card-desc">
+              {{ place.description }}
+            </div>
           </div>
           <div class="card-rating">
             <div class="rating">
@@ -42,7 +44,7 @@
                 alt=""
                 class="cirlce-img"
               />
-              {{ place.bus }}
+              {{ place.avg_availability }}
             </div>
             <div class="rating">
               <img
@@ -50,7 +52,7 @@
                 alt=""
                 class="cirlce-img"
               />
-              {{ place.trash }}
+              {{ place.avg_beauty }}
             </div>
             <div class="rating">
               <img
@@ -58,7 +60,7 @@
                 alt=""
                 class="cirlce-img"
               />
-              {{ place.flowers }}
+              {{ place.avg_purity }}
             </div>
           </div>
         </div>
@@ -70,56 +72,39 @@
 <script>
 export default {
   inject: ["sortName", "placeList"],
+  created() {
+    // > Внедряемое свойство: 5
+  },
+
   data() {
     return {
-      sortPlaces: [],
-
-      routeList: [
-        {
-          id: 1,
-          nameRoute: "Имя маршрута",
-          start: "Старт",
-          finish: "Финиш",
-          length: 0.1,
-          duration: 1.03,
-          desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor, venenatis, elit enim feugiat natoque enim ullamcorper. Nulla condimentum malesuada eget enim amet, mattis turpis. Vel, purus consequat, tristique ut diam. Vulputate nam massa suspendisse scelerisque. Urna, vitae tellus et, odio varius sit risus vitae nunc. Dignissim sed felis nunc volutpat facilisi in non tellus. Neque, ultrices at nibh risus auctor lectus nisi. Lacus hendrerit volutpat eu nec mauris scelerisque. Senectus accumsan risus proin posuere morbi facilisis et. ",
-          imgUrl: "http://192.168.1.38:8080/img/field.0a6c037b.png",
-          bus: 0.01,
-          trash: 0.02,
-          flowers: 0.003,
-        },
-        {
-          id: 2,
-          nameRoute: "Имя маршрута нового",
-          start: "Старт",
-          finish: "Финиш",
-          length: 0.3,
-          duration: 1.04,
-          desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor, venenatis, elit enim feugiat natoque enim ullamcorper. Nulla condimentum malesuada eget enim amet, mattis turpis. Vel, purus consequat, tristique ut diam. Vulputate nam massa suspendisse scelerisque. Urna, vitae tellus et, odio varius sit risus vitae nunc. Dignissim sed felis nunc volutpat facilisi in non tellus. Neque, ultrices at nibh risus auctor lectus nisi. Lacus hendrerit volutpat eu nec mauris scelerisque. Senectus accumsan risus proin posuere morbi facilisis et. ",
-          imgUrl: "http://192.168.1.38:8080/img/field.0a6c037b.png",
-          bus: 0.01,
-          trash: 0.02,
-          flowers: 0.003,
-        },
-        {
-          id: 3,
-          nameRoute: "Имя маршрута нового",
-          start: "Старт",
-          finish: "Финиш",
-          length: 0.3,
-          duration: 1.04,
-          desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor, venenatis, elit enim feugiat natoque enim ullamcorper. Nulla condimentum malesuada eget enim amet, mattis turpis. Vel, purus consequat, tristique ut diam. Vulputate nam massa suspendisse scelerisque. Urna, vitae tellus et, odio varius sit risus vitae nunc. Dignissim sed felis nunc volutpat facilisi in non tellus. Neque, ultrices at nibh risus auctor lectus nisi. Lacus hendrerit volutpat eu nec mauris scelerisque. Senectus accumsan risus proin posuere morbi facilisis et. ",
-          imgUrl: "http://192.168.1.38:8080/img/field.0a6c037b.png",
-          bus: 0.01,
-          trash: 0.02,
-          flowers: 0.003,
-        },
-      ],
+      dataPlaceList: this.fetchDataPlaceAPI(),
+    };
+  },
+  mounted() {
+    return {
+      // dataPlaceList: this.fetchDataPlaceAPI(),
     };
   },
   methods: {
     findPlace(id) {
       console.log(this.placeList.filter((el) => el.id == id));
+    },
+    async fetchDataPlaceAPI() {
+      await fetch("http://81.163.30.36:8000/review/places/")
+        .then((response) => response.json())
+        .then((data) => {
+          this.dataPlaceList = data;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+  },
+  computed: {
+    //сортировка
+    evenNumbers() {
+      return console.log("a");
     },
   },
 };

@@ -60,7 +60,11 @@ import styles from './foo.module.css'
         <div>Активность</div>
       </router-link>
 
-      <router-link to="/marks" class="a-header marks" @click="changePage">
+      <router-link
+        to="/marks/places"
+        class="a-header marks"
+        @click="changePage"
+      >
         <img
           class="a-img"
           @click="changePage"
@@ -82,7 +86,11 @@ import styles from './foo.module.css'
         <div>Отметки</div>
       </router-link>
 
-      <router-link to="/profile" class="a-header profile" @click="changePage">
+      <router-link
+        to="/profile/reports"
+        class="a-header profile"
+        @click="changePage"
+      >
         <img
           class="a-img"
           @click="changePage"

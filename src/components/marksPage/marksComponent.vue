@@ -1,90 +1,98 @@
 <template>
   <main class="main">
     <section class="buttons">
-      <button class="btn btn-places active" @click="changeCard">
-        <img
-          class="icon-btn"
-          v-show="visibleCards != 'places'"
-          @click="changeCard"
-          width="18"
-          height="18"
-          src="../../assets/imgs/places.png"
-          alt="Places"
-        />
-        <img
-          class="icon-btn"
-          v-show="visibleCards == 'places'"
-          @click="changeCard"
-          width="18"
-          height="18"
-          src="../../assets/imgs/places_white.png"
-          alt="Places"
-        />
-        Места
-      </button>
-      <button class="btn btn-routes" @click="changeCard">
-        <img
-          class="icon-btn"
-          v-show="visibleCards != 'routes'"
-          @click="changeCard"
-          width="15"
-          height="18"
-          src="../../assets/imgs/routes.png"
-          alt="Places"
-        />
-        <img
-          class="icon-btn"
-          v-show="visibleCards == 'routes'"
-          @click="changeCard"
-          width="15"
-          height="18"
-          src="../../assets/imgs/routes_white.png"
-          alt="Places"
-        />
-        Маршруты
-      </button>
-      <button class="btn btn-events" @click="changeCard">
-        <img
-          class="icon-btn"
-          v-show="visibleCards != 'events'"
-          @click="changeCard"
-          width="18"
-          height="18"
-          src="../../assets/imgs/events.png"
-          alt="Places"
-        />
-        <img
-          class="icon-btn"
-          v-show="visibleCards == 'events'"
-          @click="changeCard"
-          width="18"
-          height="18"
-          src="../../assets/imgs/events_white.png"
-          alt="Places"
-        />
-        Мероприятия
-      </button>
-      <button class="btn btn-sortPoints" @click="changeCard">
-        <img
-          class="icon-btn"
-          v-show="visibleCards != 'sortPoints'"
-          @click="changeCard"
-          width="16"
-          height="18"
-          src="../../assets/imgs/sortPoints.png"
-          alt="Places"
-        />
-        <img
-          class="icon-btn"
-          v-show="visibleCards == 'sortPoints'"
-          @click="changeCard"
-          width="16"
-          height="18"
-          src="../../assets/imgs/sortPoints_white.png"
-          alt="Places"
-        />
-        Точки сортировки
-      </button>
+      <router-link to="/marks/places"
+        ><button class="btn btn-places active" @click="changeCard">
+          <img
+            class="icon-btn"
+            v-show="visibleCards != 'places'"
+            @click="changeCard"
+            width="18"
+            height="18"
+            src="../../assets/imgs/places.png"
+            alt="Places"
+          />
+          <img
+            class="icon-btn"
+            v-show="visibleCards == 'places'"
+            @click="changeCard"
+            width="18"
+            height="18"
+            src="../../assets/imgs/places_white.png"
+            alt="Places"
+          />
+          Места
+        </button></router-link
+      >
+      <router-link to="/marks/routes"
+        ><button class="btn btn-routes" @click="changeCard">
+          <img
+            class="icon-btn"
+            v-show="visibleCards != 'routes'"
+            @click="changeCard"
+            width="15"
+            height="18"
+            src="../../assets/imgs/routes.png"
+            alt="Routes"
+          />
+          <img
+            class="icon-btn"
+            v-show="visibleCards == 'routes'"
+            @click="changeCard"
+            width="15"
+            height="18"
+            src="../../assets/imgs/routes_white.png"
+            alt="Routes"
+          />
+          Маршруты
+        </button></router-link
+      >
+      <router-link to="/marks/events"
+        ><button class="btn btn-events" @click="changeCard">
+          <img
+            class="icon-btn"
+            v-show="visibleCards != 'events'"
+            @click="changeCard"
+            width="18"
+            height="18"
+            src="../../assets/imgs/events.png"
+            alt="Events"
+          />
+          <img
+            class="icon-btn"
+            v-show="visibleCards == 'events'"
+            @click="changeCard"
+            width="18"
+            height="18"
+            src="../../assets/imgs/events_white.png"
+            alt="Events"
+          />
+          Мероприятия
+        </button></router-link
+      >
+      <router-link to="/marks/sortPoints"
+        ><button class="btn btn-sortPoints" @click="changeCard">
+          <img
+            class="icon-btn"
+            v-show="visibleCards != 'sortPoints'"
+            @click="changeCard"
+            width="16"
+            height="18"
+            src="../../assets/imgs/sortPoints.png"
+            alt="SortPoints"
+          />
+          <img
+            class="icon-btn"
+            v-show="visibleCards == 'sortPoints'"
+            @click="changeCard"
+            width="16"
+            height="18"
+            src="../../assets/imgs/sortPoints_white.png"
+            alt="SortPoints"
+          />
+          Точки сортировки
+        </button>
+      </router-link>
     </section>
 
     <section class="search">
@@ -103,7 +111,11 @@
           class="button-text setting dropbtn"
           @click="visibleDropdown = !visibleDropdown"
         >
-          <img src="../../assets/imgs/setting1.png" alt="" class="setting-icon" />
+          <img
+            src="../../assets/imgs/setting1.png"
+            alt=""
+            class="setting-icon"
+          />
           Сортировка
         </button>
         <div v-show="visibleDropdown" class="dropdown-content">
@@ -118,637 +130,7 @@
         Параметры
       </button>
     </section>
-
-    <section v-show="visibleCards == 'places'" class="cards marks">
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Щуровский лесопарк</div>
-            <div class="coordinates">
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="11"
-                  height="18"
-                  src="../../assets/imgs/map.png"
-                  alt=""
-                />
-                Коломна
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Щуровский лесопарк</div>
-            <div class="coordinates">
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="11"
-                  height="18"
-                  src="../../assets/imgs/map.png"
-                  alt=""
-                />
-                Коломна
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Щуровский лесопарк</div>
-            <div class="coordinates">
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="11"
-                  height="18"
-                  src="../../assets/imgs/map.png"
-                  alt=""
-                />
-                Коломна
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Щуровский лесопарк</div>
-            <div class="coordinates">
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="11"
-                  height="18"
-                  src="../../assets/imgs/map.png"
-                  alt=""
-                />
-                Коломна
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section v-show="visibleCards == 'routes'" class="cards marks routes">
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Голубые озера Подмосковья</div>
-            <div class="coordinates">
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="18"
-                  src="../../assets/imgs/start.png"
-                  alt=""
-                />
-                Start
-              </div>
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="18"
-                  src="../../assets/imgs/finish.png"
-                  alt=""
-                />
-                Finish
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Голубые озера Подмосковья</div>
-            <div class="coordinates">
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="18"
-                  src="../../assets/imgs/start.png"
-                  alt=""
-                />
-                Start
-              </div>
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="18"
-                  src="../../assets/imgs/finish.png"
-                  alt=""
-                />
-                Finish
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Голубые озера Подмосковья</div>
-            <div class="coordinates">
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="18"
-                  src="../../assets/imgs/start.png"
-                  alt=""
-                />
-                Start
-              </div>
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="18"
-                  src="../../assets/imgs/finish.png"
-                  alt=""
-                />
-                Finish
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Голубые озера Подмосковья</div>
-            <div class="coordinates">
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="18"
-                  src="../../assets/imgs/start.png"
-                  alt=""
-                />
-                Start
-              </div>
-              <div class="coordinate">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="18"
-                  src="../../assets/imgs/finish.png"
-                  alt=""
-                />
-                Finish
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section v-show="visibleCards == 'events'" class="cards marks events">
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Субботник в парке Мира</div>
-            <div class="coordinates">
-              <div class="coordinates">
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="11"
-                    height="18"
-                    src="../../assets/imgs/map.png"
-                    alt=""
-                  />
-                  Воскресенск
-                </div>
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/places.png"
-                    alt=""
-                  />
-                  Карьер “Песчаный”
-                </div>
-              </div>
-              <div class="km-time">
-                <div class="km">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="16"
-                    src="../../assets/imgs/calendar.png"
-                    alt=""
-                  />
-                  29.10.2022
-                </div>
-                <div class="time">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/clock.png  "
-                    alt=""
-                  />
-                  10:00
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Субботник в парке Мира</div>
-            <div class="coordinates">
-              <div class="coordinates">
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="11"
-                    height="18"
-                    src="../../assets/imgs/map.png"
-                    alt=""
-                  />
-                  Воскресенск
-                </div>
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/places.png"
-                    alt=""
-                  />
-                  Карьер “Песчаный”
-                </div>
-              </div>
-              <div class="km-time">
-                <div class="km">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="16"
-                    src="../../assets/imgs/calendar.png"
-                    alt=""
-                  />
-                  29.10.2022
-                </div>
-                <div class="time">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/clock.png  "
-                    alt=""
-                  />
-                  10:00
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Субботник в парке Мира</div>
-            <div class="coordinates">
-              <div class="coordinates">
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="11"
-                    height="18"
-                    src="../../assets/imgs/map.png"
-                    alt=""
-                  />
-                  Воскресенск
-                </div>
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/places.png"
-                    alt=""
-                  />
-                  Карьер “Песчаный”
-                </div>
-              </div>
-              <div class="km-time">
-                <div class="km">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="16"
-                    src="../../assets/imgs/calendar.png"
-                    alt=""
-                  />
-                  29.10.2022
-                </div>
-                <div class="time">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/clock.png  "
-                    alt=""
-                  />
-                  10:00
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Субботник в парке Мира</div>
-            <div class="coordinates">
-              <div class="coordinates">
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="11"
-                    height="18"
-                    src="../../assets/imgs/map.png"
-                    alt=""
-                  />
-                  Воскресенск
-                </div>
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/places.png"
-                    alt=""
-                  />
-                  Карьер “Песчаный”
-                </div>
-              </div>
-              <div class="km-time">
-                <div class="km">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="16"
-                    src="../../assets/imgs/calendar.png"
-                    alt=""
-                  />
-                  29.10.2022
-                </div>
-                <div class="time">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/clock.png  "
-                    alt=""
-                  />
-                  10:00
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      v-show="visibleCards == 'sortPoints'"
-      class="cards marks sortPoints"
-    >
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Пункт приема мукулатуры</div>
-            <div class="coordinates">
-              <div class="coordinates">
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="11"
-                    height="18"
-                    src="../../assets/imgs/map.png"
-                    alt=""
-                  />
-                  Егорьевск
-                </div>
-              </div>
-              <div class="km-time">
-                <div class="time">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/clock.png  "
-                    alt=""
-                  />
-                  00:00 - 00:00
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Субботник в парке Мира</div>
-            <div class="coordinates">
-              <div class="coordinates">
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="11"
-                    height="18"
-                    src="../../assets/imgs/map.png"
-                    alt=""
-                  />
-                  Егорьевск
-                </div>
-              </div>
-              <div class="km-time">
-                <div class="time">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/clock.png  "
-                    alt=""
-                  />
-                  00:00 - 00:00
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Субботник в парке Мира</div>
-            <div class="coordinates">
-              <div class="coordinates">
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="11"
-                    height="18"
-                    src="../../assets/imgs/map.png"
-                    alt=""
-                  />
-                  Егорьевск
-                </div>
-              </div>
-              <div class="km-time">
-                <div class="time">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/clock.png  "
-                    alt=""
-                  />
-                  00:00 - 00:00
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card marks">
-        <img
-          src="../../assets/imgs/default_marks.png"
-          alt=""
-          class="card-child card-img marks"
-        />
-        <div class="card-child card-content marks">
-          <div class="card-content-wrapping marks">
-            <div class="card-title">Субботник в парке Мира</div>
-            <div class="coordinates">
-              <div class="coordinates">
-                <div class="coordinate feed">
-                  <img
-                    class="icon-margin"
-                    width="11"
-                    height="18"
-                    src="../../assets/imgs/map.png"
-                    alt=""
-                  />
-                  Егорьевск
-                </div>
-              </div>
-              <div class="km-time">
-                <div class="time">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../assets/imgs/clock.png  "
-                    alt=""
-                  />
-                  00:00 - 00:00
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <router-view></router-view>
   </main>
 </template>
 
@@ -767,9 +149,11 @@ export default {
           ? event.target.parentElement
           : event.target;
 
-      target.parentElement.childNodes.forEach((el) => {
-        if (el.matches(".active")) {
-          el.classList.remove("active");
+      target.parentElement.parentElement.childNodes.forEach((el) => {
+        let btn = el.firstChild;
+
+        if (btn.matches(".active")) {
+          btn.classList.remove("active");
         }
         if (target.classList.contains("btn-routes")) {
           this.visibleCards = "routes";

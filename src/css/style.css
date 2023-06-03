@@ -84,6 +84,7 @@ img {
 }
 
 .main {
+  min-height: calc(100vh - 50px);
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
@@ -394,8 +395,8 @@ input.settings:placeholder-shown {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 16px;
+  justify-content: space-between;
 }
 
 .card-content-wrapping.marks {
@@ -531,6 +532,7 @@ input.settings:placeholder-shown {
   font-size: 14px;
   line-height: 19px;
   text-align: justify;
+  padding: 18px 0;
 }
 
 .card-desc.element {
@@ -869,11 +871,10 @@ input.settings:placeholder-shown {
   font-size: 14px;
   line-height: 22px;
   display: flex;
+  padding-bottom: 16px;
+  align-items: center;
 }
 
-.coordinate {
-  padding-bottom: 16px;
-}
 
 .coordinate:last-child {
   padding-bottom: 0px;

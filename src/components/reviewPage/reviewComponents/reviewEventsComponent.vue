@@ -1,16 +1,18 @@
 <template>
-  <section class="cards">
+  <section
+    class="cards"
+    v-for="event in dataEventsList"
+    v-bind:key="event.object_id"
+  >
     <div class="card review">
-      <img
-        src="../../../assets/imgs/default_review.png"
-        alt=""
-        class="card-child card-img review"
-      />
+      <img v-bind:src="event.photo" alt="" class="card-child card-img review" />
       <div class="card-child card-content review">
         <div class="card-content-wrapping">
-          <div class="card-header">
+          <div><div class="card-header">
             <div class="card-info">
-              <p class="card-name">Субботник в Дубовой роще</p>
+              <p class="card-name" @click="findPlace(place.object_id)">
+                {{ event.name }}
+              </p>
               <div class="coordinates">
                 <div class="coordinate">
                   <img
@@ -20,7 +22,7 @@
                     src="../../../assets/imgs/map.png"
                     alt=""
                   />
-                  Можайский район
+                  {{ event.adress }}
                 </div>
                 <div class="coordinate">
                   <img
@@ -30,7 +32,7 @@
                     src="../../../assets/imgs/places.png"
                     alt=""
                   />
-                  Дубовая роща
+                  {{ "что-тоы" }}
                 </div>
               </div>
               <div class="km-time">
@@ -42,7 +44,7 @@
                     src="../../../assets/imgs/calendar.png"
                     alt=""
                   />
-                  29.10.2022
+                  {{ event.status }}
                 </div>
                 <div class="time">
                   <img
@@ -52,7 +54,7 @@
                     src="../../../assets/imgs/clock.png  "
                     alt=""
                   />
-                  10:00
+                  {{ event.datetime_start }}
                 </div>
               </div>
             </div>
@@ -65,15 +67,8 @@
             </a>
           </div>
           <div class="card-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor,
-            venenatis, elit enim feugiat natoque enim ullamcorper. Nulla
-            condimentum malesuada eget enim amet, mattis turpis. Vel, purus
-            consequat, tristique ut diam. Vulputate nam massa suspendisse
-            scelerisque. Urna, vitae tellus et, odio varius sit risus vitae
-            nunc. Dignissim sed felis nunc volutpat facilisi in non tellus.
-            Neque, ultrices at nibh risus auctor lectus nisi. Lacus hendrerit
-            volutpat eu nec mauris scelerisque. Senectus accumsan risus proin
-            posuere morbi facilisis et.
+            {{ event.description }}
+          </div>
           </div>
         </div>
       </div>
@@ -89,51 +84,21 @@ export default {
       sortPlaces: [],
       visibleCards: "places",
       visibleDropdown: false,
-
-      routeList: [
-        {
-          id: 1,
-          nameRoute: "Имя маршрута",
-          start: "Старт",
-          finish: "Финиш",
-          length: 0.1,
-          duration: 1.03,
-          desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor, venenatis, elit enim feugiat natoque enim ullamcorper. Nulla condimentum malesuada eget enim amet, mattis turpis. Vel, purus consequat, tristique ut diam. Vulputate nam massa suspendisse scelerisque. Urna, vitae tellus et, odio varius sit risus vitae nunc. Dignissim sed felis nunc volutpat facilisi in non tellus. Neque, ultrices at nibh risus auctor lectus nisi. Lacus hendrerit volutpat eu nec mauris scelerisque. Senectus accumsan risus proin posuere morbi facilisis et. ",
-          imgUrl: "http://192.168.1.38:8080/img/field.0a6c037b.png",
-          bus: 0.01,
-          trash: 0.02,
-          flowers: 0.003,
-        },
-        {
-          id: 2,
-          nameRoute: "Имя маршрута нового",
-          start: "Старт",
-          finish: "Финиш",
-          length: 0.3,
-          duration: 1.04,
-          desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor, venenatis, elit enim feugiat natoque enim ullamcorper. Nulla condimentum malesuada eget enim amet, mattis turpis. Vel, purus consequat, tristique ut diam. Vulputate nam massa suspendisse scelerisque. Urna, vitae tellus et, odio varius sit risus vitae nunc. Dignissim sed felis nunc volutpat facilisi in non tellus. Neque, ultrices at nibh risus auctor lectus nisi. Lacus hendrerit volutpat eu nec mauris scelerisque. Senectus accumsan risus proin posuere morbi facilisis et. ",
-          imgUrl: "http://192.168.1.38:8080/img/field.0a6c037b.png",
-          bus: 0.01,
-          trash: 0.02,
-          flowers: 0.003,
-        },
-        {
-          id: 3,
-          nameRoute: "Имя маршрута нового",
-          start: "Старт",
-          finish: "Финиш",
-          length: 0.3,
-          duration: 1.04,
-          desc: " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor, venenatis, elit enim feugiat natoque enim ullamcorper. Nulla condimentum malesuada eget enim amet, mattis turpis. Vel, purus consequat, tristique ut diam. Vulputate nam massa suspendisse scelerisque. Urna, vitae tellus et, odio varius sit risus vitae nunc. Dignissim sed felis nunc volutpat facilisi in non tellus. Neque, ultrices at nibh risus auctor lectus nisi. Lacus hendrerit volutpat eu nec mauris scelerisque. Senectus accumsan risus proin posuere morbi facilisis et. ",
-          imgUrl: "http://192.168.1.38:8080/img/field.0a6c037b.png",
-          bus: 0.01,
-          trash: 0.02,
-          flowers: 0.003,
-        },
-      ],
+      dataEventsList: this.fetchDataEventsAPI(),
     };
   },
   methods: {
+    async fetchDataEventsAPI() {
+      await fetch("http://81.163.30.36:8000/review/events/")
+        .then((response) => response.json())
+        .then((data) => {
+          this.dataEventsList = data;
+          console.log(data);
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
     changeCard(event) {
       let target =
         event.target.className == "icon-btn"
