@@ -25,7 +25,9 @@ import profilePageComponent from "./components/profilePage/profileComponent.vue"
 import profileReportsComponent from "./components/profilePage/profileComponents/profileReportsComponent.vue";
 import profileStatisticsComponent from "./components/profilePage/profileComponents/profileStatisticsComponent.vue";
 
-import settingsComponent from "./components/settingsPage.vue";
+import settingsComponent from "./components/settingsPage/settingsComponent.vue";
+
+import objectComponent from "./components/objectPage/objectComponent.vue";
 
 export default createRouter({
     history: createWebHashHistory(),
@@ -100,8 +102,10 @@ export default createRouter({
         {
             path: '/settings',
             component: settingsComponent,
-
-
+        },
+        {
+            path: '/object',
+            component: objectComponent,
         },
 
 

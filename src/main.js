@@ -21,7 +21,9 @@ import activityMedalsComponent from "./components/activityPage/activityComponent
 import profileReportsComponent from "./components/profilePage/profileComponents/profileReportsComponent.vue";
 import profileStatisticsComponent from "./components/profilePage/profileComponents/profileStatisticsComponent.vue";
 
-import settingsComponent from "./components/settingsPage.vue";
+import settingsComponent from "./components/settingsPage/settingsComponent.vue";
+
+import objectComponent from "./components/objectPage/objectComponent.vue";
 
 import router from "./router";
 
@@ -49,6 +51,8 @@ app.component('profileReports-component', profileReportsComponent);
 app.component('profileStatistics-component', profileStatisticsComponent);
 
 app.component('settings-component', settingsComponent);
+
+app.component('object-component', objectComponent);
 
 app.mount('#app');
 

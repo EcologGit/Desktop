@@ -1,5 +1,5 @@
 <template>
-  <main class="main" id="app">
+  <main class="main">
     <section class="slider">
       <a>
         <img
@@ -13,7 +13,7 @@
         <img
           v-show="visibleNext"
           @click="visibleNext = !visibleNext"
-          src="../../assets/imgs/trash_big.png"
+          src="../../assets/imgs/default_review.png"
           alt=""
           width="940"
           height="470"
@@ -22,13 +22,13 @@
     </section>
     <section class="buttons element">
       <button class="btn-circle-icon">
-        <img src="../../assets/imgs/map_circle_button_white.png" alt="" />
+        <img src="../../assets/imgs/circle_favorite_default.png" alt="" />
       </button>
       <button class="btn-circle-icon">
         <img src="../../assets/imgs/circle_favorite_default.png" alt="" />
       </button>
       <button class="btn-circle-icon">
-        <img src="../../assets/imgs/newPlace.png" alt="" />
+        <img src="../../assets/imgs/circle_favorite_default.png" alt="" />
       </button>
     </section>
     <section class="info-element">
@@ -60,7 +60,7 @@
               class="icon-margin"
               width="18"
               height="18"
-              src="../../assets/imgs/coordinate.png"
+              src="../../assets/imgs/places.png"
               alt=""
             />
             55.064767, 55.064767
@@ -119,7 +119,7 @@
       Объект
       <div class="card review">
         <img
-          src="../../assets/imgs/nature.png"
+          src="../../assets/imgs/map.png"
           alt=""
           class="card-child card-img"
         />
@@ -165,7 +165,7 @@
               </div>
               <div class="rating">
                 <img
-                  src="../../assets/imgs/circle_trash.png"
+                  src="../../assets/imgs/circle_bus.png"
                   alt=""
                   class="cirlce-img"
                 />
@@ -188,7 +188,7 @@
       Точка сортировки
       <div class="card review">
         <img
-          src="../../assets/imgs/trash_picture.png"
+          src="../../assets/imgs/map.png"
           alt=""
           class="card-child card-img"
         />
@@ -241,7 +241,8 @@
             <div class="card-rating">
               <div class="rating">
                 <img
-                  src="../../assets/imgs/bus.png"
+                  src="
+                  ../../assets/imgs/bus.png"
                   alt=""
                   class="cirlce-img"
                 />

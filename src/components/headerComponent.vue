@@ -112,13 +112,15 @@ import styles from './foo.module.css'
         <div>Профиль</div>
       </router-link>
       <div>
-        <a class="a-circle-icon" style="border: none">
-          <img
-            class="cirlce-img"
-            src="../assets/imgs/add_place.png"
-            alt="Добавить"
-          />
-        </a>
+        <router-link to="/object">
+          <a class="a-circle-icon" style="border: none">
+            <img
+              class="cirlce-img"
+              src="../assets/imgs/add_place.png"
+              alt="Добавить"
+            />
+          </a>
+        </router-link>
       </div>
     </nav>
   </header>
