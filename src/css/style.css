@@ -40,6 +40,11 @@ img {
   color: #AEC756;
 }
 
+.logo {
+  display: flex;
+  align-items: center
+}
+
 .navs-header {
   display: flex;
   justify-content: space-between;
@@ -327,6 +332,19 @@ input.settings:placeholder-shown {
   grid-template-rows: 490px;
 }
 
+.button-event {
+  height: 36px;
+  padding: 10px 32px;
+  border-radius: 25px;
+  border: none;
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
 .card {
   border-radius: 25px;
 }
@@ -406,7 +424,6 @@ input.settings:placeholder-shown {
 .card-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   padding: 0;
   align-items: normal;
 }
@@ -470,9 +487,12 @@ input.settings:placeholder-shown {
   justify-content: space-between;
 }
 
-.card-img.card-img {
+.card-img {
   width: 375px;
   height: 350px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .card-img.activity,
@@ -501,6 +521,10 @@ input.settings:placeholder-shown {
 }
 
 .card-name {
+  width: 420px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-weight: 600;
   font-size: 22px;
   line-height: 26px;
@@ -526,13 +550,14 @@ input.settings:placeholder-shown {
 }
 
 .card-desc {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 400;
-  font-size: 14px;
+  margin: 10px 0;
   line-height: 19px;
+  font-size: 14px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
   text-align: justify;
-  padding: 18px 0;
 }
 
 .card-desc.element {
@@ -578,6 +603,7 @@ input.settings:placeholder-shown {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  margin-bottom: 25px;
 }
 
 .about-user {
@@ -855,15 +881,17 @@ input.settings:placeholder-shown {
 
 
 .km-time {
-  width: 196px;
   padding-top: 16px;
   display: flex;
-  justify-content: space-between;
 }
 
 .km-time>div {
   display: flex;
   align-items: center;
+}
+
+.km-time>div:first-child {
+  margin-right: 30px;
 }
 
 .coordinate {

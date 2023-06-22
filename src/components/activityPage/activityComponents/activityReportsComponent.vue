@@ -59,7 +59,7 @@
             alt=""
           />
         </div>
-        <div class="card-disc">
+        <div class="card-desc">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi diam
           vulputate hendrerit proin vulputate faucibus eu elementum. Sit pretium
           sed in congue molestie turpis sodales risus. Nunc quam cum felis,
@@ -166,7 +166,7 @@
             alt=""
           />
         </div>
-        <div class="card-disc">
+        <div class="card-desc">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi diam
           vulputate hendrerit proin vulputate faucibus eu elementum. Sit pretium
           sed in congue molestie turpis sodales risus. Nunc quam cum felis,

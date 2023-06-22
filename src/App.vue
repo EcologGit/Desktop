@@ -1,5 +1,5 @@
 <template>
-  <header-component title="Правильный путь" />
+  <header-component title="Аура" />
   <router-view></router-view>
   <footer-component />
 </template>

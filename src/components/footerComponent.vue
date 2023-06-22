@@ -4,7 +4,7 @@
       <div class="info-version">
         <p>Полезный туризм</p>
         <p>Alpha version</p>
-        <p>2022 г.</p>
+        <p>2023 г.</p>
       </div>
       <div class="footer-links">
         <div class="block">

@@ -6,7 +6,7 @@
   >
     <div class="card review">
       <img
-        v-bind:src="sortPoint.photo"
+        v-bind:src="'http://81.163.30.36:8000/' + sortPoint.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -34,7 +34,7 @@
                       class="icon-margin"
                       width="18"
                       height="18"
-                      src="../../../assets/imgs/places.png"
+                      src="../../../assets/imgs/clock.png"
                       alt=""
                     />
                     <span>{{ sortPoint.schedule }}</span>

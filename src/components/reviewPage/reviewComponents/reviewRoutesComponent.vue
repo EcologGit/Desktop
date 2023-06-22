@@ -5,7 +5,11 @@
     v-bind:key="route.route_id"
   >
     <div class="card review">
-      <img v-bind:src="route.photo" alt="" class="card-child card-img review" />
+      <img
+        v-bind:src="'http://81.163.30.36:8000/' + route.photo"
+        alt=""
+        class="card-child card-img review"
+      />
       <div class="card-child card-content review">
         <div class="card-content-wrapping">
           <div>
@@ -15,25 +19,16 @@
                 <div class="coordinates">
                   <div class="coordinate">
                     <img
-                      class="icon-margin"
-                      width="18"
+                      width="11"
                       height="18"
-                      src="../../../assets/imgs/start.png"
+                      src="../../../assets/imgs/map.png"
                       alt=""
-                    />
-                    {{ route.avg_beauty }}
-                  </div>
-                  <div class="coordinate">
-                    <img
                       class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../../assets/imgs/finish.png"
-                      alt=""
                     />
-                    {{ route.avg_purity }}
+                    {{ route.locality }}
                   </div>
                 </div>
+
                 <div class="km-time">
                   <div class="km">
                     <img

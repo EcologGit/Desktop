@@ -89,7 +89,7 @@
           </div>
         </div>
 
-        <div class="card-disc element">
+        <div class="card-desc element">
           Lorem ipsum dolor sit amet consectetur. Tempus sit in integer nunc non
           faucibus. Odio in imperdiet sapien in hendrerit ultrices aliquet felis
           in. Pellentesque molestie sit eu sed ac donec rhoncus neque.
@@ -143,7 +143,7 @@
                 />
               </button>
             </div>
-            <div class="card-disc">
+            <div class="card-desc">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor,
               venenatis, elit enim feugiat natoque enim ullamcorper. Nulla
               condimentum malesuada eget enim amet, mattis turpis. Vel, purus
@@ -227,7 +227,7 @@
                 />
               </button>
             </div>
-            <div class="card-disc">
+            <div class="card-desc">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempor,
               venenatis, elit enim feugiat natoque enim ullamcorper. Nulla
               condimentum malesuada eget enim amet, mattis turpis. Vel, purus

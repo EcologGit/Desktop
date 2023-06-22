@@ -3,7 +3,15 @@ import styles from './foo.module.css'
 <template>
   <header class="header">
     <router-link to="/" class="name-page" @click="changePage">
-      <div class="active-page">{{ title }}</div>
+      <div class="logo">
+        <img
+          class="cirlce-img"
+          src="../assets/imgs/logo.png"
+          alt="Logo Aura"
+          style="margin-right: 12px"
+        />
+        <p class="logo-name">{{ title }}</p>
+      </div>
     </router-link>
     <nav class="navs navs-header">
       <router-link

@@ -5,70 +5,69 @@
     v-bind:key="event.object_id"
   >
     <div class="card review">
-      <img v-bind:src="event.photo" alt="" class="card-child card-img review" />
+      <img v-bind:src="'http://81.163.30.36:8000/' + event.photo" alt="" class="card-child card-img review" />
       <div class="card-child card-content review">
         <div class="card-content-wrapping">
-          <div><div class="card-header">
-            <div class="card-info">
-              <p class="card-name" @click="findPlace(place.object_id)">
-                {{ event.name }}
-              </p>
-              <div class="coordinates">
-                <div class="coordinate">
-                  <img
-                    class="icon-margin"
-                    width="11"
-                    height="18"
-                    src="../../../assets/imgs/map.png"
-                    alt=""
-                  />
-                  {{ event.adress }}
+          <div>
+            <div class="card-header">
+              <div class="card-info">
+                <p class="card-name" @click="findPlace(place.object_id)">
+                  {{ event.name }}
+                </p>
+                <div class="coordinates">
+                  <div class="coordinate">
+                    <img
+                      class="icon-margin"
+                      width="11"
+                      height="18"
+                      src="../../../assets/imgs/map.png"
+                      alt=""
+                    />
+                    {{ event.adress }}
+                  </div>
                 </div>
-                <div class="coordinate">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../../assets/imgs/places.png"
-                    alt=""
-                  />
-                  {{ "что-тоы" }}
-                </div>
-              </div>
-              <div class="km-time">
-                <div class="km">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="16"
-                    src="../../../assets/imgs/calendar.png"
-                    alt=""
-                  />
-                  {{ event.status }}
-                </div>
-                <div class="time">
-                  <img
-                    class="icon-margin"
-                    width="18"
-                    height="18"
-                    src="../../../assets/imgs/clock.png  "
-                    alt=""
-                  />
-                  {{ event.datetime_start }}
+                <div class="km-time">
+                  <div class="km">
+                    <img
+                      class="icon-margin"
+                      width="18"
+                      height="16"
+                      src="../../../assets/imgs/calendar.png"
+                      alt=""
+                    />
+                    {{ event.status }}
+                  </div>
+                  <div class="time">
+                    <img
+                      class="icon-margin"
+                      width="18"
+                      height="18"
+                      src="../../../assets/imgs/clock.png  "
+                      alt=""
+                    />
+                    {{ formattingDate(event.datetime_start) }}
+                  </div>
                 </div>
               </div>
+              <a class="a-circle-icon">
+                <img
+                  class="cirlce-img"
+                  src="../../../assets/imgs/circle_favorite_default.png"
+                  alt=""
+                />
+              </a>
             </div>
-            <a class="a-circle-icon">
-              <img
-                class="cirlce-img"
-                src="../../../assets/imgs/circle_favorite_default.png"
-                alt=""
-              />
-            </a>
+            <div class="card-desc">
+              {{ event.description }}
+            </div>
           </div>
-          <div class="card-desc">
-            {{ event.description }}
-          </div>
+          <div>
+            <button
+              class="button-event"
+              :style="{ backgroundColor: '#D3F36B' }"
+            >
+              {{ formattingStyleButton(event.status) }}
+            </button>
           </div>
         </div>
       </div>
@@ -87,6 +86,7 @@ export default {
       dataEventsList: this.fetchDataEventsAPI(),
     };
   },
+  mounted() {},
   methods: {
     async fetchDataEventsAPI() {
       await fetch("http://81.163.30.36:8000/review/events/")
@@ -98,6 +98,30 @@ export default {
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
         });
+    },
+
+    formattingDate(date) {
+      const msUTC = Date.parse(date);
+      const correctFormatDate = new Date(msUTC);
+
+      return correctFormatDate.toLocaleString("ru-RU", {
+        dateStyle: "full",
+      });
+    },
+    formattingStyleButton(status) {
+      console.log(status);
+      if (status == "Запланировано") {
+        this.buttonColor = "#D3F36B";
+
+        return "Запланировано";
+      } else if (status == "Отменено") {
+        this.buttonColor = "red";
+
+        return "Отменено";
+      } else {
+        this.buttonColor = "grey";
+        return "Завершено";
+      }
     },
     changeCard(event) {
       let target =
@@ -121,6 +145,7 @@ export default {
       });
       target.classList.add("active");
     },
+
     sort(event) {
       event.target.parentElement.childNodes.forEach((el) => {
         if (el.classList.contains("active")) {
@@ -140,6 +165,9 @@ export default {
     findPlace(id) {
       console.log(this.placeList.filter((el) => el.id == id));
     },
+  },
+  watch: {
+    show() {},
   },
 };
 </script>

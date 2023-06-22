@@ -5,7 +5,11 @@
     v-bind:key="place.object_id"
   >
     <div class="card review">
-      <img v-bind:src="place.photo" alt="" class="card-child card-img review" />
+      <img
+        v-bind:src="'http://81.163.30.36:8000/' + place.photo"
+        alt=""
+        class="card-child card-img review"
+      />
       <div class="card-child card-content review">
         <div class="card-content-wrapping">
           <div>
