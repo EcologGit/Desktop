@@ -1309,13 +1309,6 @@ input[type=date]::-webkit-calendar-picker-indicator {
   gap: 8px;
 }
 
-.input-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  align-self: stretch;
-}
-
 .active-buttons {
   display: flex;
   flex-direction: column;
@@ -1368,12 +1361,20 @@ input[type=date]::-webkit-calendar-picker-indicator {
 .password-control.login-password {
   margin-left: -25px;
   margin-bottom: -22px;
-  cursor: pointer;
 }
 
-.hidden-password-button {
+.password-label-wrapping {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-self: stretch;
+}
+
+.password-control-wrapping-login {
+  cursor: pointer;
   border: none;
 }
+
 
 
 

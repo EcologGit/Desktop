@@ -4,43 +4,31 @@
       <p class="">Вход</p>
       <div class="inputs">
         <div class="input">
-          <div>Почта</div>
+          Почта
           <input
             class="input settings"
+            type="email"
             placeholder="Введите почту"
-            type="text"
           />
         </div>
+
         <div class="input">
-          <div class="input-label">
-            <div>Пароль</div>
-            <button class="hidden-password-button">
-              <a
-                @click="show_hide_password($event)"
-                class="password-control login-password"
-              >
-              </a>
-              ПОКАЗАТЬ
+          <div class="password-label-wrapping">
+            <div class="password-label">Пароль</div>
+            <button
+              class="password-control-wrapping-login"
+              @click="show_hide_password($event)"
+            >
+              <a class="password-control login-password"></a> ПОКАЗАТЬ
             </button>
           </div>
-          <input
-            class="input settings"
-            placeholder="Введите пароль"
-            type="text"
-          />
-        </div>
-        <div class="personal-newPassword">
-          Новый пароль
           <div class="password-wrapping">
             <input
+              id="password-login"
               class="input settings"
               type="password"
-              placeholder="Введите новый пароль"
+              placeholder="Введите пароль"
             />
-            <a
-              class="password-control setting-password"
-              @click="show_hide_password($event)"
-            ></a>
           </div>
         </div>
       </div>
@@ -82,10 +70,12 @@ export default {
       const target = event.target;
       if (target.matches(".view")) {
         target.classList.remove("view");
-        target.parentElement.children[0].setAttribute("type", "password");
+        document
+          .getElementById("password-login")
+          .setAttribute("type", "password");
       } else {
         target.classList.add("view");
-        target.parentElement.children[0].setAttribute("type", "text");
+        document.getElementById("password-login").setAttribute("type", "text");
       }
     },
     changeCard(event) {
