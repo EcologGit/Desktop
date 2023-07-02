@@ -6,7 +6,7 @@
   >
     <div class="card review">
       <img
-        v-bind:src="'http://81.163.30.36:8000/' + place.photo"
+        v-bind:src="'http://81.163.30.36:8000' + place.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -15,7 +15,7 @@
           <div>
             <div class="card-header">
               <div class="card-info">
-                <p class="card-name" @click="findPlace(place.object_id)">
+                <p class="card-name" @click="navigateTo(place.object_id)">
                   {{ place.name }}
                 </p>
                 <div class="card-adress">
@@ -98,11 +98,18 @@ export default {
       await fetch("http://81.163.30.36:8000/review/places/")
         .then((response) => response.json())
         .then((data) => {
-          this.dataPlaceList = data;
+          this.dataPlaceList = data.results;
+          console.log(data);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
         });
+    },
+    navigateTo(id) {
+      this.$router.push({
+        name: "objectPlaces",
+        params: { objectType: "places", id: id },
+      });
     },
   },
   computed: {

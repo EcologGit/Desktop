@@ -93,8 +93,8 @@
                 placeholder="Введите старый пароль"
               />
               <a
-                class="password-control"
-                onclick="return show_hide_password(this);"
+                class="password-control setting-password"
+                @click="show_hide_password($event)"
               ></a>
             </div>
           </div>
@@ -107,8 +107,8 @@
                 placeholder="Введите новый пароль"
               />
               <a
-                class="password-control"
-                onclick="return show_hide_password(this);"
+                class="password-control setting-password"
+                @click="show_hide_password($event)"
               ></a>
             </div>
           </div>
@@ -135,7 +135,8 @@ export default {
     };
   },
   methods: {
-    show_hide_password(target) {
+    show_hide_password(event) {
+      const target = event.target;
       if (target.matches(".view")) {
         target.classList.remove("view");
         target.parentElement.children[0].setAttribute("type", "password");

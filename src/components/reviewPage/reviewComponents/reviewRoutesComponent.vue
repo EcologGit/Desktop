@@ -6,7 +6,7 @@
   >
     <div class="card review">
       <img
-        v-bind:src="'http://81.163.30.36:8000/' + route.photo"
+        v-bind:src="'http://81.163.30.36:8000' + route.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -15,7 +15,9 @@
           <div>
             <div class="card-header">
               <div class="card-info">
-                <p class="card-name">{{ route.name }}</p>
+                <p class="card-name" @click="navigateTo(route.route_id)">
+                  {{ route.name }}
+                </p>
                 <div class="coordinates">
                   <div class="coordinate">
                     <img
@@ -29,7 +31,7 @@
                   </div>
                 </div>
 
-                <div class="km-time">
+                <div class="parameters">
                   <div class="km">
                     <img
                       class="icon-margin"
@@ -105,6 +107,12 @@ export default {
     };
   },
   methods: {
+    navigateTo(id) {
+      this.$router.push({
+        name: "objectRoutes",
+        params: { objectType: "routes", id: id },
+      });
+    },
     findRoutes(id) {
       console.log(this.routesList.filter((el) => el.id == id));
     },
@@ -112,7 +120,7 @@ export default {
       await fetch("http://81.163.30.36:8000/review/routes/")
         .then((response) => response.json())
         .then((data) => {
-          this.routesList = data;
+          this.routesList = data.results;
           console.log(data);
         })
         .catch((error) => {

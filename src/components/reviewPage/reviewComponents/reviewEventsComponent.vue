@@ -2,16 +2,20 @@
   <section
     class="cards"
     v-for="event in dataEventsList"
-    v-bind:key="event.object_id"
+    v-bind:key="event.event_id"
   >
     <div class="card review">
-      <img v-bind:src="'http://81.163.30.36:8000/' + event.photo" alt="" class="card-child card-img review" />
+      <img
+        v-bind:src="'http://81.163.30.36:8000' + event.photo"
+        alt=""
+        class="card-child card-img review"
+      />
       <div class="card-child card-content review">
         <div class="card-content-wrapping">
           <div>
             <div class="card-header">
               <div class="card-info">
-                <p class="card-name" @click="findPlace(place.object_id)">
+                <p class="card-name" @click="navigateTo(event.event_id)">
                   {{ event.name }}
                 </p>
                 <div class="coordinates">
@@ -26,7 +30,7 @@
                     {{ event.adress }}
                   </div>
                 </div>
-                <div class="km-time">
+                <div class="parameters">
                   <div class="km">
                     <img
                       class="icon-margin"
@@ -63,7 +67,7 @@
           </div>
           <div>
             <button
-              class="button-event"
+              class="status-event"
               :style="{ backgroundColor: '#D3F36B' }"
             >
               {{ formattingStyleButton(event.status) }}
@@ -88,11 +92,17 @@ export default {
   },
   mounted() {},
   methods: {
+    navigateTo(id) {
+      this.$router.push({
+        name: "objectEvents",
+        params: { objectType: "events", id: id },
+      });
+    },
     async fetchDataEventsAPI() {
       await fetch("http://81.163.30.36:8000/review/events/")
         .then((response) => response.json())
         .then((data) => {
-          this.dataEventsList = data;
+          this.dataEventsList = data.results;
           console.log(data);
         })
         .catch((error) => {

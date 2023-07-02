@@ -22,7 +22,7 @@
                 Егорьевск
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="time">
                 <img
                   class="icon-margin"
@@ -60,7 +60,7 @@
                 Егорьевск
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="time">
                 <img
                   class="icon-margin"
@@ -98,7 +98,7 @@
                 Егорьевск
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="time">
                 <img
                   class="icon-margin"
@@ -136,7 +136,7 @@
                 Егорьевск
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="time">
                 <img
                   class="icon-margin"

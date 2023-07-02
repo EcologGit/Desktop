@@ -1,4 +1,3 @@
-import styles from './foo.module.css'
 
 <template>
   <header class="header">
@@ -95,7 +94,7 @@ import styles from './foo.module.css'
       </router-link>
 
       <router-link
-        to="/profile/reports"
+        :to="{ name: 'profileReports', params: { id: 1 } }"
         class="a-header profile"
         @click="changePage"
       >
@@ -120,15 +119,13 @@ import styles from './foo.module.css'
         <div>Профиль</div>
       </router-link>
       <div>
-        <router-link to="/object">
-          <a class="a-circle-icon" style="border: none">
-            <img
-              class="cirlce-img"
-              src="../assets/imgs/add_place.png"
-              alt="Добавить"
-            />
-          </a>
-        </router-link>
+        <a class="a-circle-icon" style="border: none" @click="navigateTo(1)">
+          <img
+            class="cirlce-img"
+            src="../assets/imgs/add_place.png"
+            alt="Добавить"
+          />
+        </a>
       </div>
     </nav>
   </header>
@@ -145,6 +142,12 @@ export default {
     };
   },
   methods: {
+    navigateTo(id) {
+      this.$router.push({
+        name: "report",
+        params: { id: id },
+      });
+    },
     changePage(event) {
       const headerDiv = document.querySelectorAll(".header * > div");
       let target = event.target.classList.contains("a-header")

@@ -2,11 +2,11 @@
   <section
     class="cards"
     v-for="sortPoint in dataSortPointsList"
-    v-bind:key="sortPoint.object_id"
+    v-bind:key="sortPoint.point_id"
   >
     <div class="card review">
       <img
-        v-bind:src="'http://81.163.30.36:8000/' + sortPoint.photo"
+        v-bind:src="'http://81.163.30.36:8000' + sortPoint.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -15,7 +15,7 @@
           <div>
             <div class="card-header">
               <div class="card-info">
-                <p class="card-name" @click="findPlace(sortPoint.object_id)">
+                <p class="card-name" @click="navigateTo(sortPoint.point_id)">
                   {{ sortPoint.name }}
                 </p>
                 <div class="coordinates">
@@ -79,6 +79,12 @@ export default {
     };
   },
   methods: {
+    navigateTo(id) {
+      this.$router.push({
+        name: "objectSortPoints",
+        params: { objectType: "sortPoints", id: id },
+      });
+    },
     findPlace(id) {
       console.log(this.placeList.filter((el) => el.id == id));
     },
@@ -86,7 +92,8 @@ export default {
       await fetch("http://81.163.30.36:8000/review/sortPoints/")
         .then((response) => response.json())
         .then((data) => {
-          this.dataSortPointsList = data;
+          this.dataSortPointsList = data.results;
+          console.log("DATA");
           console.log(data);
         })
         .catch((error) => {

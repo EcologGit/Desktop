@@ -55,7 +55,7 @@
             @click="changeCard"
             width="18"
             height="18"
-            src="../../assets/imgs/events.png"
+            src="../../assets/imgs/events_black.png"
             alt="Events"
           />
           <img
