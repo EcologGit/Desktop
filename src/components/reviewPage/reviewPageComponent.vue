@@ -185,7 +185,7 @@ export default {
       }
     },
     findPlace(id) {
-      console.log(this.placeList.filter((el) => el.id == id));
+      this.placeList.filter((el) => el.id == id);
     },
   },
 };

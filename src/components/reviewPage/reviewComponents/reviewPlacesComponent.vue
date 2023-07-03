@@ -96,14 +96,13 @@ export default {
   },
   methods: {
     findPlace(id) {
-      console.log(this.placeList.filter((el) => el.id == id));
+      this.placeList.filter((el) => el.id == id);
     },
     async fetchDataPlaceAPI() {
       await fetch(`${url}/review/places/`)
         .then((response) => response.json())
         .then((data) => {
           this.dataPlaceList = data.results;
-          console.log(data);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -119,7 +118,7 @@ export default {
   computed: {
     //сортировка
     evenNumbers() {
-      return console.log("a");
+      return "a";
     },
   },
 };

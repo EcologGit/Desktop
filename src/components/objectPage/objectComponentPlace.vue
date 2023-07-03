@@ -431,25 +431,17 @@ export default {
   },
   methods: {
     navigateTo(id) {
-      console.log(id);
       this.$router.push({
         name: "report",
         params: { id: id },
       });
     },
-    newFunc() {
-      console.log("hello");
-    },
+    newFunc() {},
     async fetchDataObjectAPI() {
-      console.log(this.$route.params.objectType);
       await fetch(`${url}/review/places/${this.$route.params.id}`)
         .then((response) => response.json())
         .then((data) => {
           this.dataObject = data.object_info;
-          console.log("DATA");
-          console.log(data);
-          console.log(data.object_info);
-          // return data.object_info;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -458,13 +450,11 @@ export default {
   },
   computed: {
     calcNotes() {
-      console.log(this.notes.length * 5);
       return this.notes.length * 5;
     },
   },
   watch: {
     inputValue(value) {
-      console.log("value" + value);
       if (value.length === 5) {
         this.notes = [];
       }

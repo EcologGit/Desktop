@@ -145,19 +145,15 @@ export default {
         target.parentElement.children[0].setAttribute("type", "text");
       }
     },
-    fetchData() {
-      console.log();
-    },
+    fetchData() {},
   },
   computed: {
     calcNotes() {
-      console.log(this.notes.length * 5);
       return this.notes.length * 5;
     },
   },
   watch: {
     inputValue(value) {
-      console.log("value" + value);
       if (value.length === 5) {
         this.notes = [];
       }

@@ -90,19 +90,15 @@ export default {
     };
   },
   methods: {
-    newFunc() {
-      console.log("hello");
-    },
+    newFunc() {},
   },
   computed: {
     calcNotes() {
-      console.log(this.notes.length * 5);
       return this.notes.length * 5;
     },
   },
   watch: {
     inputValue(value) {
-      console.log("value" + value);
       if (value.length === 5) {
         this.notes = [];
       }

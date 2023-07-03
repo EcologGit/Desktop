@@ -90,15 +90,13 @@ export default {
       });
     },
     findPlace(id) {
-      console.log(this.placeList.filter((el) => el.id == id));
+      this.placeList.filter((el) => el.id == id);
     },
     async fetchDataPlaceAPI() {
       await fetch(`${url}/review/sortPoints/`)
         .then((response) => response.json())
         .then((data) => {
           this.dataSortPointsList = data.results;
-          console.log("DATA");
-          console.log(data);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

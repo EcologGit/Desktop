@@ -138,7 +138,6 @@ export default {
   },
   methods: {
     navigateTo() {
-      console.log();
       this.visibleMain = false;
       this.$router.push({
         name: "settings",
@@ -172,9 +171,7 @@ export default {
       });
       event.target.classList.add("active");
     },
-    newFunc() {
-      console.log("hello");
-    },
+    newFunc() {},
   },
 };
 </script>

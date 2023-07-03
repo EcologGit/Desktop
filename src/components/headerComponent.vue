@@ -152,7 +152,6 @@ export default {
       let target = event.target.classList.contains("a-header")
         ? event.target
         : event.target.parentElement;
-      console.log(target);
 
       headerDiv.forEach((el) => {
         if (el.matches(".active-page")) {

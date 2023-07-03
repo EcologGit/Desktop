@@ -118,14 +118,13 @@ export default {
       });
     },
     findRoutes(id) {
-      console.log(this.routesList.filter((el) => el.id == id));
+      this.routesList.filter((el) => el.id == id);
     },
     async fetchDataRoutesAPI() {
       await fetch(`${url}/review/routes/`)
         .then((response) => response.json())
         .then((data) => {
           this.routesList = data.results;
-          console.log(data);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

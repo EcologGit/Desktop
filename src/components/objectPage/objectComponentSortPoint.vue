@@ -417,18 +417,12 @@ export default {
     };
   },
   methods: {
-    newFunc() {
-      console.log("hello");
-    },
+    newFunc() {},
     async fetchDataObjectAPI() {
-      console.log(this.$route.params.objectType);
       await fetch(`${url}/review/sortPoints/${this.$route.params.id}`)
         .then((response) => response.json())
         .then((data) => {
           this.dataObject = data;
-
-          console.log("DATA");
-          console.log(data);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -437,13 +431,11 @@ export default {
   },
   computed: {
     calcNotes() {
-      console.log(this.notes.length * 5);
       return this.notes.length * 5;
     },
   },
   watch: {
     inputValue(value) {
-      console.log("value" + value);
       if (value.length === 5) {
         this.notes = [];
       }

@@ -106,7 +106,6 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.dataEventsList = data.results;
-          console.log(data);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -122,7 +121,6 @@ export default {
       });
     },
     formattingStyleButton(status) {
-      console.log(status);
       if (status == "Запланировано") {
         this.buttonColor = "#D3F36B";
 
@@ -175,8 +173,7 @@ export default {
         dropdbtn.classList.remove("active");
       }
     },
-    findPlace(id) {
-      console.log(this.placeList.filter((el) => el.id == id));
+    findPlace(id) {this.placeList.filter((el) => el.id == id)
     },
   },
   watch: {
