@@ -6,7 +6,7 @@
   >
     <div class="card review">
       <img
-        v-bind:src="'http://81.163.30.36:8000' + place.photo"
+        v-bind:src="url + place.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -74,6 +74,8 @@
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
   inject: ["sortName", "placeList"],
   created() {
@@ -82,6 +84,8 @@ export default {
 
   data() {
     return {
+      url: url,
+
       dataPlaceList: this.fetchDataPlaceAPI(),
     };
   },
@@ -95,7 +99,7 @@ export default {
       console.log(this.placeList.filter((el) => el.id == id));
     },
     async fetchDataPlaceAPI() {
-      await fetch("http://81.163.30.36:8000/review/places/")
+      await fetch(`${url}/review/places/`)
         .then((response) => response.json())
         .then((data) => {
           this.dataPlaceList = data.results;

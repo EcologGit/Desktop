@@ -753,6 +753,12 @@ button {
   border-radius: 27px;
 }
 
+.form_toggle.report-toggle {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .password-wrapping {
   display: flex;
   justify-content: flex-start;
@@ -808,6 +814,7 @@ button {
 
   color: #FFFFFF;
   margin: 32px auto 0px;
+  justify-content: center;
 }
 
 .section.more {
@@ -1343,6 +1350,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 
 .single-button.signup-button-photo {
   margin: 0 auto;
+  width: 100%;
 }
 
 .signup-button {
@@ -1374,6 +1382,165 @@ input[type=date]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   border: none;
 }
+
+.newReport {
+  display: flex;
+  width: 940px;
+  padding: 32px 0px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.info-newReport {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  width: 100%;
+}
+
+.info-newReport * {
+  width: 100%;
+}
+
+
+
+.cleaning-place {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+
+}
+
+.input.settings.report-input {
+  width: 100%;
+}
+
+.sortPoints-object-label-wrapping {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  align-self: stretch;
+}
+
+.sortPoints-object-add {
+  border: none;
+  display: flex;
+  background: transparent;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.photo-newReport,
+.desc-newReport {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+textarea {
+  outline: none;
+  resize: none;
+  overflow: auto;
+  width: 100%;
+  padding: 15px 16px 0px 16px;
+  border-radius: 25px;
+  border: none;
+}
+
+.newReport-wrapping {
+  width: 100%;
+  display: flex;
+  padding: 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  align-self: stretch;
+  border-radius: 25px;
+  background: var(--desktop-ios-white, #FFF);
+}
+
+.raiting-newReport-label-wrapping {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.raiting-newReport-points,
+.star-newReport-points {
+  width: 100%;
+}
+
+.input-number {
+  display: flex;
+  width: 70px;
+  height: 35px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 7px;
+  border: 0.5px solid var(--desktop-ios-separator-grey, #C4C4C4);
+  background: var(--desktop-ios-white, #FFF);
+}
+
+.input-number-wrapping {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.buttons-newReport {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.newReport-publish {
+  display: flex;
+  height: 50px;
+  padding: 16px 32px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  opacity: 0.699999988079071;
+  background: var(--desktop-ios-dark-grey, #24282C);
+  color: var(--desktop-ios-separator-grey, #C4C4C4);
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: none;
+}
+
+.save-draft {
+  color: var(--desktop-ios-dark-grey, #24282C);
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
 
 
 

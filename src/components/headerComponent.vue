@@ -119,7 +119,7 @@
         <div>Профиль</div>
       </router-link>
       <div>
-        <a class="a-circle-icon" style="border: none" @click="navigateTo(1)">
+        <a class="a-circle-icon" style="border: none" @click="navigateTo()">
           <img
             class="cirlce-img"
             src="../assets/imgs/add_place.png"
@@ -142,10 +142,9 @@ export default {
     };
   },
   methods: {
-    navigateTo(id) {
+    navigateTo() {
       this.$router.push({
-        name: "report",
-        params: { id: id },
+        name: "newReport",
       });
     },
     changePage(event) {

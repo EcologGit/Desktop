@@ -6,7 +6,7 @@
   >
     <div class="card review">
       <img
-        v-bind:src="'http://81.163.30.36:8000' + route.photo"
+        v-bind:src="url + route.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -99,10 +99,14 @@
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
   inject: ["sortName", "placeList"],
   data() {
     return {
+      url: url,
+
       routesList: this.fetchDataRoutesAPI(),
     };
   },
@@ -117,7 +121,7 @@ export default {
       console.log(this.routesList.filter((el) => el.id == id));
     },
     async fetchDataRoutesAPI() {
-      await fetch("http://81.163.30.36:8000/review/routes/")
+      await fetch(`${url}/review/routes/`)
         .then((response) => response.json())
         .then((data) => {
           this.routesList = data.results;

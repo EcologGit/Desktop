@@ -38,6 +38,8 @@ import objectComponentPlace from "./components/objectPage/objectComponentPlace.v
 
 import reportComponent from "./components/reportPage/reportComponent.vue";
 
+import newReportComponent from "./components/createReportPage/newReportComponent.vue";
+
 
 export default createRouter({
     history: createWebHashHistory(),
@@ -64,33 +66,45 @@ export default createRouter({
                 },
 
                 {
-                    path: ':objectType/:id',
-                    name: 'objectEvents',
-                    component: objectComponentEvent,
-                },
-                {
-                    path: ':objectType/:id',
-                    name: 'objectRoutes',
-                    component: objectComponentRoute,
-                },
-                {
-                    path: ':objectType/:id',
-                    name: 'objectSortPoints',
-                    component: objectComponentSortPoint,
-                },
-                {
-                    path: ':objectType/:id',
-                    name: 'objectPlaces',
-                    component: objectComponentPlace,
-                },
-                {
                     path: '/:id',
                     name: 'report',
                     component: reportComponent,
                 },
 
+
             ],
         },
+        {
+            path: '/review/sortPoints/:id',
+            name: 'objectSortPoints',
+            component: objectComponentSortPoint,
+        },
+
+        {
+            path: '/review/routes/:id',
+            name: 'objectRoutes',
+            component: objectComponentRoute,
+        },
+
+        {
+            path: '/review/events/:id',
+            name: 'objectEvents',
+            component: objectComponentEvent,
+        },
+
+
+        {
+            path: '/review/places/:id',
+            name: 'objectPlaces',
+            component: objectComponentPlace,
+        },
+        {
+            path: '/newReport',
+            name: 'newReport',
+            component: newReportComponent,
+        },
+
+
 
         {
             path: '/activity/',

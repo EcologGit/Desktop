@@ -6,7 +6,7 @@
   >
     <div class="card review">
       <img
-        v-bind:src="'http://81.163.30.36:8000' + event.photo"
+        v-bind:src="url + event.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -80,10 +80,13 @@
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
   inject: ["sortName", "placeList"],
   data() {
     return {
+      url: url,
       sortPlaces: [],
       visibleCards: "places",
       visibleDropdown: false,
@@ -99,7 +102,7 @@ export default {
       });
     },
     async fetchDataEventsAPI() {
-      await fetch("http://81.163.30.36:8000/review/events/")
+      await fetch(`${url}/review/events/`)
         .then((response) => response.json())
         .then((data) => {
           this.dataEventsList = data.results;

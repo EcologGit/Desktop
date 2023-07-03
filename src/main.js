@@ -30,6 +30,7 @@ import objectComponentSortPoint from "./components/objectPage/objectComponentSor
 import objectComponentPlace from "./components/objectPage/objectComponentPlace.vue";
 
 import reportComponent from "./components/reportPage/reportComponent.vue";
+import newReportComponent from "./components/createReportPage/newReportComponent.vue";
 
 
 
@@ -67,6 +68,7 @@ app.component('objectSortPointcomponent-', objectComponentSortPoint);
 app.component('objectPlace-component', objectComponentPlace);
 
 app.component('report-component', reportComponent);
+app.component('newReport-component', newReportComponent);
 
 app.mount('#app');
 
@@ -80,3 +82,5 @@ window.onclick = function (event) {
         }
     }
 };
+
+export const url = 'http://81.163.30.36:8000';

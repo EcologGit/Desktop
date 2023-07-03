@@ -1,4 +1,6 @@
 <template>
+  <main class="main">
+
   <section class="object" v-bind="dataObject">
     <section class="slider">
       <a>
@@ -6,7 +8,7 @@
           class="object-img"
           v-show="!visibleNext"
           @click="visibleNext = !visibleNext"
-          v-bind:src="'http://81.163.30.36:8000' + dataObject.photo"
+          v-bind:src="url + dataObject.photo"
           alt=""
         />
         <img
@@ -342,16 +344,21 @@
       </div>
     </section>
   </section>
+  </main>
+
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
   data() {
     return {
+      url: url,
       dataObject: this.fetchDataObjectAPI(),
       visibleMore: false,
       id: this.$route.params.id,
-      objectType: this.$route.params.id,
+      objectType: this.$route.params.objectType,
     };
   },
   methods: {
@@ -360,9 +367,7 @@ export default {
     },
     async fetchDataObjectAPI() {
       console.log(this.$route.params.objectType);
-      await fetch(
-        `http://81.163.30.36:8000/review/${this.$route.params.objectType}/${this.$route.params.id}`
-      )
+      await fetch(`${url}/review/events/${this.$route.params.id}`)
         .then((response) => response.json())
         .then((data) => {
           this.dataObject = data;

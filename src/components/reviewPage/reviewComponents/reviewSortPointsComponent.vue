@@ -6,7 +6,7 @@
   >
     <div class="card review">
       <img
-        v-bind:src="'http://81.163.30.36:8000' + sortPoint.photo"
+        v-bind:src="url + sortPoint.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -67,13 +67,17 @@
       </div>
     </div>
   </section>
+  <router-view></router-view>
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
   inject: ["sortName", "placeList"],
   data() {
     return {
+      url: url,
       sortPlaces: [],
       dataSortPointsList: this.fetchDataPlaceAPI(),
     };
@@ -82,14 +86,14 @@ export default {
     navigateTo(id) {
       this.$router.push({
         name: "objectSortPoints",
-        params: { objectType: "sortPoints", id: id },
+        params: { id: id },
       });
     },
     findPlace(id) {
       console.log(this.placeList.filter((el) => el.id == id));
     },
     async fetchDataPlaceAPI() {
-      await fetch("http://81.163.30.36:8000/review/sortPoints/")
+      await fetch(`${url}/review/sortPoints/`)
         .then((response) => response.json())
         .then((data) => {
           this.dataSortPointsList = data.results;
