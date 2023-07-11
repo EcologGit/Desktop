@@ -103,6 +103,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.dataPlaceList = data.results;
+          console.log(data.results);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

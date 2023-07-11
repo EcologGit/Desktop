@@ -72,15 +72,15 @@ app.component('newReport-component', newReportComponent);
 
 app.mount('#app');
 
-window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn') && !event.target.parentElement.matches('.dropdown-content')) {
-        let dropdowns = document.querySelector(".dropdown-content");
-        let dropdbtn = document.querySelector(".dropbtn");
-        if (dropdowns) {
-            dropdowns.style.display = 'none';
-            dropdbtn.classList.remove('active');
-        }
-    }
+window.onclick = function () {
+    // if (!event.target.matches('.dropbtn') && !event.target.parentElement.matches('.dropdown-content')) {
+    //     let dropdowns = document.querySelector(".dropdown-content");
+    //     let dropdbtn = document.querySelector(".dropbtn");
+    //     if (dropdowns) {
+    //         dropdowns.style.display = 'none';
+    //         dropdbtn.classList.remove('active');
+    //     }
+    // }
 };
 
 export const url = 'http://81.163.30.36:8000';

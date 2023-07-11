@@ -4,6 +4,7 @@
     <router-link to="/profile/signup">
       <button class="single-button initial">
         <img
+          class="icon-margin"
           height="18"
           width="18"
           icon-btn

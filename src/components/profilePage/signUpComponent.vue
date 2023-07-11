@@ -11,6 +11,8 @@
                 class="input settings"
                 placeholder="Введите имя"
                 type="text"
+                v-model="name"
+                required
               />
             </div>
             <div class="personal-surname">
@@ -19,6 +21,8 @@
                 class="input settings"
                 placeholder="Введите фамилию"
                 type="text"
+                v-model="surname"
+                required
               />
             </div>
             <div class="personal-phone">
@@ -27,6 +31,8 @@
                 class="input settings"
                 type="tel"
                 placeholder="+7 (123) 456-78-90"
+                v-model="phone"
+                required
               />
             </div>
             <div class="personal-email">
@@ -35,6 +41,8 @@
                 class="input settings"
                 type="email"
                 placeholder="Введите электронную почту"
+                v-model="email"
+                required
               />
             </div>
             <div class="personal-newPassword">
@@ -44,6 +52,8 @@
                   class="input settings"
                   type="password"
                   placeholder="Введите новый пароль"
+                  v-model="password"
+                  required
                 />
                 <a
                   class="password-control setting-password"
@@ -55,16 +65,22 @@
           <div class="bloc-inputs">
             <div class="personal-nickname">
               Никнейм
-              <input class="input settings" placeholder="Никнейм" type="text" />
-            </div>
-            <div class="personal-dob">
-              Дата рождения
               <input
                 class="input settings"
-                align-items="middle"
+                placeholder="Никнейм"
+                type="text"
+                v-model="nickname"
+                required
+              />
+            </div>
+            <div class="personal-dob">
+              <div>Дата рождения</div>
+              <input
+                class=""
                 type="date"
-                placeholder="Дата рождения"
-                value="2000-06-01"
+                v-model="dob"
+                required
+                max="9999-12-31"
               />
             </div>
             <div class="personal-sex">
@@ -75,7 +91,8 @@
                     id="men"
                     type="radio"
                     name="radio"
-                    value="man"
+                    v-model="sex"
+                    required
                     checked
                   />
                   <label for="men">Мужской</label>
@@ -92,6 +109,8 @@
                 class="input settings"
                 placeholder="Введите вид деятельности"
                 type="text"
+                v-model="activity"
+                required
               />
             </div>
             <div class="personal-locality">
@@ -100,12 +119,15 @@
                 class="input settings"
                 placeholder="Введите населенный пункт"
                 type="text"
+                v-model="place"
+                required
               />
             </div>
           </div>
         </div>
-        <button class="single-button signup-button-photo" @click="fetchData()">
+        <button class="single-button signup-button-photo">
           <img
+            class="icon-margin"
             width="18"
             height="14"
             src="../../assets/imgs/photo_white.png"
@@ -120,7 +142,7 @@
             Нажимая на кнопку «Зарегистрироваться», Вы соглашаетесь с Условиями
             использования сервиса
           </div>
-          <button class="btn-profile">
+          <button class="btn-profile" @click="postSignIn">
             <img
               class="icon-btn"
               width="18"
@@ -147,10 +169,21 @@
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
   data() {
     return {
-      visibleCards: "reports",
+      name: "",
+      surname: "",
+      phone: "",
+      email: "",
+      password: "",
+      nickname: "",
+      dob: "",
+      sex: "",
+      activity: "",
+      place: "",
     };
   },
   methods: {
@@ -164,35 +197,17 @@ export default {
         target.parentElement.children[0].setAttribute("type", "text");
       }
     },
-    changeCard(event) {
-      let target =
-        event.target.className == "icon-btn"
-          ? event.target.parentElement
-          : event.target;
+    async postSignIn() {
+      var requestOptions = {
+        method: "POST",
+        redirect: "follow",
+      };
 
-      target.parentElement.parentElement.childNodes.forEach((el) => {
-        let btn = el.firstChild;
-        if (btn.matches(".active")) {
-          btn.classList.remove("active");
-        }
-
-        if (target.classList.contains("btn-statistics")) {
-          this.visibleCards = "statistics";
-        } else {
-          this.visibleCards = "reports";
-        }
-      });
-      target.classList.add("active");
+      await fetch(`${url}/users/api/browser_refresh/`, requestOptions)
+        .then((response) => response.text())
+        .then(() => console.log("true"))
+        .catch((error) => console.log("error", error));
     },
-    sort(event) {
-      event.target.parentElement.childNodes.forEach((el) => {
-        if (el.classList.contains("active")) {
-          el.classList.remove("active");
-        }
-      });
-      event.target.classList.add("active");
-    },
-    newFunc() {},
   },
 };
 </script>

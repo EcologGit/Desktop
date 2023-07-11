@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="active-buttons">
-        <button class="btn-profile">
+        <button class="btn-profile" @click="postSignIn">
           <img
             class="icon-btn"
             width="9"
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
   data() {
     return {
@@ -78,35 +80,26 @@ export default {
         document.getElementById("password-login").setAttribute("type", "text");
       }
     },
-    changeCard(event) {
-      let target =
-        event.target.className == "icon-btn"
-          ? event.target.parentElement
-          : event.target;
 
-      target.parentElement.parentElement.childNodes.forEach((el) => {
-        let btn = el.firstChild;
-        if (btn.matches(".active")) {
-          btn.classList.remove("active");
-        }
+    async postSignIn() {
+      var requestOptions = {
+        method: "POST",
+        redirect: "follow",
+      };
 
-        if (target.classList.contains("btn-statistics")) {
-          this.visibleCards = "statistics";
-        } else {
-          this.visibleCards = "reports";
-        }
-      });
-      target.classList.add("active");
+      await fetch(`${url}/users/api/browser_refresh/`, requestOptions)
+        .then((response) => response.text())
+        .then(() => {
+          this.navigateTo(1);
+        })
+        .catch((error) => console.log("error", error));
     },
-    sort(event) {
-      event.target.parentElement.childNodes.forEach((el) => {
-        if (el.classList.contains("active")) {
-          el.classList.remove("active");
-        }
+    navigateTo(id) {
+      this.$router.push({
+        name: "profileReports",
+        params: { id: id },
       });
-      event.target.classList.add("active");
     },
-    newFunc() {},
   },
 };
 </script>

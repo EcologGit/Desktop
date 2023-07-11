@@ -148,7 +148,7 @@ export default {
       });
     },
     changePage(event) {
-      const headerDiv = document.querySelectorAll(".header * > div");
+      const headerDiv = document.querySelectorAll(".navs-header * > div");
       let target = event.target.classList.contains("a-header")
         ? event.target
         : event.target.parentElement;

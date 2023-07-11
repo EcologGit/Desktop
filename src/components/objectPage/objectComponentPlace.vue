@@ -1,7 +1,5 @@
 <template>
   <main class="main">
-    <main class="main"></main>
-
     <section class="object" v-bind="dataObject">
       <section class="slider">
         <a>
@@ -9,7 +7,7 @@
             class="object-img"
             v-show="!visibleNext"
             @click="visibleNext = !visibleNext"
-            v-bind:src="'http://81.163.30.36:8000' + dataObject.photo"
+            v-bind:src="url + dataObject.photo"
             alt=""
           />
           <img
@@ -34,13 +32,19 @@
           <div class="object-events">
             <p>Мероприятия</p>
             <div class="small-list events">
-              <div class="event-small-card">
+              <div
+                class="event-small-card"
+                v-for="actual_event in actual_events"
+                v-bind:key="actual_event.id"
+              >
                 <img
                   class="small-card-img"
-                  src="../../assets/imgs/default_activity.png"
+                  v-bind:src="url + actual_event.photo"
                   alt=""
                 />
-                <div class="small-card-name"><p>Name</p></div>
+                <div class="small-card-name">
+                  <p>{{ actual_event.name }}</p>
+                </div>
                 <div class="parameters-object">
                   <div class="parameter-object date">
                     <img
@@ -50,7 +54,7 @@
                       src="../../assets/imgs/calendar.png"
                       alt=""
                     />
-                    01.01.1970
+                    {{ actual_event.date }}
                   </div>
                   <div class="parameter-object time">
                     <img
@@ -60,54 +64,31 @@
                       src="../../assets/imgs/clock.png  "
                       alt=""
                     />
-                    0:00
+                    {{ actual_event.time }}
                   </div>
                 </div>
-                <div class="parameter-object status">Запланировано</div>
-              </div>
-              <div class="event-small-card">
-                <img
-                  class="small-card-img"
-                  src="../../assets/imgs/default_activity.png"
-                  alt=""
-                />
-                <div class="small-card-name"><p>Name</p></div>
-                <div class="parameters-object">
-                  <div class="parameter-object date">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="16"
-                      src="../../assets/imgs/calendar.png"
-                      alt=""
-                    />
-                    01.01.1970
-                  </div>
-                  <div class="parameter-object time">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/clock.png  "
-                      alt=""
-                    />
-                    0:00
-                  </div>
+                <div class="parameter-object status">
+                  {{ actual_event.status }}
                 </div>
-                <div class="parameter-object status">Запланировано</div>
               </div>
             </div>
           </div>
           <div class="object-sortPoints">
             <p>Точка сортировки</p>
             <div class="small-list sortPoints">
-              <div class="sortPoint-small-card">
+              <div
+                class="sortPoint-small-card"
+                v-for="sortPoint in sortPoints"
+                v-bind:key="sortPoint.pk"
+              >
                 <img
                   class="small-card-img"
-                  src="../../assets/imgs/default_activity.png"
+                  v-bind:src="url + sortPoint.photo"
                   alt=""
                 />
-                <div class="small-card-name"><p>Name</p></div>
+                <div class="small-card-name">
+                  <p>{{ sortPoint.name }}</p>
+                </div>
                 <div class="parameters-object">
                   <div class="parameter-object time">
                     <img
@@ -120,25 +101,8 @@
                     0:00 - 0:00
                   </div>
                 </div>
-              </div>
-              <div class="sortPoint-small-card">
-                <img
-                  class="small-card-img"
-                  src="../../assets/imgs/default_activity.png"
-                  alt=""
-                />
-                <div class="small-card-name"><p>Name</p></div>
-                <div class="parameters-object">
-                  <div class="parameter-object time">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/clock.png  "
-                      alt=""
-                    />
-                    0:00 - 0:00
-                  </div>
+                <div class="parameter-object status">
+                  {{ sortPoint.locality }}
                 </div>
               </div>
             </div>
@@ -160,7 +124,7 @@
                   src="../../assets/imgs/map.png"
                   alt=""
                 />
-                Locality
+                {{ dataObject.locality }},
               </div>
               <div class="coordinate-value">
                 <img
@@ -170,7 +134,8 @@
                   src="../../assets/imgs/coordinates.png"
                   alt=""
                 />
-                xx.xxxx, yy.yyyy
+                {{ dataObject.latitude_n }},
+                {{ dataObject.longitude_e }}
               </div>
             </div>
           </div>
@@ -195,7 +160,7 @@
                   />
                   Доступность
                 </div>
-                <div>4,8</div>
+                <div>{{ dataObject.avg_availability }}</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -206,7 +171,7 @@
                   />
                   Красота
                 </div>
-                <div>4,8</div>
+                <div>{{ dataObject.avg_beauty }}</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -217,7 +182,7 @@
                   />
                   Чистота
                 </div>
-                <div>4,8</div>
+                <div>{{ dataObject.avg_purity }}</div>
               </div>
             </div>
           </div>
@@ -233,7 +198,7 @@
                   />
                   Пластик
                 </div>
-                <div>0,0 кг</div>
+                <div>{{ dataObjectReportsStatistics[0].sum_amount }} кг</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -296,7 +261,11 @@
       </section>
       <section class="object-reports">
         <p>Отчеты</p>
-        <div class="object-report-card">
+        <div
+          class="object-report-card"
+          v-for="report in reports"
+          v-bind:key="report.created_at"
+        >
           <div class="object-report-info">
             <div class="object-report-user-info">
               <div class="object-report-user-img-name" @click="navigateTo(1)">
@@ -305,11 +274,11 @@
                   alt="User"
                   class="user-photo"
                 />
-                Username
+                {{ report.user_id.public_name }}
               </div>
 
               <div class="date-and-time">
-                <div class="date">Date</div>
+                <div class="date">{{ report.created_at }}</div>
 
                 <div class="time">Time</div>
               </div>
@@ -389,25 +358,7 @@
             <img src="../../assets/imgs/default_activity.png" alt="" />
           </div>
           <div class="object-result-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi diam
-            vulputate hendrerit proin vulputate faucibus eu elementum. Sit
-            pretium sed in congue molestie turpis sodales risus. Nunc quam cum
-            felis, elementum amet fermentum. Tristique ipsum pulvinar dignissim
-            ultricies nulla nulla fusce lectus. Urna, in fusce dictumst ipsum
-            facilisis malesuada tempus, at. Auctor viverra et vestibulum nibh
-            congue augue sagittis ac. Et mus mollis amet vel faucibus ultricies
-            mattis. Sed aliquam eu, blandit morbi pellentesque leo imperdiet.
-            Consectetur pharetra morbi tellus facilisi pellentesque id.
-            Pharetra, elit interdum eget risus ut. Tristique nibh habitant
-            aenean ac nec eget venenatis. Eget in morbi elementum id egestas
-            quisque. Orci id quis consectetur volutpat vitae convallis faucibus
-            ut. Egestas ornare pretium non accumsan volutpat scelerisque. Mauris
-            mattis mauris pulvinar sit. Purus arcu, aenean ut sapien viverra
-            molestie vitae sem semper. In fames et ut tellus. Et volutpat,
-            hendrerit eget ullamcorper purus imperdiet. Vitae non iaculis netus
-            in egestas tempor nibh. Elementum, eget cras in vitae lectus laoreet
-            in egestas. Arcu neque, aliquet urna, consectetur. Maecenas purus,
-            ut a volutpat lacus.
+            {{ report.description }}
           </div>
         </div>
       </section>
@@ -421,12 +372,16 @@ import { url } from "@/main.js";
 export default {
   data() {
     return {
+      reports: this.fetchReports(),
       url: url,
-
       dataObject: this.fetchDataObjectAPI(),
+      dataObjectReportsStatistics: [],
+      actualEvents: this.fetchActualEvents(),
       visibleMore: false,
       id: this.$route.params.id,
       objectType: this.$route.params.objectType,
+      actual_events: this.fetchActualEvents(),
+      sortPoints: this.fetchSortPoints(),
     };
   },
   methods: {
@@ -441,7 +396,54 @@ export default {
       await fetch(`${url}/review/places/${this.$route.params.id}`)
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           this.dataObject = data.object_info;
+          this.dataObjectReportsStatistics = data.reports_statistic;
+          //TODO: добавить Map по dataObjectReportsStatistics
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    async fetchActualEvents() {
+      await fetch(
+        `${url}/review/actual_events/nature_object/${this.$route.params.id}`
+      )
+        .then((response) => response.json())
+        .then(() => {
+          this.actual_events = [
+            {
+              id: 1,
+              date: "01.02.2000",
+              status: "Запланирова",
+              time: "00:00",
+              name: "Мероприятие",
+            },
+          ];
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    async fetchSortPoints() {
+      await fetch(
+        `${url}/review/nearest_nature_objects_to_sort_point/${this.$route.params.id}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortPoints = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    async fetchReports() {
+      await fetch(
+        `${url}/review/reports/nature_object/${this.$route.params.id}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.reports = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

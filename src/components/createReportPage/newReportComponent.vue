@@ -66,6 +66,7 @@
         <p class="photo-label">Фото*</p>
         <button class="single-button signup-button-photo" @click="fetchData()">
           <img
+            class="icon-margin"
             width="18"
             height="14"
             src="../../assets/imgs/photo_white.png"
