@@ -560,6 +560,16 @@ button {
   border-radius: 25px;
 }
 
+.small-card-p {
+  line-height: normal;
+  text-align: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+}
+
 .card-img.marks {
   width: 292px;
   height: 317px;
@@ -997,7 +1007,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 .object {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 32px;
 }
 
 .slider {
@@ -1073,6 +1083,7 @@ input[type=date]::-webkit-calendar-picker-indicator {
 
 .event-small-card,
 .sortPoint-small-card {
+  width: 230px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1086,14 +1097,16 @@ input[type=date]::-webkit-calendar-picker-indicator {
 
 }
 
-.parameters.object-event {
+.parameters.object-event,
+.parameters.object-route {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.parameters.object-event,
-.parameters.object-sorPoint>div {
+.parameters.object-event>div,
+.parameters.object-sorPoint>div,
+.parameters.object-route {
   margin: 0;
 }
 

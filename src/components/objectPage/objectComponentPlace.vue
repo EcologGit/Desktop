@@ -34,16 +34,16 @@
             <div class="small-list events">
               <div
                 class="event-small-card"
-                v-for="actual_event in actual_events"
-                v-bind:key="actual_event.id"
+                v-for="actualEvent in actualEvents"
+                v-bind:key="actualEvent.id"
               >
                 <img
                   class="small-card-img"
-                  v-bind:src="url + actual_event.photo"
+                  v-bind:src="url + actualEvent.photo"
                   alt=""
                 />
                 <div class="small-card-name">
-                  <p>{{ actual_event.name }}</p>
+                  <p class="small-card-p">{{ actualEvent.name }}</p>
                 </div>
                 <div class="parameters-object">
                   <div class="parameter-object date">
@@ -54,7 +54,7 @@
                       src="../../assets/imgs/calendar.png"
                       alt=""
                     />
-                    {{ actual_event.date }}
+                    {{ actualEvent.date }}
                   </div>
                   <div class="parameter-object time">
                     <img
@@ -64,11 +64,11 @@
                       src="../../assets/imgs/clock.png  "
                       alt=""
                     />
-                    {{ actual_event.time }}
+                    {{ actualEvent.time }}
                   </div>
                 </div>
                 <div class="parameter-object status">
-                  {{ actual_event.status }}
+                  {{ actualEvent.status }}
                 </div>
               </div>
             </div>
@@ -87,7 +87,7 @@
                   alt=""
                 />
                 <div class="small-card-name">
-                  <p>{{ sortPoint.name }}</p>
+                  <p class="small-card-p">{{ sortPoint.name }}</p>
                 </div>
                 <div class="parameters-object">
                   <div class="parameter-object time">
@@ -380,7 +380,6 @@ export default {
       visibleMore: false,
       id: this.$route.params.id,
       objectType: this.$route.params.objectType,
-      actual_events: this.fetchActualEvents(),
       sortPoints: this.fetchSortPoints(),
     };
   },
@@ -411,7 +410,7 @@ export default {
       )
         .then((response) => response.json())
         .then(() => {
-          this.actual_events = [
+          this.actualEvents = [
             {
               id: 1,
               date: "01.02.2000",
@@ -419,7 +418,22 @@ export default {
               time: "00:00",
               name: "Мероприятие",
             },
+            {
+              id: 2,
+              date: "01.02.2000",
+              status: "Запланирова",
+              time: "00:00",
+              name: "Мероприятие",
+            },
+            {
+              id: 3,
+              date: "01.02.2000",
+              status: "Запланирова",
+              time: "00:00",
+              name: "Мероприятие",
+            },
           ];
+          this.actualEvents = this.actualEvents.slice(0, 2);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -431,7 +445,7 @@ export default {
       )
         .then((response) => response.json())
         .then((data) => {
-          this.sortPoints = data.results;
+          this.sortPoints = data.results.slice(0, 2);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

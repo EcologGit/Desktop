@@ -1,7 +1,7 @@
 <template>
   <section
     class="cards"
-    v-for="sortPoint in dataSortPointsList"
+    v-for="sortPoint in filteredList(this.modelValue)"
     v-bind:key="sortPoint.point_id"
   >
     <div class="card review">
@@ -75,6 +75,9 @@ import { url } from "@/main.js";
 
 export default {
   inject: ["sortName", "placeList"],
+  props: {
+    modelValue: String,
+  },
   data() {
     return {
       url: url,
@@ -101,6 +104,17 @@ export default {
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
         });
+    },
+    filteredList(modelValue) {
+      if (modelValue != "") {
+        return this.dataSortPointsList.filter((place) => {
+          return place.name
+            .toLowerCase()
+            .includes(this.modelValue.toLowerCase());
+        });
+      } else {
+        return this.dataSortPointsList;
+      }
     },
   },
 };

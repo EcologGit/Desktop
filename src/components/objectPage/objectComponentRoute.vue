@@ -7,7 +7,7 @@
             class="object-img"
             v-show="!visibleNext"
             @click="visibleNext = !visibleNext"
-            v-bind:src="'http://81.163.30.36:8000' + dataObject.photo"
+            v-bind:src="url + dataObject.photo"
             alt=""
           />
           <img
@@ -29,7 +29,7 @@
                 src="../../assets/imgs/ruler.png"
                 alt=""
               />
-              00 км
+              {{ dataObject.length }} км
             </div>
             <div class="time">
               <img
@@ -39,7 +39,7 @@
                 src="../../assets/imgs/hourglass.png  "
                 alt=""
               />
-              00
+              {{ dataObject.duration }}
             </div>
           </div>
         </div>
@@ -54,13 +54,19 @@
           <div class="object-events">
             <p>Мероприятия</p>
             <div class="small-list events">
-              <div class="event-small-card">
+              <div
+                class="event-small-card"
+                v-for="actualEvent in actualEvents"
+                v-bind:key="actualEvent.id"
+              >
                 <img
                   class="small-card-img"
-                  src="../../assets/imgs/default_activity.png"
+                  v-bind:src="url + actualEvent.photo"
                   alt=""
                 />
-                <div class="small-card-name"><p>Name</p></div>
+                <div class="small-card-name">
+                  <p class="small-card-p">{{ actualEvent.name }}</p>
+                </div>
                 <div class="parameters-object">
                   <div class="parameter-object date">
                     <img
@@ -70,7 +76,7 @@
                       src="../../assets/imgs/calendar.png"
                       alt=""
                     />
-                    01.01.1970
+                    {{ actualEvent.date }}
                   </div>
                   <div class="parameter-object time">
                     <img
@@ -80,54 +86,31 @@
                       src="../../assets/imgs/clock.png  "
                       alt=""
                     />
-                    0:00
+                    {{ actualEvent.time }}
                   </div>
                 </div>
-                <div class="parameter-object status">Запланировано</div>
-              </div>
-              <div class="event-small-card">
-                <img
-                  class="small-card-img"
-                  src="../../assets/imgs/default_activity.png"
-                  alt=""
-                />
-                <div class="small-card-name"><p>Name</p></div>
-                <div class="parameters-object">
-                  <div class="parameter-object date">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="16"
-                      src="../../assets/imgs/calendar.png"
-                      alt=""
-                    />
-                    01.01.1970
-                  </div>
-                  <div class="parameter-object time">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/clock.png  "
-                      alt=""
-                    />
-                    0:00
-                  </div>
+                <div class="parameter-object status">
+                  {{ actualEvent.status }}
                 </div>
-                <div class="parameter-object status">Запланировано</div>
               </div>
             </div>
           </div>
           <div class="object-sortPoints">
             <p>Точка сортировки</p>
             <div class="small-list sortPoints">
-              <div class="sortPoint-small-card">
+              <div
+                class="sortPoint-small-card"
+                v-for="sortPoint in sortPoints"
+                v-bind:key="sortPoint.pk"
+              >
                 <img
                   class="small-card-img"
-                  src="../../assets/imgs/default_activity.png"
+                  v-bind:src="url + sortPoint.photo"
                   alt=""
                 />
-                <div class="small-card-name"><p>Name</p></div>
+                <div class="small-card-name">
+                  <p class="small-card-p">{{ sortPoint.name }}</p>
+                </div>
                 <div class="parameters-object">
                   <div class="parameter-object time">
                     <img
@@ -140,25 +123,8 @@
                     0:00 - 0:00
                   </div>
                 </div>
-              </div>
-              <div class="sortPoint-small-card">
-                <img
-                  class="small-card-img"
-                  src="../../assets/imgs/default_activity.png"
-                  alt=""
-                />
-                <div class="small-card-name"><p>Name</p></div>
-                <div class="parameters-object">
-                  <div class="parameter-object time">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/clock.png  "
-                      alt=""
-                    />
-                    0:00 - 0:00
-                  </div>
+                <div class="parameter-object status">
+                  {{ sortPoint.locality }}
                 </div>
               </div>
             </div>
@@ -175,7 +141,7 @@
                   src="../../assets/imgs/map.png"
                   alt=""
                 />
-                Locality
+                {{ dataObject.locality }}
               </div>
               <div class="coordinate-start">
                 <img
@@ -185,7 +151,7 @@
                   src="../../assets/imgs/start.png"
                   alt=""
                 />
-                xx.xxxx, yy.yyyy
+                {{ dataObject.start_n }}, {{ dataObject.start_e }}
               </div>
               <div class="coordinate-end">
                 <img
@@ -195,7 +161,7 @@
                   src="../../assets/imgs/finish.png"
                   alt=""
                 />
-                xx.xxxx, yy.yyyy
+                {{ dataObject.end_n }}, {{ dataObject.end_e }}
               </div>
             </div>
           </div>
@@ -220,7 +186,7 @@
                   />
                   Доступность
                 </div>
-                <div>4,8</div>
+                <div>{{ dataObject.avg_availability }}</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -231,7 +197,7 @@
                   />
                   Красота
                 </div>
-                <div>4,8</div>
+                <div>{{ dataObject.avg_beauty }}</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -242,7 +208,7 @@
                   />
                   Чистота
                 </div>
-                <div>4,8</div>
+                <div>{{ dataObject.avg_purity }}</div>
               </div>
             </div>
           </div>
@@ -258,7 +224,7 @@
                   />
                   Пластик
                 </div>
-                <div>0,0 кг</div>
+                <div>{{ dataObjectReportsStatistics[0].sum_amount }} кг</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -447,11 +413,13 @@ export default {
   data() {
     return {
       url: url,
-
+      dataObjectReportsStatistics: [],
       dataObject: this.fetchDataObjectAPI(),
       visibleMore: false,
       id: this.$route.params.id,
       objectType: this.$route.params.objectType,
+      actualEvents: this.fetchActualEvents(),
+      sortPoints: this.fetchSortPoints(),
     };
   },
   methods: {
@@ -461,6 +429,51 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.dataObject = data.object_info;
+          this.dataObjectReportsStatistics = data.reports_statistic;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    async fetchActualEvents() {
+      await fetch(
+        `${url}/review/actual_events/nature_object/${this.$route.params.id}`
+      )
+        .then((response) => response.json())
+        .then(() => {
+          this.actualEvents = [
+            {
+              id: 1,
+              date: "01.02.2000",
+              status: "Запланирова",
+              time: "00:00",
+              name: "Мероприятие",
+            },
+          ];
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    async fetchSortPoints() {
+      await fetch(
+        `${url}/review/nearest_nature_objects_to_sort_point/${this.$route.params.id}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortPoints = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    async fetchReports() {
+      await fetch(
+        `${url}/review/reports/nature_object/${this.$route.params.id}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.reports = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

@@ -1,7 +1,7 @@
 <template>
   <section
     class="cards"
-    v-for="event in dataEventsList"
+    v-for="event in filteredList(this.modelValue)"
     v-bind:key="event.event_id"
   >
     <div class="card review">
@@ -84,6 +84,9 @@ import { url } from "@/main.js";
 
 export default {
   inject: ["sortName", "placeList"],
+  props: {
+    modelValue: String,
+  },
   data() {
     return {
       url: url,
@@ -173,7 +176,16 @@ export default {
         dropdbtn.classList.remove("active");
       }
     },
-    findPlace(id) {this.placeList.filter((el) => el.id == id)
+    filteredList(modelValue) {
+      if (modelValue != "") {
+        return this.dataEventsList.filter((place) => {
+          return place.name
+            .toLowerCase()
+            .includes(this.modelValue.toLowerCase());
+        });
+      } else {
+        return this.dataEventsList;
+      }
     },
   },
   watch: {

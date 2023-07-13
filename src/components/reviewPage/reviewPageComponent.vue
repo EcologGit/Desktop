@@ -98,6 +98,7 @@
     <section class="search">
       <input
         type="text"
+        v-model="searchText"
         class="search-field"
         placeholder="Поиск адресов и мест"
       />
@@ -287,7 +288,10 @@
         </div>
       </div>
     </section>
-    <router-view></router-view>
+    <router-view
+      :modelValue="searchText"
+      @update:modelValue="(newValue) => (searchText = newValue)"
+    ></router-view>
   </main>
 </template>
 
@@ -296,6 +300,7 @@ export default {
   inject: ["sortName", "placeList"],
   data() {
     return {
+      searchText: "",
       option: "Alphabet",
       method: "Ascending",
       numberOfReports: "Unimportant",
@@ -329,6 +334,9 @@ export default {
       });
       target.classList.add("active");
     },
+    // handleInput(event) {
+    //   console.log(event.target.value);
+    // },
     sort() {
       // event.target.parentElement.childNodes.forEach((el) => {
       //   if (el.classList.contains("active")) {

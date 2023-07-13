@@ -1,6 +1,6 @@
 <template>
   <main class="main" id="app">
-    <form method="post">
+    <form>
       <section class="settings-personal">
         <div class="personal-info">
           Личная информация
@@ -119,7 +119,7 @@
           </div>
         </div>
       </section>
-      <button class="single-button save" @click="fetchData()">
+      <button class="single-button save">
         <img
           class="icon-margin"
           width="18"
@@ -151,7 +151,6 @@ export default {
         target.parentElement.children[0].setAttribute("type", "text");
       }
     },
-    fetchData() {},
   },
   computed: {
     calcNotes() {

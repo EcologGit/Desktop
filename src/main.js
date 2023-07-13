@@ -83,4 +83,4 @@ window.onclick = function () {
     // }
 };
 
-export const url = 'http://81.163.30.36:8000';
+export const url = 'http://81.163.30.36/django_api';

@@ -1,7 +1,10 @@
 <template>
+  <div>
+    {{ search }}
+  </div>
   <section
     class="cards"
-    v-for="place in dataPlaceList"
+    v-for="place in filteredList(this.modelValue)"
     v-bind:key="place.object_id"
   >
     <div class="card review">
@@ -77,7 +80,9 @@
 import { url } from "@/main.js";
 
 export default {
-  inject: ["sortName", "placeList"],
+  props: {
+    modelValue: String,
+  },
   created() {
     // > Внедряемое свойство: 5
   },
@@ -85,7 +90,6 @@ export default {
   data() {
     return {
       url: url,
-
       dataPlaceList: this.fetchDataPlaceAPI(),
     };
   },
@@ -115,12 +119,19 @@ export default {
         params: { objectType: "places", id: id },
       });
     },
-  },
-  computed: {
-    //сортировка
-    evenNumbers() {
-      return "a";
+    filteredList(modelValue) {
+      if (modelValue != "") {
+        return this.dataPlaceList.filter((place) => {
+          return place.name
+            .toLowerCase()
+            .includes(this.modelValue.toLowerCase());
+        });
+      } else {
+        return this.dataPlaceList;
+      }
     },
   },
+
+  computed: {},
 };
 </script>

@@ -7,7 +7,7 @@
             class="object-img"
             v-show="!visibleNext"
             @click="visibleNext = !visibleNext"
-            v-bind:src="'http://81.163.30.36:8000' + dataObject.photo"
+            v-bind:src="url + dataObject.photo"
             alt=""
           />
           <img
@@ -29,7 +29,7 @@
                 src="../../assets/imgs/clock.png"
                 alt=""
               />
-              00:00 - 00:00
+              {{ dataObject.schedule }}
             </div>
           </div>
         </div>
@@ -44,33 +44,19 @@
           <div class="object-events">
             <p>Ближайшие объекты</p>
             <div class="small-list events">
-              <div class="event-small-card">
+              <div
+                class="event-small-card"
+                v-for="nearObject in nearObjects"
+                v-bind:key="nearObject.pk"
+              >
                 <img
                   class="small-card-img"
-                  src="../../assets/imgs/default_activity.png"
+                  v-bind:src="url + nearObject.photo"
                   alt=""
                 />
-                <div class="small-card-name"><p>Name</p></div>
-                <div class="parameters-object">
-                  <div class="parameter-object date">
-                    <img
-                      class="icon-margin"
-                      width="12"
-                      height="20"
-                      src="../../assets/imgs/map.png"
-                      alt=""
-                    />
-                    Locality
-                  </div>
+                <div class="small-card-name">
+                  <p class="small-card-p">{{ nearObject.name }}</p>
                 </div>
-              </div>
-              <div class="event-small-card">
-                <img
-                  class="small-card-img"
-                  src="../../assets/imgs/default_activity.png"
-                  alt=""
-                />
-                <div class="small-card-name"><p>Name</p></div>
                 <div class="parameters-object">
                   <div class="parameter-object date">
                     <img
@@ -80,7 +66,7 @@
                       src="../../assets/imgs/map.png"
                       alt=""
                     />
-                    Locality
+                    {{ nearObject.locality }}
                   </div>
                 </div>
               </div>
@@ -148,7 +134,7 @@
                   src="../../assets/imgs/map.png"
                   alt=""
                 />
-                Locality
+                {{ dataObject.locality }},
               </div>
               <div class="coordinate-value">
                 <img
@@ -158,7 +144,8 @@
                   src="../../assets/imgs/coordinates.png"
                   alt=""
                 />
-                xx.xxxx, yy.yyyy
+                {{ dataObject.latitude_n }},
+                {{ dataObject.longitude_e }}
               </div>
             </div>
           </div>
@@ -183,7 +170,7 @@
                   />
                   Доступность
                 </div>
-                <div>4,8</div>
+                <div>{{ dataObject.avg_availability }}</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -194,7 +181,7 @@
                   />
                   Красота
                 </div>
-                <div>4,8</div>
+                <div>{{ dataObject.avg_beauty }}</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -205,7 +192,7 @@
                   />
                   Чистота
                 </div>
-                <div>4,8</div>
+                <div>{{ dataObject.avg_purity }}</div>
               </div>
             </div>
           </div>
@@ -221,7 +208,7 @@
                   />
                   Пластик
                 </div>
-                <div>0,0 кг</div>
+                <div>{{ dataObjectReportsStatistics[0].name }} кг</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -414,15 +401,28 @@ export default {
       visibleMore: false,
       id: this.$route.params.id,
       objectType: this.$route.params.objectType,
+      nearObjects: this.fetchNearObject(),
+      dataObjectReportsStatistics: [],
     };
   },
   methods: {
     newFunc() {},
+    async fetchNearObject() {
+      await fetch(`${url}/review/event_nature_objects/1`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.nearObjects = data.results.slice(0, 2);
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
     async fetchDataObjectAPI() {
       await fetch(`${url}/review/sortPoints/${this.$route.params.id}`)
         .then((response) => response.json())
         .then((data) => {
           this.dataObject = data;
+          this.dataObjectReportsStatistics = data.wast_types;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
