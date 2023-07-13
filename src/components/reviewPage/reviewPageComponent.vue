@@ -312,6 +312,7 @@ export default {
   },
   methods: {
     changeCard(event) {
+      this.searchText = "";
       let target =
         event.target.className == "icon-btn"
           ? event.target.parentElement
