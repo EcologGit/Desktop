@@ -57,7 +57,7 @@
                     alt=""
                   />
                 </a>
-                <a class="a-circle-icon">
+                <a class="a-circle-icon" @click="logout">
                   <img
                     class="cirlce-img"
                     src="../../assets/imgs/logout_button.png"
@@ -130,6 +130,8 @@
 
 <script>
 export default {
+  inject: ["isAuthenticated"],
+
   data() {
     return {
       visibleCards: "reports",
@@ -171,7 +173,10 @@ export default {
       });
       event.target.classList.add("active");
     },
-    newFunc() {},
+    logout() {
+      this.isAuthenticated.value = false;
+      this.$router.push("/");
+    },
   },
 };
 </script>

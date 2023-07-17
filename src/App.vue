@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
+let authenticated = ref(false);
 export default {
   name: "App",
 
@@ -15,6 +18,7 @@ export default {
   },
   provide() {
     return {
+      isAuthenticated: authenticated,
       sortName: "Сортировка",
       placeList: this.dataPlaceList,
     };
@@ -22,6 +26,7 @@ export default {
 
   components: {},
   methods: {
+    getAuthenticated() {},
     countTaskOpen(id) {
       const index = this.notes.find((task) => task.id === id);
       index.wasTaskRead++;

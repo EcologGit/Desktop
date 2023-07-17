@@ -68,13 +68,14 @@
       </router-link>
 
       <router-link
-        to="/marks/places"
+        :to="authenticated ? '/marks/places' : ''"
         class="a-header marks"
-        @click="changePage"
+        :class="authenticated ? '' : 'disabled'"
+        @click="changePage(authenticated)"
       >
         <img
           class="a-img"
-          @click="changePage"
+          @click="changePage(authenticated)"
           v-show="visiblePage != 'marks'"
           width="11"
           height="18"
@@ -83,7 +84,7 @@
         />
         <img
           class="a-img"
-          @click="changePage"
+          @click="changePage(authenticated)"
           v-show="visiblePage == 'marks'"
           width="11"
           height="18"
@@ -94,13 +95,14 @@
       </router-link>
 
       <router-link
-        :to="{ name: 'profileReports', params: { id: 1 } }"
+        :to="authenticated ? { name: 'profileReports', params: { id: 1 } } : ''"
         class="a-header profile"
-        @click="changePage"
+        @click="changePage(authenticated)"
+        :class="authenticated ? '' : 'disabled'"
       >
         <img
           class="a-img"
-          @click="changePage"
+          @click="changePage(authenticated)"
           v-show="visiblePage != 'profile'"
           width="18"
           height="18"
@@ -109,7 +111,7 @@
         />
         <img
           class="a-img"
-          @click="changePage"
+          @click="changePage(authenticated)"
           v-show="visiblePage == 'profile'"
           width="18"
           height="18"
@@ -133,12 +135,15 @@
 
 <script>
 export default {
+  inject: ["isAuthenticated"],
+
   props: {
     title: String,
   },
   data() {
     return {
       visiblePage: "home",
+      authenticated: this.isAuthenticated,
     };
   },
   methods: {
@@ -147,7 +152,8 @@ export default {
         name: "newReport",
       });
     },
-    changePage(event) {
+    changePage(status, event) {
+      if (status == false) return;
       const headerDiv = document.querySelectorAll(".navs-header * > div");
       let target = event.target.classList.contains("a-header")
         ? event.target

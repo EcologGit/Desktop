@@ -38,8 +38,13 @@ import router from "./router";
 
 
 
+
+
 const app = createApp(App);
 app.use(router);
+
+export const url = 'http://81.163.30.36/django_api';
+
 app.component('header-component', headerComponent);
 app.component('footer-component', footerComponent);
 
@@ -71,16 +76,3 @@ app.component('report-component', reportComponent);
 app.component('newReport-component', newReportComponent);
 
 app.mount('#app');
-
-window.onclick = function () {
-    // if (!event.target.matches('.dropbtn') && !event.target.parentElement.matches('.dropdown-content')) {
-    //     let dropdowns = document.querySelector(".dropdown-content");
-    //     let dropdbtn = document.querySelector(".dropbtn");
-    //     if (dropdowns) {
-    //         dropdowns.style.display = 'none';
-    //         dropdbtn.classList.remove('active');
-    //     }
-    // }
-};
-
-export const url = 'http://81.163.30.36/django_api';

@@ -1464,6 +1464,11 @@ input[type=date]::-webkit-calendar-picker-indicator {
   width: 100%;
 }
 
+.disabled {
+  color: grey;
+  cursor: no-drop;
+}
+
 
 
 .cleaning-place {

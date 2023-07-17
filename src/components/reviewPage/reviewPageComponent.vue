@@ -102,7 +102,12 @@
         class="search-field"
         placeholder="Поиск адресов и мест"
       />
-      <img src="../../assets/imgs/search.png" alt="" class="search-icon" />
+      <img
+        src="../../assets/imgs/search.png"
+        alt=""
+        @click="searchFun"
+        class="search-icon"
+      />
     </section>
 
     <section class="settings">
@@ -288,10 +293,11 @@
         </div>
       </div>
     </section>
-    <router-view
+    <!-- <router-view
       :modelValue="searchText"
       @update:modelValue="(newValue) => (searchText = newValue)"
-    ></router-view>
+    ></router-view> -->
+    <router-view></router-view>
   </main>
 </template>
 
@@ -301,6 +307,7 @@ export default {
   data() {
     return {
       searchText: "",
+      searchTextProvide: "",
       option: "Alphabet",
       method: "Ascending",
       numberOfReports: "Unimportant",
@@ -311,6 +318,9 @@ export default {
     };
   },
   methods: {
+    // searchFun(searchText) {
+    //   return searchText;
+    // },
     changeCard(event) {
       this.searchText = "";
       let target =

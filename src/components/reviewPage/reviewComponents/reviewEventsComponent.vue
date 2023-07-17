@@ -1,7 +1,7 @@
 <template>
   <section
     class="cards"
-    v-for="event in filteredList(this.modelValue)"
+    v-for="event in filteredList(this.searchTextProvide)"
     v-bind:key="event.event_id"
   >
     <div class="card review">
@@ -85,7 +85,7 @@ import { url } from "@/main.js";
 export default {
   inject: ["sortName", "placeList"],
   props: {
-    modelValue: String,
+    searchTextProvide: String,
   },
   data() {
     return {
@@ -178,14 +178,22 @@ export default {
     },
     filteredList(modelValue) {
       if (modelValue != "") {
-        return this.dataEventsList.filter((place) => {
-          return place.name
-            .toLowerCase()
-            .includes(this.modelValue.toLowerCase());
-        });
+        return this.filteredListAsync(modelValue);
       } else {
         return this.dataEventsList;
       }
+    },
+    async filteredListAsync(modelValue) {
+      return await fetch(`${url}/review/events/?search=${modelValue}`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.dataEventsList = data.results;
+
+          return this.dataEventsList;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
     },
   },
   watch: {

@@ -4,7 +4,7 @@
   </div>
   <section
     class="cards"
-    v-for="place in filteredList(this.modelValue)"
+    v-for="place in dataPlaceList"
     v-bind:key="place.object_id"
   >
     <div class="card review">
@@ -81,7 +81,8 @@ import { url } from "@/main.js";
 
 export default {
   props: {
-    modelValue: String,
+    searchFun: Function,
+    // modelValue: String,
   },
   created() {
     // > Внедряемое свойство: 5
@@ -107,7 +108,6 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.dataPlaceList = data.results;
-          console.log(data.results);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

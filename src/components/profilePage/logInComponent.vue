@@ -62,6 +62,8 @@
 import { url } from "@/main.js";
 
 export default {
+  inject: ["isAuthenticated"],
+
   data() {
     return {
       visibleCards: "reports",
@@ -86,10 +88,12 @@ export default {
         method: "POST",
         redirect: "follow",
       };
+      this.isAuthenticated.value = true;
 
       await fetch(`${url}/users/api/browser_refresh/`, requestOptions)
         .then((response) => response.text())
-        .then(() => {
+        .then((result) => {
+          console.log(result);
           this.navigateTo(1);
         })
         .catch((error) => console.log("error", error));

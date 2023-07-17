@@ -85,13 +85,18 @@
 
 <script>
 export default {
+  inject: ["isAuthenticated"],
+
   data() {
     return {
       visibleMore: false,
+      isAuthenticated: this.newFunc(this.isAuthenticated),
     };
   },
   methods: {
-    newFunc() {},
+    newFunc(isAuthenticated) {
+      console.log(isAuthenticated.value);
+    },
   },
   computed: {
     calcNotes() {

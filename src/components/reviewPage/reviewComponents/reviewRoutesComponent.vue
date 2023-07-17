@@ -1,7 +1,7 @@
 <template>
   <section
     class="cards"
-    v-for="route in filteredList(this.modelValue)"
+    v-for="route in dataPlaceList"
     v-bind:key="route.route_id"
   >
     <div class="card review">
@@ -104,7 +104,7 @@ import { url } from "@/main.js";
 export default {
   inject: ["sortName", "placeList"],
   props: {
-    modelValue: String,
+    // modelValue: String,
   },
   data() {
     return {
