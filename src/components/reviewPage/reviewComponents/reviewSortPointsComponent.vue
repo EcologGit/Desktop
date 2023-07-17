@@ -96,7 +96,6 @@ export default {
       });
     },
     emitSorting() {
-      console.log(this.$emit("parameters"));
       this.$emit("parameters", {
         sortingReady: (value) => this.sortingReady(value),
       });
@@ -134,7 +133,6 @@ export default {
         });
     },
     searchByName(search) {
-      console.log(search);
       if (search != undefined && search != null && search != "") {
         this.sortSortPointsList = this.searchByNameAsync(search);
       } else {
@@ -145,7 +143,6 @@ export default {
       await fetch(`${url}/review/sortPoints/?search=${search}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.results);
           this.sortSortPointsList = data.results;
         })
         .catch((error) => {

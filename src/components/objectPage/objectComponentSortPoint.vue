@@ -41,7 +41,7 @@
             <p>Описание</p>
             {{ dataObject.description }}
           </div>
-          <div class="object-events">
+          <div class="object-events" v-if="nearObjects.length > 0">
             <p>Ближайшие объекты</p>
             <div class="small-list events">
               <div
@@ -72,7 +72,7 @@
               </div>
             </div>
           </div>
-          <div class="object-sortPoints">
+          <div class="object-sortPoints" v-if="dataObject.length > 0">
             <p>Ближайшие маршруты</p>
             <div class="small-list sortPoints">
               <div class="sortPoint-small-card">

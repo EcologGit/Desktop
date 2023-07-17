@@ -129,11 +129,15 @@
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
   inject: ["isAuthenticated"],
 
   data() {
     return {
+      dataSortPointsList: this.fetchDataProfileAPI(),
+
       visibleCards: "reports",
       visibleMain: true,
     };
@@ -172,6 +176,16 @@ export default {
         }
       });
       event.target.classList.add("active");
+    },
+    async fetchDataProfileAPI() {
+      await fetch(`${url}/user_profiles/profile_info/1/`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.dataSortPointsList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
     },
     logout() {
       this.isAuthenticated.value = false;

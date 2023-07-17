@@ -29,7 +29,7 @@
             <p>Описание</p>
             {{ dataObject.description }}
           </div>
-          <div class="object-events">
+          <div class="object-events" v-if="actualEvents.length > 0">
             <p>Мероприятия</p>
             <div class="small-list events">
               <div
@@ -73,7 +73,7 @@
               </div>
             </div>
           </div>
-          <div class="object-sortPoints">
+          <div v-if="sortPoints.length > 0" class="object-sortPoints">
             <p>Точка сортировки</p>
             <div class="small-list sortPoints">
               <div
@@ -198,7 +198,8 @@
                   />
                   Пластик
                 </div>
-                <div>{{ dataObjectReportsStatistics[0].sum_amount }} кг</div>
+                <!-- <div>{{ dataObjectReportsStatistics[0].sum_amount }} кг</div> -->
+                <div>{{ 0.0 }} кг</div>
               </div>
               <div class="point">
                 <div class="rate">

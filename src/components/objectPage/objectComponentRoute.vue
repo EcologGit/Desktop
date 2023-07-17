@@ -51,7 +51,7 @@
             <p>Описание</p>
             {{ dataObject.description }}
           </div>
-          <div class="object-events">
+          <div class="object-events" v-if="actualEvents.length > 0">
             <p>Мероприятия</p>
             <div class="small-list events">
               <div
@@ -95,7 +95,7 @@
               </div>
             </div>
           </div>
-          <div class="object-sortPoints">
+          <div class="object-sortPoints" v-if="sortPoints.length > 0">
             <p>Точка сортировки</p>
             <div class="small-list sortPoints">
               <div

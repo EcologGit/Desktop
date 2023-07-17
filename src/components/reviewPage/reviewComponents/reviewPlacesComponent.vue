@@ -100,7 +100,6 @@ export default {
       });
     },
     emitSorting() {
-      console.log(this.$emit("parameters"));
       this.$emit("parameters", {
         sortingReady: (value) => this.sortingReady(value),
       });
