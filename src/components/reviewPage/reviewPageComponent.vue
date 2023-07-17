@@ -131,7 +131,7 @@
                     <input
                       type="radio"
                       id="alphabet"
-                      value="Alphabet"
+                      value="name"
                       name="option"
                       v-model="option"
                     />
@@ -141,7 +141,7 @@
                     <input
                       type="radio"
                       id="rating"
-                      value="Rating"
+                      value="report_count"
                       name="option"
                       v-model="option"
                     />
@@ -151,7 +151,7 @@
                     <input
                       type="radio"
                       id="popular"
-                      value="Popular"
+                      value="sum_rating"
                       name="option"
                       v-model="option"
                     />
@@ -166,7 +166,7 @@
                     <input
                       type="radio"
                       id="ascending"
-                      value="Ascending"
+                      value=""
                       name="method"
                       v-model="method"
                     />
@@ -176,7 +176,7 @@
                     <input
                       type="radio"
                       id="descending"
-                      value="Descending"
+                      value="-"
                       name="method"
                       v-model="method"
                     />
@@ -185,10 +185,7 @@
                 </div>
               </div>
             </div>
-            <button
-              class="single-button setting-button"
-              @click="visibleModalSorting = false"
-            >
+            <button class="single-button setting-button" @click="sortingReady">
               <img
                 class="icon-btn"
                 width="18"
@@ -278,7 +275,7 @@
             </div>
             <button
               class="single-button setting-button"
-              @click="visibleModalParameters = false"
+              @click="parametersReady"
             >
               <img
                 class="icon-btn"
@@ -293,7 +290,10 @@
         </div>
       </div>
     </section>
-    <router-view @interface="getChildInterface"></router-view>
+    <router-view
+      @parameters="getSortingInterface"
+      @interface="getChildInterface"
+    ></router-view>
   </main>
 </template>
 
@@ -304,12 +304,15 @@ export default {
   childInterface: {
     searchByName: () => {},
   },
+  sortingInterface: {
+    sortingReady: () => {},
+  },
   inject: ["sortName", "placeList"],
   data() {
     return {
       searchText: "",
-      option: "Alphabet",
-      method: "Ascending",
+      option: "name",
+      method: "",
       numberOfReports: "Unimportant",
       sortPlaces: [],
       visibleCards: "places",
@@ -318,6 +321,11 @@ export default {
     };
   },
   methods: {
+    parametersReady() {
+      this.visibleModalParameters = false;
+    },
+
+    //
     getChildInterface(childInterface) {
       this.$options.childInterface = childInterface;
     },
@@ -325,6 +333,16 @@ export default {
     // Add count through the interface
     searchByName() {
       this.$options.childInterface.searchByName(this.searchText);
+    },
+    //
+    getSortingInterface(sortingInterface) {
+      this.$options.sortingInterface = sortingInterface;
+    },
+
+    // Add count through the interface
+    sortingReady() {
+      this.visibleModalSorting = false;
+      this.$options.sortingInterface.sortingReady([this.option, this.method]);
     },
     changeCard(event) {
       this.searchText = "";

@@ -95,11 +95,18 @@ export default {
   mounted() {
     // Emits on mount
     this.emitInterface();
+    this.emitSorting();
   },
   methods: {
     emitInterface() {
       this.$emit("interface", {
         searchByName: (value) => this.searchByName(value),
+      });
+    },
+    emitSorting() {
+      console.log(this.$emit("parameters"));
+      this.$emit("parameters", {
+        sortingReady: (value) => this.sortingReady(value),
       });
     },
     navigateTo(id) {
@@ -180,6 +187,18 @@ export default {
         dropdowns.style.display = "none";
         dropdbtn.classList.remove("active");
       }
+    },
+    async sortingReady(parameters) {
+      await fetch(
+        `${url}/review/events/?ordering=${parameters[1]}${parameters[0]}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortEventsList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
     },
     searchByName(search) {
       console.log(search);

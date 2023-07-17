@@ -91,11 +91,18 @@ export default {
   mounted() {
     // Emits on mount
     this.emitInterface();
+    this.emitSorting();
   },
   methods: {
     emitInterface() {
       this.$emit("interface", {
         searchByName: (value) => this.searchByName(value),
+      });
+    },
+    emitSorting() {
+      console.log(this.$emit("parameters"));
+      this.$emit("parameters", {
+        sortingReady: (value) => this.sortingReady(value),
       });
     },
     findPlace(id) {
@@ -118,9 +125,20 @@ export default {
         params: { objectType: "places", id: id },
       });
     },
+    async sortingReady(parameters) {
+      await fetch(
+        `${url}/review/places/?ordering=${parameters[1]}${parameters[0]}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortPlaceList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
 
     searchByName(search) {
-      console.log(search);
       if (search != undefined && search != null && search != "") {
         this.sortPlaceList = this.searchByNameAsync(search);
       } else {
@@ -131,7 +149,6 @@ export default {
       await fetch(`${url}/review/places/?search=${search}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.results);
           this.sortPlaceList = data.results;
         })
         .catch((error) => {
