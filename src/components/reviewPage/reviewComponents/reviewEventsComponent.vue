@@ -1,7 +1,7 @@
 <template>
   <section
     class="cards"
-    v-for="event in filteredList(this.searchTextProvide)"
+    v-for="event in sortEventsList"
     v-bind:key="event.event_id"
   >
     <div class="card review">
@@ -83,21 +83,25 @@
 import { url } from "@/main.js";
 
 export default {
-  inject: ["sortName", "placeList"],
-  props: {
-    searchTextProvide: String,
-  },
   data() {
     return {
       url: url,
-      sortPlaces: [],
       visibleCards: "places",
       visibleDropdown: false,
       dataEventsList: this.fetchDataEventsAPI(),
+      sortEventsList: [],
     };
   },
-  mounted() {},
+  mounted() {
+    // Emits on mount
+    this.emitInterface();
+  },
   methods: {
+    emitInterface() {
+      this.$emit("interface", {
+        searchByName: (value) => this.searchByName(value),
+      });
+    },
     navigateTo(id) {
       this.$router.push({
         name: "objectEvents",
@@ -109,6 +113,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.dataEventsList = data.results;
+          this.sortEventsList = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -176,20 +181,20 @@ export default {
         dropdbtn.classList.remove("active");
       }
     },
-    filteredList(modelValue) {
-      if (modelValue != "") {
-        return this.filteredListAsync(modelValue);
+    searchByName(search) {
+      console.log(search);
+      if (search != undefined && search != null && search != "") {
+        this.sortEventsList = this.searchByNameAsync(search);
       } else {
-        return this.dataEventsList;
+        this.sortEventsList = this.dataEventsList;
       }
     },
-    async filteredListAsync(modelValue) {
-      return await fetch(`${url}/review/events/?search=${modelValue}`)
+    async searchByNameAsync(search) {
+      await fetch(`${url}/review/events/?search=${search}`)
         .then((response) => response.json())
         .then((data) => {
-          this.dataEventsList = data.results;
-
-          return this.dataEventsList;
+          console.log(data.results);
+          this.sortEventsList = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

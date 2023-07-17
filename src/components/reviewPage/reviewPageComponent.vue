@@ -105,7 +105,7 @@
       <img
         src="../../assets/imgs/search.png"
         alt=""
-        @click="searchFun"
+        @click="searchByName"
         class="search-icon"
       />
     </section>
@@ -293,21 +293,21 @@
         </div>
       </div>
     </section>
-    <!-- <router-view
-      :modelValue="searchText"
-      @update:modelValue="(newValue) => (searchText = newValue)"
-    ></router-view> -->
-    <router-view></router-view>
+    <router-view @interface="getChildInterface"></router-view>
   </main>
 </template>
 
 <script>
 export default {
+  // Add a default
+
+  childInterface: {
+    searchByName: () => {},
+  },
   inject: ["sortName", "placeList"],
   data() {
     return {
       searchText: "",
-      searchTextProvide: "",
       option: "Alphabet",
       method: "Ascending",
       numberOfReports: "Unimportant",
@@ -318,9 +318,14 @@ export default {
     };
   },
   methods: {
-    // searchFun(searchText) {
-    //   return searchText;
-    // },
+    getChildInterface(childInterface) {
+      this.$options.childInterface = childInterface;
+    },
+
+    // Add count through the interface
+    searchByName() {
+      this.$options.childInterface.searchByName(this.searchText);
+    },
     changeCard(event) {
       this.searchText = "";
       let target =

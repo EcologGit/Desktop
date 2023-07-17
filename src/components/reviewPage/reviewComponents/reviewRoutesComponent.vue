@@ -1,7 +1,7 @@
 <template>
   <section
     class="cards"
-    v-for="route in dataPlaceList"
+    v-for="route in sortRoutesList"
     v-bind:key="route.route_id"
   >
     <div class="card review">
@@ -102,7 +102,6 @@
 import { url } from "@/main.js";
 
 export default {
-  inject: ["sortName", "placeList"],
   props: {
     // modelValue: String,
   },
@@ -110,10 +109,20 @@ export default {
     return {
       url: url,
 
-      routesList: this.fetchDataRoutesAPI(),
+      dataRoutesList: this.fetchDataRoutesAPI(),
+      sortRoutesList: [],
     };
   },
+  mounted() {
+    // Emits on mount
+    this.emitInterface();
+  },
   methods: {
+    emitInterface() {
+      this.$emit("interface", {
+        searchByName: (value) => this.searchByName(value),
+      });
+    },
     navigateTo(id) {
       this.$router.push({
         name: "objectRoutes",
@@ -121,28 +130,37 @@ export default {
       });
     },
     findRoutes(id) {
-      this.routesList.filter((el) => el.id == id);
+      this.dataRoutesList.filter((el) => el.id == id);
     },
     async fetchDataRoutesAPI() {
       await fetch(`${url}/review/routes/`)
         .then((response) => response.json())
         .then((data) => {
-          this.routesList = data.results;
+          this.dataRoutesList = data.results;
+          this.sortRoutesList = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
         });
     },
-    filteredList(modelValue) {
-      if (modelValue != "") {
-        return this.routesList.filter((place) => {
-          return place.name
-            .toLowerCase()
-            .includes(this.modelValue.toLowerCase());
-        });
+    searchByName(search) {
+      console.log(search);
+      if (search != undefined && search != null && search != "") {
+        this.sortRoutesList = this.searchByNameAsync(search);
       } else {
-        return this.routesList;
+        this.sortRoutesList = this.dataRoutesList;
       }
+    },
+    async searchByNameAsync(search) {
+      await fetch(`${url}/review/routes/?search=${search}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.results);
+          this.sortRoutesList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
     },
   },
 };

@@ -1,10 +1,7 @@
 <template>
-  <div>
-    {{ search }}
-  </div>
   <section
     class="cards"
-    v-for="place in dataPlaceList"
+    v-for="place in sortPlaceList"
     v-bind:key="place.object_id"
   >
     <div class="card review">
@@ -80,10 +77,6 @@
 import { url } from "@/main.js";
 
 export default {
-  props: {
-    searchFun: Function,
-    // modelValue: String,
-  },
   created() {
     // > Внедряемое свойство: 5
   },
@@ -92,14 +85,19 @@ export default {
     return {
       url: url,
       dataPlaceList: this.fetchDataPlaceAPI(),
+      sortPlaceList: [],
     };
   },
   mounted() {
-    return {
-      // dataPlaceList: this.fetchDataPlaceAPI(),
-    };
+    // Emits on mount
+    this.emitInterface();
   },
   methods: {
+    emitInterface() {
+      this.$emit("interface", {
+        searchByName: (value) => this.searchByName(value),
+      });
+    },
     findPlace(id) {
       this.placeList.filter((el) => el.id == id);
     },
@@ -108,6 +106,7 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.dataPlaceList = data.results;
+          this.sortPlaceList = this.dataPlaceList;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -119,16 +118,25 @@ export default {
         params: { objectType: "places", id: id },
       });
     },
-    filteredList(modelValue) {
-      if (modelValue != "") {
-        return this.dataPlaceList.filter((place) => {
-          return place.name
-            .toLowerCase()
-            .includes(this.modelValue.toLowerCase());
-        });
+
+    searchByName(search) {
+      console.log(search);
+      if (search != undefined && search != null && search != "") {
+        this.sortPlaceList = this.searchByNameAsync(search);
       } else {
-        return this.dataPlaceList;
+        this.sortPlaceList = this.dataPlaceList;
       }
+    },
+    async searchByNameAsync(search) {
+      await fetch(`${url}/review/places/?search=${search}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.results);
+          this.sortPlaceList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
     },
   },
 

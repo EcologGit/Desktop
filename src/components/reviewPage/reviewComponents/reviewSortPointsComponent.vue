@@ -1,7 +1,7 @@
 <template>
   <section
     class="cards"
-    v-for="sortPoint in dataPlaceList"
+    v-for="sortPoint in sortSortPointsList"
     v-bind:key="sortPoint.point_id"
   >
     <div class="card review">
@@ -74,18 +74,26 @@
 import { url } from "@/main.js";
 
 export default {
-  inject: ["sortName", "placeList"],
   props: {
     // modelValue: String,
   },
   data() {
     return {
       url: url,
-      sortPlaces: [],
       dataSortPointsList: this.fetchDataPlaceAPI(),
+      sortSortPointsList: [],
     };
   },
+  mounted() {
+    // Emits on mount
+    this.emitInterface();
+  },
   methods: {
+    emitInterface() {
+      this.$emit("interface", {
+        searchByName: (value) => this.searchByName(value),
+      });
+    },
     navigateTo(id) {
       this.$router.push({
         name: "objectSortPoints",
@@ -100,21 +108,30 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.dataSortPointsList = data.results;
+          this.sortSortPointsList = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
         });
     },
-    filteredList(modelValue) {
-      if (modelValue != "") {
-        return this.dataSortPointsList.filter((place) => {
-          return place.name
-            .toLowerCase()
-            .includes(this.modelValue.toLowerCase());
-        });
+    searchByName(search) {
+      console.log(search);
+      if (search != undefined && search != null && search != "") {
+        this.sortSortPointsList = this.searchByNameAsync(search);
       } else {
-        return this.dataSortPointsList;
+        this.sortSortPointsList = this.dataSortPointsList;
       }
+    },
+    async searchByNameAsync(search) {
+      await fetch(`${url}/review/sortPoints/?search=${search}`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.results);
+          this.sortSortPointsList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
     },
   },
 };
