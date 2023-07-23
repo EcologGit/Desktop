@@ -133,7 +133,7 @@
                       id="alphabet"
                       value="name"
                       name="option"
-                      v-model="option"
+                      v-model="ordering"
                     />
                     <label for="alphabet">По алфавиту</label>
                   </div>
@@ -143,7 +143,7 @@
                       id="rating"
                       value="report_count"
                       name="option"
-                      v-model="option"
+                      v-model="ordering"
                     />
                     <label for="rating">По рейтингу</label>
                   </div>
@@ -153,7 +153,7 @@
                       id="popular"
                       value="sum_rating"
                       name="option"
-                      v-model="option"
+                      v-model="ordering"
                     />
                     <label for="popular">По популярности</label>
                   </div>
@@ -185,7 +185,10 @@
                 </div>
               </div>
             </div>
-            <button class="single-button setting-button" @click="sortingReady">
+            <button
+              class="single-button setting-button"
+              @click="sortingAFiltering"
+            >
               <img
                 class="icon-btn"
                 width="18"
@@ -216,66 +219,67 @@
                 class="search-parameter"
                 type="text"
                 placeholder="Поиск населенного пункта"
+                v-model="admareaName"
               />
             </div>
             <div class="modal-parameter">
               <div class="label-parameter">Количество отчетов</div>
               <div class="part-options">
-                <div class="sort-numberOfReports">
+                <div class="sort-reportCount">
                   <input
                     type="radio"
-                    id="unimportant"
-                    value="Unimportant"
-                    name="numberOfReports"
-                    v-model="numberOfReports"
+                    id="no_matter"
+                    value="no_matter"
+                    name="reportCount"
+                    v-model="reportCount"
                   />
-                  <label for="unimportant">Неважно</label>
+                  <label for="no_matter">Неважно</label>
                 </div>
-                <div class="sort-numberOfReports">
+                <div class="sort-reportCount">
                   <input
                     type="radio"
-                    id="noReports"
-                    value="NoReports"
-                    name="numberOfReports"
-                    v-model="numberOfReports"
+                    id="zero"
+                    value="zero"
+                    name="reportCount"
+                    v-model="reportCount"
                   />
-                  <label for="noReports">Без отчетов</label>
+                  <label for="zero">Без отчетов</label>
                 </div>
-                <div class="sort-numberOfReports">
+                <div class="sort-reportCount">
                   <input
                     type="radio"
-                    id="20Andless"
-                    value="20Andless"
-                    name="numberOfReports"
-                    v-model="numberOfReports"
+                    id="no_more_than_20"
+                    value="no_more_than_20"
+                    name="reportCount"
+                    v-model="reportCount"
                   />
-                  <label for="20Andless">Не более 20 отчетов</label>
+                  <label for="no_more_than_20">Не более 20 отчетов</label>
                 </div>
-                <div class="sort-numberOfReports">
+                <div class="sort-reportCount">
                   <input
                     type="radio"
-                    id="20-100"
-                    value="20-100"
-                    name="numberOfReports"
-                    v-model="numberOfReports"
+                    id="20_to_99"
+                    value="20_to_99"
+                    name="reportCount"
+                    v-model="reportCount"
                   />
-                  <label for="20-100">От 20 до 100 отчетов</label>
+                  <label for="20_to_99">От 20 до 100 отчетов</label>
                 </div>
-                <div class="sort-numberOfReports">
+                <div class="sort-reportCount">
                   <input
                     type="radio"
                     id="100AndMore"
                     value="100AndMore"
-                    name="numberOfReports"
-                    v-model="numberOfReports"
+                    name="reportCount"
+                    v-model="reportCount"
                   />
-                  <label for="100AndMore">Более 100 отчетов</label>
+                  <label for="more_than_100">Более 100 отчетов</label>
                 </div>
               </div>
             </div>
             <button
               class="single-button setting-button"
-              @click="parametersReady"
+              @click="sortingAFiltering"
             >
               <img
                 class="icon-btn"
@@ -305,15 +309,16 @@ export default {
     searchByName: () => {},
   },
   sortingInterface: {
-    sortingReady: () => {},
+    sortingAFiltering: () => {},
   },
   inject: ["sortName", "placeList"],
   data() {
     return {
       searchText: "",
-      option: "name",
+      ordering: "name",
       method: "",
-      numberOfReports: "Unimportant",
+      admareaName: "",
+      reportCount: "no_matter",
       sortPlaces: [],
       visibleCards: "places",
       visibleModalSorting: false,
@@ -340,9 +345,15 @@ export default {
     },
 
     // Add count through the interface
-    sortingReady() {
+    sortingAFiltering() {
       this.visibleModalSorting = false;
-      this.$options.sortingInterface.sortingReady([this.option, this.method]);
+      this.visibleModalParameters = false;
+      this.$options.sortingInterface.sortingAFiltering({
+        ordering: this.ordering,
+        method: this.method,
+        reportCount: this.reportCount,
+        admareaName: this.admareaName,
+      });
     },
     changeCard(event) {
       this.searchText = "";
@@ -367,24 +378,6 @@ export default {
         }
       });
       target.classList.add("active");
-    },
-    // handleInput(event) {
-    //   console.log(event.target.value);
-    // },
-    sort() {
-      // event.target.parentElement.childNodes.forEach((el) => {
-      //   if (el.classList.contains("active")) {
-      //     el.classList.remove("active");
-      //   }
-      // });
-      // event.target.classList.add("active");
-      // this.placeList.sort((a, b) => b.rating - a.rating);
-      // let dropdowns = document.querySelector(".dropdown-content");
-      // let dropdbtn = document.querySelector(".dropbtn");
-      // if (dropdowns) {
-      //   dropdowns.style.display = "none";
-      //   dropdbtn.classList.remove("active");
-      // }
     },
     findPlace(id) {
       this.placeList.filter((el) => el.id == id);

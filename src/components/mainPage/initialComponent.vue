@@ -90,14 +90,9 @@ export default {
   data() {
     return {
       visibleMore: false,
-      isAuthenticated: this.newFunc(this.isAuthenticated),
     };
   },
-  methods: {
-    newFunc(isAuthenticated) {
-      console.log(isAuthenticated.value);
-    },
-  },
+  methods: {},
   computed: {
     calcNotes() {
       return this.notes.length * 5;

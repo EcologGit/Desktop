@@ -12,7 +12,7 @@
             <div class="card-header">
               <div class="user-info">
                 <div class="card-name profile">Евгений Базаров</div>
-                <div class="card-nameId">@doctor_bazar</div>
+                <div class="card-nameId">@{{ dataProfile.username }}</div>
               </div>
             </div>
             <div class="user-data">
@@ -132,11 +132,11 @@
 import { url } from "@/main.js";
 
 export default {
-  inject: ["isAuthenticated"],
+  inject: ["isAuthenticated", "tokenAuthenticated"],
 
   data() {
     return {
-      dataSortPointsList: this.fetchDataProfileAPI(),
+      dataProfile: this.fetchDataProfileAPI(),
 
       visibleCards: "reports",
       visibleMain: true,
@@ -178,10 +178,22 @@ export default {
       event.target.classList.add("active");
     },
     async fetchDataProfileAPI() {
-      await fetch(`${url}/user_profiles/profile_info/1/`)
+      var myHeaders = new Headers();
+      myHeaders.append(
+        "Authorization",
+        `Bearer ${this.tokenAuthenticated.value}`
+      );
+      console.log(myHeaders);
+
+      var requestOptions = {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+      await fetch(`${url}/user_profiles/profile_info/1/`, requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          this.dataSortPointsList = data.results;
+          this.dataProfile = data;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -189,6 +201,7 @@ export default {
     },
     logout() {
       this.isAuthenticated.value = false;
+      this.tokenAuthenticated.value = "";
       this.$router.push("/");
     },
   },

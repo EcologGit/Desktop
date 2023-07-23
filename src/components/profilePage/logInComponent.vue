@@ -8,6 +8,7 @@
           <input
             class="input settings"
             type="email"
+            v-model="username"
             placeholder="Введите почту"
           />
         </div>
@@ -28,6 +29,7 @@
               class="input settings"
               type="password"
               placeholder="Введите пароль"
+              v-model="password"
             />
           </div>
         </div>
@@ -62,11 +64,13 @@
 import { url } from "@/main.js";
 
 export default {
-  inject: ["isAuthenticated"],
+  inject: ["isAuthenticated", "tokenAuthenticated"],
 
   data() {
     return {
       visibleCards: "reports",
+      username: "",
+      password: "",
     };
   },
   methods: {
@@ -84,17 +88,30 @@ export default {
     },
 
     async postSignIn() {
+      var urlencoded = new URLSearchParams();
+      urlencoded.append("username", this.username);
+      urlencoded.append("password", this.password);
       var requestOptions = {
         method: "POST",
         redirect: "follow",
+        body: urlencoded,
       };
       this.isAuthenticated.value = true;
 
-      await fetch(`${url}/users/api/browser_refresh/`, requestOptions)
+      await fetch(`${url}/users/api/browser_token/`, requestOptions)
         .then((response) => response.text())
         .then((result) => {
-          console.log(result);
-          this.navigateTo(1);
+          result = JSON.parse(result);
+          if (
+            result["access"] != null &&
+            result["access"] != undefined &&
+            result["access"] != ""
+          ) {
+            this.tokenAuthenticated.value = result["access"];
+            this.navigateTo(1);
+          } else {
+            return false;
+          }
         })
         .catch((error) => console.log("error", error));
     },

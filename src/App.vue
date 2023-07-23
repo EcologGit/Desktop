@@ -8,6 +8,7 @@
 import { ref } from "vue";
 
 let authenticated = ref(false);
+let authenticatedToken = ref("");
 export default {
   name: "App",
 
@@ -19,6 +20,7 @@ export default {
   provide() {
     return {
       isAuthenticated: authenticated,
+      tokenAuthenticated: authenticatedToken,
       sortName: "Сортировка",
       placeList: this.dataPlaceList,
     };

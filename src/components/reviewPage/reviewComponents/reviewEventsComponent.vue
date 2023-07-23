@@ -105,7 +105,7 @@ export default {
     },
     emitSorting() {
       this.$emit("parameters", {
-        sortingReady: (value) => this.sortingReady(value),
+        sortingAFiltering: (value) => this.sortingAFiltering(value),
       });
     },
     navigateTo(id) {
@@ -187,9 +187,9 @@ export default {
         dropdbtn.classList.remove("active");
       }
     },
-    async sortingReady(parameters) {
+    async sortingAFiltering(parameters) {
       await fetch(
-        `${url}/review/events/?ordering=${parameters[1]}${parameters[0]}`
+        `${url}/review/events/?ordering=${parameters.method}${parameters.ordering}&report_count=${parameters.reportCount}&admarea_name=${parameters.admareaName}`
       )
         .then((response) => response.json())
         .then((data) => {

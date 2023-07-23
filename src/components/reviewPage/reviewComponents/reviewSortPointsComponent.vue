@@ -97,7 +97,7 @@ export default {
     },
     emitSorting() {
       this.$emit("parameters", {
-        sortingReady: (value) => this.sortingReady(value),
+        sortingAFiltering: (value) => this.sortingAFiltering(value),
       });
     },
     navigateTo(id) {
@@ -120,9 +120,9 @@ export default {
           this.answer = "Ошибка! Нет доступа к API. " + error;
         });
     },
-    async sortingReady(parameters) {
+    async sortingAFiltering(parameters) {
       await fetch(
-        `${url}/review/sortPoints/?ordering=${parameters[1]}${parameters[0]}`
+        `${url}/review/sortPoints/?ordering=${parameters.method}${parameters.ordering}&report_count=${parameters.reportCount}&admarea_name=${parameters.admareaName}`
       )
         .then((response) => response.json())
         .then((data) => {

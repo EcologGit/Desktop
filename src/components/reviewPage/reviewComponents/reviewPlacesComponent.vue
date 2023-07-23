@@ -101,7 +101,7 @@ export default {
     },
     emitSorting() {
       this.$emit("parameters", {
-        sortingReady: (value) => this.sortingReady(value),
+        sortingAFiltering: (value) => this.sortingAFiltering(value),
       });
     },
     findPlace(id) {
@@ -124,9 +124,9 @@ export default {
         params: { objectType: "places", id: id },
       });
     },
-    async sortingReady(parameters) {
+    async sortingAFiltering(parameters) {
       await fetch(
-        `${url}/review/places/?ordering=${parameters[1]}${parameters[0]}`
+        `${url}/review/places/?ordering=${parameters.method}${parameters.ordering}&report_count=${parameters.reportCount}&admarea_name=${parameters.admareaName}`
       )
         .then((response) => response.json())
         .then((data) => {
