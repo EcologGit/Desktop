@@ -1,12 +1,12 @@
 <template>
   <section
     class="cards"
-    v-for="sortPoint in dataSortPointsList"
-    v-bind:key="sortPoint.object_id"
+    v-for="sortPoint in sortSortPointsList"
+    v-bind:key="sortPoint.point_id"
   >
     <div class="card review">
       <img
-        v-bind:src="'http://81.163.30.36:8000/' + sortPoint.photo"
+        v-bind:src="url + sortPoint.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -15,7 +15,7 @@
           <div>
             <div class="card-header">
               <div class="card-info">
-                <p class="card-name" @click="findPlace(sortPoint.object_id)">
+                <p class="card-name" @click="navigateTo(sortPoint.point_id)">
                   {{ sortPoint.name }}
                 </p>
                 <div class="coordinates">
@@ -67,27 +67,83 @@
       </div>
     </div>
   </section>
+  <router-view></router-view>
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
-  inject: ["sortName", "placeList"],
+  props: {
+    // modelValue: String,
+  },
   data() {
     return {
-      sortPlaces: [],
+      url: url,
       dataSortPointsList: this.fetchDataPlaceAPI(),
+      sortSortPointsList: [],
     };
   },
+  mounted() {
+    // Emits on mount
+    this.emitInterface();
+    this.emitSorting();
+  },
   methods: {
+    emitInterface() {
+      this.$emit("interface", {
+        searchByName: (value) => this.searchByName(value),
+      });
+    },
+    emitSorting() {
+      this.$emit("parameters", {
+        sortingAFiltering: (value) => this.sortingAFiltering(value),
+      });
+    },
+    navigateTo(id) {
+      this.$router.push({
+        name: "objectSortPoints",
+        params: { id: id },
+      });
+    },
     findPlace(id) {
-      console.log(this.placeList.filter((el) => el.id == id));
+      this.placeList.filter((el) => el.id == id);
     },
     async fetchDataPlaceAPI() {
-      await fetch("http://81.163.30.36:8000/review/sortPoints/")
+      await fetch(`${url}/review/sortPoints/`)
         .then((response) => response.json())
         .then((data) => {
-          this.dataSortPointsList = data;
-          console.log(data);
+          this.dataSortPointsList = data.results;
+          this.sortSortPointsList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    async sortingAFiltering(parameters) {
+      await fetch(
+        `${url}/review/sortPoints/?ordering=${parameters.method}${parameters.ordering}&report_count=${parameters.reportCount}&admarea_name=${parameters.admareaName}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortSortPointsList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    searchByName(search) {
+      if (search != undefined && search != null && search != "") {
+        this.sortSortPointsList = this.searchByNameAsync(search);
+      } else {
+        this.sortSortPointsList = this.dataSortPointsList;
+      }
+    },
+    async searchByNameAsync(search) {
+      await fetch(`${url}/review/sortPoints/?search=${search}`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortSortPointsList = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

@@ -20,17 +20,31 @@ import activityMedalsComponent from "./components/activityPage/activityComponent
 
 import profileReportsComponent from "./components/profilePage/profileComponents/profileReportsComponent.vue";
 import profileStatisticsComponent from "./components/profilePage/profileComponents/profileStatisticsComponent.vue";
+import settingsComponent from "./components/profilePage/settingsComponent.vue";
+import logInComponent from "./components/profilePage/logInComponent.vue";
+import signUpComponent from "./components/profilePage/signUpComponent.vue";
 
-import settingsComponent from "./components/settingsPage/settingsComponent.vue";
+import objectComponentEvent from "./components/objectPage/objectComponentEvent.vue";
+import objectComponentRoute from "./components/objectPage/objectComponentRoute.vue";
+import objectComponentSortPoint from "./components/objectPage/objectComponentSortPoint.vue";
+import objectComponentPlace from "./components/objectPage/objectComponentPlace.vue";
 
-import objectComponent from "./components/objectPage/objectComponent.vue";
+import reportComponent from "./components/reportPage/reportComponent.vue";
+import newReportComponent from "./components/createReportPage/newReportComponent.vue";
+
+
 
 import router from "./router";
 
 
 
+
+
 const app = createApp(App);
 app.use(router);
+
+export const url = 'http://81.163.30.36/django_api';
+
 app.component('header-component', headerComponent);
 app.component('footer-component', footerComponent);
 
@@ -49,20 +63,16 @@ app.component('activityMedals-component', activityMedalsComponent);
 
 app.component('profileReports-component', profileReportsComponent);
 app.component('profileStatistics-component', profileStatisticsComponent);
-
 app.component('settings-component', settingsComponent);
+app.component('login-component', logInComponent);
+app.component('sugnup-component', signUpComponent);
 
-app.component('object-component', objectComponent);
+app.component('objectEvent-component', objectComponentEvent);
+app.component('objectRoute-component', objectComponentRoute);
+app.component('objectSortPointcomponent-', objectComponentSortPoint);
+app.component('objectPlace-component', objectComponentPlace);
+
+app.component('report-component', reportComponent);
+app.component('newReport-component', newReportComponent);
 
 app.mount('#app');
-
-window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn') && !event.target.parentElement.matches('.dropdown-content')) {
-        let dropdowns = document.querySelector(".dropdown-content");
-        let dropdbtn = document.querySelector(".dropbtn");
-        if (dropdowns) {
-            dropdowns.style.display = 'none';
-            dropdbtn.classList.remove('active');
-        }
-    }
-};

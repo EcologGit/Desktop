@@ -199,9 +199,7 @@ export default {
       });
       event.target.classList.add("active");
     },
-    newFunc() {
-      console.log("hello");
-    },
+    newFunc() {},
   },
 };
 </script>

@@ -44,9 +44,7 @@ export default {
     return {};
   },
   methods: {
-    openTask() {
-      console.log(true);
-    },
+    openTask() {},
   },
 };
 </script>

@@ -178,10 +178,7 @@ export default {
       });
       event.target.classList.add("active");
     },
-    visibleCardsFunc() {
-      console.log(this.visibleCards);
-      console.log(this.changeCards());
-    },
+    visibleCardsFunc() {},
   },
 };
 </script>

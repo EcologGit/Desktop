@@ -32,7 +32,7 @@
                 Карьер “Песчаный”
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="km">
                 <img
                   class="icon-margin"
@@ -90,7 +90,7 @@
                 Карьер “Песчаный”
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="km">
                 <img
                   class="icon-margin"
@@ -148,7 +148,7 @@
                 Карьер “Песчаный”
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="km">
                 <img
                   class="icon-margin"
@@ -206,7 +206,7 @@
                 Карьер “Песчаный”
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="km">
                 <img
                   class="icon-margin"
@@ -274,10 +274,7 @@ export default {
       });
       event.target.classList.add("active");
     },
-    visibleCardsFunc() {
-      console.log(this.visibleCards);
-      console.log(this.changeCards());
-    },
+    visibleCardsFunc() {},
   },
 };
 </script>

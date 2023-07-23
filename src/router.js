@@ -24,10 +24,22 @@ import activityMedalsComponent from "./components/activityPage/activityComponent
 import profilePageComponent from "./components/profilePage/profileComponent.vue";
 import profileReportsComponent from "./components/profilePage/profileComponents/profileReportsComponent.vue";
 import profileStatisticsComponent from "./components/profilePage/profileComponents/profileStatisticsComponent.vue";
+import settingsComponent from "./components/profilePage/settingsComponent.vue";
+import logInComponent from "./components/profilePage/logInComponent.vue";
+import signUpComponent from "./components/profilePage/signUpComponent.vue";
 
-import settingsComponent from "./components/settingsPage/settingsComponent.vue";
 
-import objectComponent from "./components/objectPage/objectComponent.vue";
+
+
+import objectComponentEvent from "./components/objectPage/objectComponentEvent.vue";
+import objectComponentRoute from "./components/objectPage/objectComponentRoute.vue";
+import objectComponentSortPoint from "./components/objectPage/objectComponentSortPoint.vue";
+import objectComponentPlace from "./components/objectPage/objectComponentPlace.vue";
+
+import reportComponent from "./components/reportPage/reportComponent.vue";
+
+import newReportComponent from "./components/createReportPage/newReportComponent.vue";
+
 
 export default createRouter({
     history: createWebHashHistory(),
@@ -38,22 +50,62 @@ export default createRouter({
             path: '/review/',
             component: reviewPageComponent,
             children: [{
-                    path: 'events',
+                    path: 'events/',
                     component: reviewEventsComponent,
                 },
                 {
-                    path: 'places',
+                    path: 'places/',
                     component: reviewPlacesComponent,
                 },
                 {
-                    path: 'routes',
-                    component: reviewRoutesComponent
+                    path: 'routes/',
+                    component: reviewRoutesComponent,
                 }, {
-                    path: 'sortPoints',
-                    component: reviewSortPointsComponent
+                    path: 'sortPoints/',
+                    component: reviewSortPointsComponent,
                 },
+
+                {
+                    path: '/:id',
+                    name: 'report',
+                    component: reportComponent,
+                },
+
+
             ],
         },
+        {
+            path: '/review/sortPoints/:id',
+            name: 'objectSortPoints',
+            component: objectComponentSortPoint,
+        },
+
+        {
+            path: '/review/routes/:id',
+            name: 'objectRoutes',
+            component: objectComponentRoute,
+        },
+
+        {
+            path: '/review/events/:id',
+            name: 'objectEvents',
+            component: objectComponentEvent,
+        },
+
+
+        {
+            path: '/review/places/:id',
+            name: 'objectPlaces',
+            component: objectComponentPlace,
+        },
+        {
+            path: '/newReport',
+            name: 'newReport',
+            component: newReportComponent,
+        },
+
+
+
         {
             path: '/activity/',
             component: activityPageComponent,
@@ -71,42 +123,59 @@ export default createRouter({
             path: '/marks/',
             component: marksPageComponent,
             children: [{
-                    path: 'events',
+                    path: 'events/',
                     component: marksEventsComponent,
                 },
                 {
-                    path: 'places',
+                    path: 'places/',
                     component: marksPlacesComponent,
                 },
                 {
-                    path: 'routes',
-                    component: marksRoutesComponent
+                    path: 'routes/',
+                    component: marksRoutesComponent,
                 }, {
-                    path: 'sortPoints',
-                    component: marksSortPointsComponent
+                    path: 'sortPoints/',
+                    component: marksSortPointsComponent,
                 },
             ],
         },
         {
             path: '/profile/',
-            component: profilePageComponent,
             children: [{
-                path: 'reports',
-                component: profileReportsComponent,
-            }, {
-                path: 'statistics',
-                component: profileStatisticsComponent,
-            }, ],
+                    path: ':id',
+                    name: 'profile',
+                    component: profilePageComponent,
+                    children: [{
+                        name: 'profileReports',
+                        path: 'reports',
+                        component: profileReportsComponent,
+                    }, {
+                        name: 'profileStatistics',
+
+                        path: 'statistics',
+                        component: profileStatisticsComponent,
+                    }, ]
+                },
+                {
+                    name: 'settings',
+                    path: 'settings',
+                    component: settingsComponent,
+                },
+                {
+                    name: 'signup',
+                    path: 'signup',
+                    component: signUpComponent,
+                },
+                {
+                    name: 'login',
+                    path: 'login',
+                    component: logInComponent,
+                },
+            ],
 
         },
-        {
-            path: '/settings',
-            component: settingsComponent,
-        },
-        {
-            path: '/object',
-            component: objectComponent,
-        },
+
+
 
 
     ]

@@ -1,4 +1,3 @@
-import styles from './foo.module.css'
 
 <template>
   <header class="header">
@@ -69,13 +68,14 @@ import styles from './foo.module.css'
       </router-link>
 
       <router-link
-        to="/marks/places"
+        :to="authenticated ? '/marks/places' : ''"
         class="a-header marks"
-        @click="changePage"
+        :class="authenticated ? '' : 'disabled'"
+        @click="changePage(authenticated)"
       >
         <img
           class="a-img"
-          @click="changePage"
+          @click="changePage(authenticated)"
           v-show="visiblePage != 'marks'"
           width="11"
           height="18"
@@ -84,7 +84,7 @@ import styles from './foo.module.css'
         />
         <img
           class="a-img"
-          @click="changePage"
+          @click="changePage(authenticated)"
           v-show="visiblePage == 'marks'"
           width="11"
           height="18"
@@ -95,13 +95,14 @@ import styles from './foo.module.css'
       </router-link>
 
       <router-link
-        to="/profile/reports"
+        :to="authenticated ? { name: 'profileReports', params: { id: 1 } } : ''"
         class="a-header profile"
-        @click="changePage"
+        @click="changePage(authenticated)"
+        :class="authenticated ? '' : 'disabled'"
       >
         <img
           class="a-img"
-          @click="changePage"
+          @click="changePage(authenticated)"
           v-show="visiblePage != 'profile'"
           width="18"
           height="18"
@@ -110,7 +111,7 @@ import styles from './foo.module.css'
         />
         <img
           class="a-img"
-          @click="changePage"
+          @click="changePage(authenticated)"
           v-show="visiblePage == 'profile'"
           width="18"
           height="18"
@@ -120,15 +121,13 @@ import styles from './foo.module.css'
         <div>Профиль</div>
       </router-link>
       <div>
-        <router-link to="/object">
-          <a class="a-circle-icon" style="border: none">
-            <img
-              class="cirlce-img"
-              src="../assets/imgs/add_place.png"
-              alt="Добавить"
-            />
-          </a>
-        </router-link>
+        <a class="a-circle-icon" style="border: none" @click="navigateTo()">
+          <img
+            class="cirlce-img"
+            src="../assets/imgs/add_place.png"
+            alt="Добавить"
+          />
+        </a>
       </div>
     </nav>
   </header>
@@ -136,21 +135,29 @@ import styles from './foo.module.css'
 
 <script>
 export default {
+  inject: ["isAuthenticated"],
+
   props: {
     title: String,
   },
   data() {
     return {
       visiblePage: "home",
+      authenticated: this.isAuthenticated,
     };
   },
   methods: {
-    changePage(event) {
-      const headerDiv = document.querySelectorAll(".header * > div");
+    navigateTo() {
+      this.$router.push({
+        name: "newReport",
+      });
+    },
+    changePage(status, event) {
+      if (status == false) return;
+      const headerDiv = document.querySelectorAll(".navs-header * > div");
       let target = event.target.classList.contains("a-header")
         ? event.target
         : event.target.parentElement;
-      console.log(target);
 
       headerDiv.forEach((el) => {
         if (el.matches(".active-page")) {

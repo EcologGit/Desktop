@@ -1,6 +1,6 @@
 <template>
   <main class="main" id="app">
-    <form method="post">
+    <form>
       <section class="settings-personal">
         <div class="personal-info">
           Личная информация
@@ -93,8 +93,8 @@
                 placeholder="Введите старый пароль"
               />
               <a
-                class="password-control"
-                onclick="return show_hide_password(this);"
+                class="password-control setting-password"
+                @click="show_hide_password($event)"
               ></a>
             </div>
           </div>
@@ -107,8 +107,8 @@
                 placeholder="Введите новый пароль"
               />
               <a
-                class="password-control"
-                onclick="return show_hide_password(this);"
+                class="password-control setting-password"
+                @click="show_hide_password($event)"
               ></a>
             </div>
           </div>
@@ -119,8 +119,14 @@
           </div>
         </div>
       </section>
-      <button class="single-button save" @click="fetchData()">
-        <img width="18" height="18" src="../../assets/imgs/save.png" alt="" />
+      <button class="single-button save">
+        <img
+          class="icon-margin"
+          width="18"
+          height="18"
+          src="../../assets/imgs/save.png"
+          alt=""
+        />
         Сохранить
       </button>
     </form>
@@ -135,7 +141,8 @@ export default {
     };
   },
   methods: {
-    show_hide_password(target) {
+    show_hide_password(event) {
+      const target = event.target;
       if (target.matches(".view")) {
         target.classList.remove("view");
         target.parentElement.children[0].setAttribute("type", "password");
@@ -144,19 +151,14 @@ export default {
         target.parentElement.children[0].setAttribute("type", "text");
       }
     },
-    fetchData() {
-      console.log();
-    },
   },
   computed: {
     calcNotes() {
-      console.log(this.notes.length * 5);
       return this.notes.length * 5;
     },
   },
   watch: {
     inputValue(value) {
-      console.log("value" + value);
       if (value.length === 5) {
         this.notes = [];
       }

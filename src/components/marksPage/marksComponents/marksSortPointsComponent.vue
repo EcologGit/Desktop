@@ -22,7 +22,7 @@
                 Егорьевск
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="time">
                 <img
                   class="icon-margin"
@@ -60,7 +60,7 @@
                 Егорьевск
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="time">
                 <img
                   class="icon-margin"
@@ -98,7 +98,7 @@
                 Егорьевск
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="time">
                 <img
                   class="icon-margin"
@@ -136,7 +136,7 @@
                 Егорьевск
               </div>
             </div>
-            <div class="km-time">
+            <div class="parameters">
               <div class="time">
                 <img
                   class="icon-margin"
@@ -194,10 +194,7 @@ export default {
       });
       event.target.classList.add("active");
     },
-    visibleCardsFunc() {
-      console.log(this.visibleCards);
-      console.log(this.changeCards());
-    },
+    visibleCardsFunc() {},
   },
 };
 </script>

@@ -1,12 +1,12 @@
 <template>
   <section
     class="cards"
-    v-for="route in routesList"
+    v-for="route in sortRoutesList"
     v-bind:key="route.route_id"
   >
     <div class="card review">
       <img
-        v-bind:src="'http://81.163.30.36:8000/' + route.photo"
+        v-bind:src="url + route.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -15,7 +15,9 @@
           <div>
             <div class="card-header">
               <div class="card-info">
-                <p class="card-name">{{ route.name }}</p>
+                <p class="card-name" @click="navigateTo(route.route_id)">
+                  {{ route.name }}
+                </p>
                 <div class="coordinates">
                   <div class="coordinate">
                     <img
@@ -29,7 +31,7 @@
                   </div>
                 </div>
 
-                <div class="km-time">
+                <div class="parameters">
                   <div class="km">
                     <img
                       class="icon-margin"
@@ -97,23 +99,80 @@
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
-  inject: ["sortName", "placeList"],
+  props: {
+    // modelValue: String,
+  },
   data() {
     return {
-      routesList: this.fetchDataRoutesAPI(),
+      url: url,
+
+      dataRoutesList: this.fetchDataRoutesAPI(),
+      sortRoutesList: [],
     };
   },
+  mounted() {
+    // Emits on mount
+    this.emitInterface();
+    this.emitSorting();
+  },
   methods: {
+    emitInterface() {
+      this.$emit("interface", {
+        searchByName: (value) => this.searchByName(value),
+      });
+    },
+    emitSorting() {
+      this.$emit("parameters", {
+        sortingAFiltering: (value) => this.sortingAFiltering(value),
+      });
+    },
+    navigateTo(id) {
+      this.$router.push({
+        name: "objectRoutes",
+        params: { objectType: "routes", id: id },
+      });
+    },
     findRoutes(id) {
-      console.log(this.routesList.filter((el) => el.id == id));
+      this.dataRoutesList.filter((el) => el.id == id);
     },
     async fetchDataRoutesAPI() {
-      await fetch("http://81.163.30.36:8000/review/routes/")
+      await fetch(`${url}/review/routes/`)
         .then((response) => response.json())
         .then((data) => {
-          this.routesList = data;
-          console.log(data);
+          this.dataRoutesList = data.results;
+          this.sortRoutesList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    async sortingAFiltering(parameters) {
+      await fetch(
+        `${url}/review/routes/?ordering=${parameters.method}${parameters.ordering}&report_count=${parameters.reportCount}&admarea_name=${parameters.admareaName}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortRoutesList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    searchByName(search) {
+      if (search != undefined && search != null && search != "") {
+        this.sortRoutesList = this.searchByNameAsync(search);
+      } else {
+        this.sortRoutesList = this.dataRoutesList;
+      }
+    },
+    async searchByNameAsync(search) {
+      await fetch(`${url}/review/routes/?search=${search}`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortRoutesList = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

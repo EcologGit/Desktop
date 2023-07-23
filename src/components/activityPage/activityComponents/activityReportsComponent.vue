@@ -1,6 +1,10 @@
 <template>
   <section>
-    <div class="card activity">
+    <div
+      class="card activity"
+      v-for="activity in dataActivity"
+      v-bind:key="activity.pk"
+    >
       <div class="card-header activity">
         <div class="user-date">
           <div class="user-info">
@@ -9,9 +13,9 @@
               alt="User"
               class="user-photo"
             />
-            Николай Ростов
+            {{ activity.user_id.username }}
           </div>
-          <div class="date-report">01.01.2022 12:43</div>
+          <div class="date-report">{{ activity.created_at }}</div>
         </div>
         <div class="coordinates">
           <div class="coordinate">
@@ -22,7 +26,7 @@
               src="../../../assets/imgs/map.png"
               alt=""
             />
-            Воскресенск
+            {{ activity.obj.locality }}
           </div>
           <div class="coordinate">
             <img
@@ -32,7 +36,7 @@
               src="../../../assets/imgs/places.png"
               alt=""
             />
-            Карьер “Песчаный”
+            {{ activity.obj.name }}
           </div>
         </div>
       </div>
@@ -60,24 +64,7 @@
           />
         </div>
         <div class="card-desc">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi diam
-          vulputate hendrerit proin vulputate faucibus eu elementum. Sit pretium
-          sed in congue molestie turpis sodales risus. Nunc quam cum felis,
-          elementum amet fermentum. Tristique ipsum pulvinar dignissim ultricies
-          nulla nulla fusce lectus. Urna, in fusce dictumst ipsum facilisis
-          malesuada tempus, at. Auctor viverra et vestibulum nibh congue augue
-          sagittis ac. Et mus mollis amet vel faucibus ultricies mattis. Sed
-          aliquam eu, blandit morbi pellentesque leo imperdiet. Consectetur
-          pharetra morbi tellus facilisi pellentesque id. Pharetra, elit
-          interdum eget risus ut. Tristique nibh habitant aenean ac nec eget
-          venenatis. Eget in morbi elementum id egestas quisque. Orci id quis
-          consectetur volutpat vitae convallis faucibus ut. Egestas ornare
-          pretium non accumsan volutpat scelerisque. Mauris mattis mauris
-          pulvinar sit. Purus arcu, aenean ut sapien viverra molestie vitae sem
-          semper. In fames et ut tellus. Et volutpat, hendrerit eget ullamcorper
-          purus imperdiet. Vitae non iaculis netus in egestas tempor nibh.
-          Elementum, eget cras in vitae lectus laoreet in egestas. Arcu neque,
-          aliquet urna, consectetur. Maecenas purus, ut a volutpat lacus.
+          {{ activity.description }}
         </div>
       </div>
       <div class="card-rating">
@@ -87,7 +74,7 @@
             alt=""
             class="cirlce-img"
           />
-          3,6 кг
+          кг
         </div>
         <div class="rating">
           <img
@@ -95,7 +82,7 @@
             alt=""
             class="cirlce-img"
           />
-          2,2 кг
+          кг
         </div>
         <div class="rating">
           <img
@@ -103,7 +90,7 @@
             alt=""
             class="cirlce-img"
           />
-          15,8 кг
+          кг
         </div>
       </div>
     </div>
@@ -216,3 +203,30 @@
     </div>
   </section>
 </template>
+
+<script>
+import { url } from "@/main.js";
+
+export default {
+  data() {
+    return {
+      url: url,
+
+      dataActivity: this.fetchDataActivity(),
+    };
+  },
+  methods: {
+    async fetchDataActivity() {
+      await fetch(`${url}/activities/reports/`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.dataActivity = data.results;
+          console.log(data.results);
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+  },
+};
+</script>

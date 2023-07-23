@@ -1,17 +1,21 @@
 <template>
   <section
     class="cards"
-    v-for="event in dataEventsList"
-    v-bind:key="event.object_id"
+    v-for="event in sortEventsList"
+    v-bind:key="event.event_id"
   >
     <div class="card review">
-      <img v-bind:src="'http://81.163.30.36:8000/' + event.photo" alt="" class="card-child card-img review" />
+      <img
+        v-bind:src="url + event.photo"
+        alt=""
+        class="card-child card-img review"
+      />
       <div class="card-child card-content review">
         <div class="card-content-wrapping">
           <div>
             <div class="card-header">
               <div class="card-info">
-                <p class="card-name" @click="findPlace(place.object_id)">
+                <p class="card-name" @click="navigateTo(event.event_id)">
                   {{ event.name }}
                 </p>
                 <div class="coordinates">
@@ -26,7 +30,7 @@
                     {{ event.adress }}
                   </div>
                 </div>
-                <div class="km-time">
+                <div class="parameters">
                   <div class="km">
                     <img
                       class="icon-margin"
@@ -63,7 +67,7 @@
           </div>
           <div>
             <button
-              class="button-event"
+              class="status-event"
               :style="{ backgroundColor: '#D3F36B' }"
             >
               {{ formattingStyleButton(event.status) }}
@@ -76,24 +80,46 @@
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
-  inject: ["sortName", "placeList"],
   data() {
     return {
-      sortPlaces: [],
+      url: url,
       visibleCards: "places",
       visibleDropdown: false,
       dataEventsList: this.fetchDataEventsAPI(),
+      sortEventsList: [],
     };
   },
-  mounted() {},
+  mounted() {
+    // Emits on mount
+    this.emitInterface();
+    this.emitSorting();
+  },
   methods: {
+    emitInterface() {
+      this.$emit("interface", {
+        searchByName: (value) => this.searchByName(value),
+      });
+    },
+    emitSorting() {
+      this.$emit("parameters", {
+        sortingAFiltering: (value) => this.sortingAFiltering(value),
+      });
+    },
+    navigateTo(id) {
+      this.$router.push({
+        name: "objectEvents",
+        params: { objectType: "events", id: id },
+      });
+    },
     async fetchDataEventsAPI() {
-      await fetch("http://81.163.30.36:8000/review/events/")
+      await fetch(`${url}/review/events/`)
         .then((response) => response.json())
         .then((data) => {
-          this.dataEventsList = data;
-          console.log(data);
+          this.dataEventsList = data.results;
+          this.sortEventsList = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -109,7 +135,6 @@ export default {
       });
     },
     formattingStyleButton(status) {
-      console.log(status);
       if (status == "Запланировано") {
         this.buttonColor = "#D3F36B";
 
@@ -162,8 +187,34 @@ export default {
         dropdbtn.classList.remove("active");
       }
     },
-    findPlace(id) {
-      console.log(this.placeList.filter((el) => el.id == id));
+    async sortingAFiltering(parameters) {
+      await fetch(
+        `${url}/review/events/?ordering=${parameters.method}${parameters.ordering}&report_count=${parameters.reportCount}&admarea_name=${parameters.admareaName}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortEventsList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    searchByName(search) {
+      if (search != undefined && search != null && search != "") {
+        this.sortEventsList = this.searchByNameAsync(search);
+      } else {
+        this.sortEventsList = this.dataEventsList;
+      }
+    },
+    async searchByNameAsync(search) {
+      await fetch(`${url}/review/events/?search=${search}`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortEventsList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
     },
   },
   watch: {

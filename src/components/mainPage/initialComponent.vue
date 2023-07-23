@@ -1,16 +1,20 @@
 <template>
   <main class="main initial">
     <img src="../../assets/imgs/initial_img.png" alt="" />
-    <button class="single-button initial">
-      <img
-        height="18"
-        width="18"
-        icon-btn
-        src="../../assets/imgs/signUp_icon.png"
-        alt=""
-      />
-      Регистрация
-    </button>
+    <router-link to="/profile/signup">
+      <button class="single-button initial">
+        <img
+          class="icon-margin"
+          height="18"
+          width="18"
+          icon-btn
+          src="../../assets/imgs/signUp_white.png"
+          alt=""
+        />
+        Регистрация
+      </button>
+    </router-link>
+
     <button class="button-text more" @click="visibleMore = !visibleMore">
       <img
         height="11"
@@ -81,25 +85,21 @@
 
 <script>
 export default {
+  inject: ["isAuthenticated"],
+
   data() {
     return {
       visibleMore: false,
     };
   },
-  methods: {
-    newFunc() {
-      console.log("hello");
-    },
-  },
+  methods: {},
   computed: {
     calcNotes() {
-      console.log(this.notes.length * 5);
       return this.notes.length * 5;
     },
   },
   watch: {
     inputValue(value) {
-      console.log("value" + value);
       if (value.length === 5) {
         this.notes = [];
       }

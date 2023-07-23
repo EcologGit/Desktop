@@ -1,12 +1,12 @@
 <template>
   <section
     class="cards"
-    v-for="place in dataPlaceList"
+    v-for="place in sortPlaceList"
     v-bind:key="place.object_id"
   >
     <div class="card review">
       <img
-        v-bind:src="'http://81.163.30.36:8000/' + place.photo"
+        v-bind:src="url + place.photo"
         alt=""
         class="card-child card-img review"
       />
@@ -15,7 +15,7 @@
           <div>
             <div class="card-header">
               <div class="card-info">
-                <p class="card-name" @click="findPlace(place.object_id)">
+                <p class="card-name" @click="navigateTo(place.object_id)">
                   {{ place.name }}
                 </p>
                 <div class="card-adress">
@@ -74,42 +74,88 @@
 </template>
 
 <script>
+import { url } from "@/main.js";
+
 export default {
-  inject: ["sortName", "placeList"],
   created() {
     // > Внедряемое свойство: 5
   },
 
   data() {
     return {
+      url: url,
       dataPlaceList: this.fetchDataPlaceAPI(),
+      sortPlaceList: [],
     };
   },
   mounted() {
-    return {
-      // dataPlaceList: this.fetchDataPlaceAPI(),
-    };
+    // Emits on mount
+    this.emitInterface();
+    this.emitSorting();
   },
   methods: {
+    emitInterface() {
+      this.$emit("interface", {
+        searchByName: (value) => this.searchByName(value),
+      });
+    },
+    emitSorting() {
+      this.$emit("parameters", {
+        sortingAFiltering: (value) => this.sortingAFiltering(value),
+      });
+    },
     findPlace(id) {
-      console.log(this.placeList.filter((el) => el.id == id));
+      this.placeList.filter((el) => el.id == id);
     },
     async fetchDataPlaceAPI() {
-      await fetch("http://81.163.30.36:8000/review/places/")
+      await fetch(`${url}/review/places/`)
         .then((response) => response.json())
         .then((data) => {
-          this.dataPlaceList = data;
+          this.dataPlaceList = data.results;
+          this.sortPlaceList = this.dataPlaceList;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    navigateTo(id) {
+      this.$router.push({
+        name: "objectPlaces",
+        params: { objectType: "places", id: id },
+      });
+    },
+    async sortingAFiltering(parameters) {
+      await fetch(
+        `${url}/review/places/?ordering=${parameters.method}${parameters.ordering}&report_count=${parameters.reportCount}&admarea_name=${parameters.admareaName}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortPlaceList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+
+    searchByName(search) {
+      if (search != undefined && search != null && search != "") {
+        this.sortPlaceList = this.searchByNameAsync(search);
+      } else {
+        this.sortPlaceList = this.dataPlaceList;
+      }
+    },
+    async searchByNameAsync(search) {
+      await fetch(`${url}/review/places/?search=${search}`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.sortPlaceList = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
         });
     },
   },
-  computed: {
-    //сортировка
-    evenNumbers() {
-      return console.log("a");
-    },
-  },
+
+  computed: {},
 };
 </script>
