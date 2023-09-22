@@ -1,0 +1,15 @@
+.planned::before {
+    background-color: #D3F36B;
+}
+
+.active::before {
+    background-color: purple;
+}
+
+.completed::before {
+    background-color: green;
+}
+
+.canceled::before {
+    background-color: red;
+}

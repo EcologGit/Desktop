@@ -1,0 +1,16 @@
+.param-object {
+    display: flex;
+    align-items: center;
+    line-height: 22px;
+}
+
+.param-object.status::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    margin-right: 8px;
+}

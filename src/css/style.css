@@ -1652,9 +1652,14 @@ textarea {
 }
 
 
+.custom-slider-small-list {
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
 
-
-
+.small-list-container {
+  max-width: 490px;
+}
 
 
 
