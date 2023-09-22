@@ -29,50 +29,7 @@
             <p>Описание</p>
             {{ dataObject.description }}
           </div>
-          <div class="object-events" v-if="actualEvents.length > 0">
-            <p>Мероприятия</p>
-            <div class="small-list events">
-              <div
-                class="event-small-card"
-                v-for="actualEvent in actualEvents"
-                v-bind:key="actualEvent.id"
-              >
-                <img
-                  class="small-card-img"
-                  v-bind:src="url + actualEvent.photo"
-                  alt=""
-                />
-                <div class="small-card-name">
-                  <p class="small-card-p">{{ actualEvent.name }}</p>
-                </div>
-                <div class="parameters-object">
-                  <div class="parameter-object date">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="16"
-                      src="../../assets/imgs/calendar.png"
-                      alt=""
-                    />
-                    {{ actualEvent.date }}
-                  </div>
-                  <div class="parameter-object time">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/clock.png  "
-                      alt=""
-                    />
-                    {{ actualEvent.time }}
-                  </div>
-                </div>
-                <div class="parameter-object status">
-                  {{ actualEvent.status }}
-                </div>
-              </div>
-            </div>
-          </div>
+          <ActualEventScroller :objectId="this.id" />
           <div v-if="sortPoints.length > 0" class="object-sortPoints">
             <p>Точка сортировки</p>
             <div class="small-list sortPoints">
@@ -366,18 +323,20 @@
     </section>
   </main>
 </template>
-
 <script>
 import { url } from "@/main.js";
+import ActualEventScroller from ".//components//ActualEventScroller.vue"
 
 export default {
+  components: {
+    ActualEventScroller,
+  },
   data() {
     return {
       reports: this.fetchReports(),
       url: url,
       dataObject: this.fetchDataObjectAPI(),
       dataObjectReportsStatistics: [],
-      actualEvents: this.fetchActualEvents(),
       visibleMore: false,
       id: this.$route.params.id,
       objectType: this.$route.params.objectType,
@@ -396,45 +355,9 @@ export default {
       await fetch(`${url}/review/places/${this.$route.params.id}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
           this.dataObject = data.object_info;
           this.dataObjectReportsStatistics = data.reports_statistic;
           //TODO: добавить Map по dataObjectReportsStatistics
-        })
-        .catch((error) => {
-          this.answer = "Ошибка! Нет доступа к API. " + error;
-        });
-    },
-    async fetchActualEvents() {
-      await fetch(
-        `${url}/review/actual_events/nature_object/${this.$route.params.id}`
-      )
-        .then((response) => response.json())
-        .then(() => {
-          this.actualEvents = [
-            {
-              id: 1,
-              date: "01.02.2000",
-              status: "Запланирова",
-              time: "00:00",
-              name: "Мероприятие",
-            },
-            {
-              id: 2,
-              date: "01.02.2000",
-              status: "Запланирова",
-              time: "00:00",
-              name: "Мероприятие",
-            },
-            {
-              id: 3,
-              date: "01.02.2000",
-              status: "Запланирова",
-              time: "00:00",
-              name: "Мероприятие",
-            },
-          ];
-          this.actualEvents = this.actualEvents.slice(0, 2);
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
