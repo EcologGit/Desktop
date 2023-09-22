@@ -1661,7 +1661,13 @@ textarea {
   max-width: 490px;
 }
 
+.nav-titles p {
+  font-size: 14px;
+}
 
+.nav-titles p:hover:not(.disabled) {
+  color: #D3F36B;
+}
 
 
 

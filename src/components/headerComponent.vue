@@ -12,7 +12,7 @@
         <p class="logo-name">{{ title }}</p>
       </div>
     </router-link>
-    <nav class="navs navs-header">
+    <nav class="navs navs-header nav-titles">
       <router-link
         to="/review/places"
         class="a-header review"
@@ -36,7 +36,7 @@
           src="../assets/imgs/review.png"
           alt="Иконка Обзор"
         />
-        <div>Обзор</div>
+        <p>Обзор</p>
       </router-link>
 
       <router-link
@@ -64,7 +64,7 @@
           src="../assets/imgs/activity.png"
           alt="Иконка Лента"
         />
-        <div>Активность</div>
+        <p>Активность</p>
       </router-link>
 
       <router-link
@@ -91,7 +91,7 @@
           src="../assets/imgs/favorite.png"
           alt="Иконка Отметки"
         />
-        <div>Отметки</div>
+        <p :class="authenticated ? '' : 'disabled'">Отметки</p>
       </router-link>
 
       <router-link
@@ -118,7 +118,7 @@
           src="../assets/imgs/profile.png"
           alt="Иконка Профиль"
         />
-        <div>Профиль</div>
+        <p :class="authenticated ? '' : 'disabled'">Профиль</p>
       </router-link>
       <div>
         <a class="a-circle-icon" style="border: none" @click="navigateTo()">
