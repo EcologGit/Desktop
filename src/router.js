@@ -174,9 +174,8 @@ export default createRouter({
             ],
 
         },
-
-
-
-
-    ]
+    ],
+    scrollBehavior() {
+        return { top: 0 }
+    },
 })

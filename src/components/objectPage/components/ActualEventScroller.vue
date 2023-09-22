@@ -1,7 +1,7 @@
 <template>
   <div class="object-events" v-if="actualEvents.length > 0">
     <p>Мероприятия</p>
-    <div style="display: flex; flex-direction: row; gap: 20px">
+    <div style="display: flex; flex-direction: row; gap: 20px; cursor: default;">
       <div
         class="small-list events custom-slider-small-list small-list-container"
         ref="eventSlider"
@@ -13,11 +13,12 @@
           v-for="actualEvent in actualEvents"
           v-bind:key="actualEvent.id"
         >
+        <router-link :to="`/review/events/${actualEvent.id}`">
           <img
             class="small-card-img"
             v-bind:src="getMediaSrc(actualEvent.photo)"
             alt=""
-          />
+          /></router-link>
           <div class="small-card-name">
             <p class="small-card-p">{{ actualEvent.name }}</p>
           </div>
