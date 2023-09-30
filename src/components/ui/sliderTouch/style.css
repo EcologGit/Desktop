@@ -1,0 +1,43 @@
+.small-list {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+.custom-slider-small-list {
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+.small-list-container {
+    max-width: 490px;
+}
+
+@keyframes logo-animation {
+  0% {
+    transform: rotate(90deg);
+  }
+  33% {
+    transform: rotate(180deg);
+  }
+  67% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animation-logo {
+  border-radius: 0% 0% 50% 50%;
+  border-style: solid;
+  border-color: var(--desktop-ios-dark-grey, #24282C);
+  border-width: 3px;
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0;
+  border-top-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  animation: logo-animation 0.3s ease infinite;
+}

@@ -1,23 +1,21 @@
 <template>
   <div class="object-events" v-if="actualEvents.length > 0">
     <p>Мероприятия</p>
-    <div style="display: flex; flex-direction: row; gap: 20px; cursor: default;">
-      <div
-        class="small-list events custom-slider-small-list small-list-container"
-        ref="eventSlider"
-        @mousedown="mouseDownHandler"
-        @mouseup="mouseUpHandler"
-      >
+    <sliderTouch
+      :isLoading="isLoading"
+      :hasNextData="urlNextActualEvent === null"
+    >
+      <template v-slot:sliderContent>
         <div
           class="event-small-card"
           v-for="actualEvent in actualEvents"
           v-bind:key="actualEvent.id"
         >
-        <router-link :to="`/review/events/${actualEvent.id}`">
-          <img
-            class="small-card-img"
-            v-bind:src="getMediaSrc(actualEvent.photo)"
-            alt=""
+          <router-link :to="`/review/events/${actualEvent.id}`">
+            <img
+              class="small-card-img"
+              v-bind:src="getMediaSrc(actualEvent.photo)"
+              alt=""
           /></router-link>
           <div class="small-card-name">
             <p class="small-card-p">{{ actualEvent.name }}</p>
@@ -44,34 +42,34 @@
               {{ actualEvent.time }}
             </div>
           </div>
-          <div :class="['param-object', 'status', `${getStatusClass(actualEvent.status_id)}`]">
-            {{ getStatusName(actualEvent.status_id) }}
-          </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </sliderTouch>
   </div>
 </template>
 
-<style src="./styles.css">
-</style>
+<style src="./styles.css"></style>
 
 <script>
 import { url } from "@/main.js";
 import moment from "moment";
-import { eventStatuses } from "..//..//..//consts//eventStatus//eventStatus"
-import "..//..//..//consts//eventStatus//styles.css"
+import { eventStatuses } from "..//..//..//consts//eventStatus//eventStatus";
+import "..//..//..//consts//eventStatus//styles.css";
+import sliderTouch from "..//..//ui//sliderTouch//sliderTouch.vue";
 export default {
   props: {
     objectId: Number,
+    isLoadReady: Boolean,
+  },
+  components: {
+    sliderTouch,
   },
   data() {
     return {
       actualEvents: [],
       eventStatusesDict: [],
       urlNextActualEvent: `${url}/review/actual_events/nature_object/${this.objectId}`,
-      isClick: false,
-      startScrollCoordinateX: null,
+      isLoading: false,
     };
   },
   created() {
@@ -83,31 +81,6 @@ export default {
     };
   },
   methods: {
-    handleMouseOver(event) {
-      if (this.isClick && this.startScrollCoordinateX) {
-        this.$refs.eventSlider.scrollLeft +=
-          (this.startScrollCoordinateX - event.clientX) * 2;
-        this.startScrollCoordinateX = event.clientX;
-      }
-    },
-    mouseDownHandler(event) {
-      event.preventDefault();
-      this.isClick = true;
-      this.startScrollCoordinateX = event.clientX;
-      const once = {
-        once: true,
-      };
-      window.addEventListener(
-        "mouseup",
-        () => {
-          this.isClick = false;
-          this.startScrollCoordinateX = null;
-          window.removeEventListener("mouseover", this.handleMouseOver);
-        },
-        once
-      );
-      window.addEventListener("mouseover", this.handleMouseOver);
-    },
     getMediaSrc(eventUrl) {
       return `${url}${eventUrl}/`;
     },
@@ -119,17 +92,11 @@ export default {
     getStatusClass(status_id) {
       let statusName = this.getStatusName(status_id);
       if (statusName) {
-        return Object.entries(eventStatuses).find((el) => el[1] === statusName)[0]
+        return Object.entries(eventStatuses).find(
+          (el) => el[1] === statusName
+        )[0];
       }
-      return ''
-    },
-    rightScrollEvent() {
-      const slider = this.$refs.eventSlider;
-      slider.scrollLeft += 150;
-    },
-    leftScrollEvent() {
-      const slider = this.$refs.eventSlider;
-      slider.scrollLeft -= 150;
+      return "";
     },
     async fetchEventsStatusDict(urlEventStatuses) {
       await fetch(urlEventStatuses)
@@ -139,6 +106,7 @@ export default {
         });
     },
     async fetchActualEvents(url) {
+      this.isLoading = true;
       await fetch(url)
         .then((response) => response.json())
         .then((response) => {
@@ -153,6 +121,9 @@ export default {
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
   },
