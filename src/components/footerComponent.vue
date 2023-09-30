@@ -6,6 +6,7 @@
         <p>Alpha version</p>
         <p>2023 г.</p>
       </div>
+      <liveInternetCounter/>
       <div class="footer-links">
         <div class="block">
           <a href="#" class="footer-link">Обзор</a>
@@ -38,7 +39,11 @@
 </template>
 
 <script>
+import liveInternetCounter from "./liveInternetCounter.vue";
 export default {
+  components: {
+    liveInternetCounter
+  },
   props: {},
   data() {
     return {};
