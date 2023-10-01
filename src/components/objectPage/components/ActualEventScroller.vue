@@ -73,7 +73,6 @@ import "..//..//ui//sliderTouch//styles.css";
 import sliderTouch from "..//..//ui//sliderTouch//sliderTouch.vue";
 export default {
   props: {
-    objectId: Number,
     eventUrl: String
   },
   components: {
