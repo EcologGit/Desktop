@@ -4,6 +4,7 @@
     <sliderTouch
       :isLoading="isLoading"
       :hasNextData="urlNextActualEvent === null"
+      :setIsLoadReady="setIsLoadReady"
     >
       <template v-slot:sliderContent>
         <div
@@ -43,6 +44,19 @@
             </div>
           </div>
         </div>
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+          "
+        >
+          <div
+            v-show="isLoadReady && isLoading"
+            class="animation-logo logo-animation"
+          ></div>
+        </div>
       </template>
     </sliderTouch>
   </div>
@@ -55,11 +69,11 @@ import { url } from "@/main.js";
 import moment from "moment";
 import { eventStatuses } from "..//..//..//consts//eventStatus//eventStatus";
 import "..//..//..//consts//eventStatus//styles.css";
+import "..//..//ui//sliderTouch//styles.css";
 import sliderTouch from "..//..//ui//sliderTouch//sliderTouch.vue";
 export default {
   props: {
     objectId: Number,
-    isLoadReady: Boolean,
   },
   components: {
     sliderTouch,
@@ -68,8 +82,9 @@ export default {
     return {
       actualEvents: [],
       eventStatusesDict: [],
-      urlNextActualEvent: `${url}/review/actual_events/nature_object/${this.objectId}`,
+      urlNextActualEvent: `${url}/review/actual_events/nature_object/${this.objectId}/?page_size=4`,
       isLoading: false,
+      isLoadReady: false,
     };
   },
   created() {
@@ -81,6 +96,9 @@ export default {
     };
   },
   methods: {
+    setIsLoadReady(val) {
+      this.isLoadReady = val;
+    },
     getMediaSrc(eventUrl) {
       return `${url}${eventUrl}/`;
     },
@@ -110,7 +128,7 @@ export default {
       await fetch(url)
         .then((response) => response.json())
         .then((response) => {
-          this.actualEvents = response.results.map((key) => {
+          const newData = response.results.map((key) => {
             return {
               id: key.pk,
               date: moment(key.time_start).format("DD.MM.YYYY"),
@@ -118,6 +136,14 @@ export default {
               ...key,
             };
           });
+          if (this.actualEvents.length > 0){
+            this.actualEvents = [...this.actualEvents, ...newData]
+          }
+          else {
+            this.actualEvents = newData;
+          }
+          
+          this.urlNextActualEvent = response.next;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -125,6 +151,18 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
+    },
+  },
+  watch: {
+    isLoadReady: {
+      async handler(newValue) {
+        if (!this.isLoading && newValue && this.urlNextActualEvent) {
+          await this.fetchActualEvents(
+            this.urlNextActualEvent
+          )
+    
+        }
+      },
     },
   },
 };
