@@ -74,6 +74,7 @@ import sliderTouch from "..//..//ui//sliderTouch//sliderTouch.vue";
 export default {
   props: {
     objectId: Number,
+    eventUrl: String
   },
   components: {
     sliderTouch,
@@ -82,7 +83,7 @@ export default {
     return {
       actualEvents: [],
       eventStatusesDict: [],
-      urlNextActualEvent: `${url}/review/actual_events/nature_object/${this.objectId}/?page_size=4`,
+      urlNextActualEvent: this.eventUrl,
       isLoading: false,
       isLoadReady: false,
     };

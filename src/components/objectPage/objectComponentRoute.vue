@@ -51,50 +51,7 @@
             <p>Описание</p>
             {{ dataObject.description }}
           </div>
-          <div class="object-events" v-if="actualEvents.length > 0">
-            <p>Мероприятия</p>
-            <div class="small-list events">
-              <div
-                class="event-small-card"
-                v-for="actualEvent in actualEvents"
-                v-bind:key="actualEvent.id"
-              >
-                <img
-                  class="small-card-img"
-                  v-bind:src="url + actualEvent.photo"
-                  alt=""
-                />
-                <div class="small-card-name">
-                  <p class="small-card-p">{{ actualEvent.name }}</p>
-                </div>
-                <div class="parameters-object">
-                  <div class="parameter-object date">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="16"
-                      src="../../assets/imgs/calendar.png"
-                      alt=""
-                    />
-                    {{ actualEvent.date }}
-                  </div>
-                  <div class="parameter-object time">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../assets/imgs/clock.png  "
-                      alt=""
-                    />
-                    {{ actualEvent.time }}
-                  </div>
-                </div>
-                <div class="parameter-object status">
-                  {{ actualEvent.status }}
-                </div>
-              </div>
-            </div>
-          </div>
+          <ActualEventScroller :objectId="this.id" :eventUrl="`${url}/review/actual_events/route/${this.id}/?page_size=4`"/>
           <div class="object-sortPoints" v-if="sortPoints.length > 0">
             <p>Точка сортировки</p>
             <div class="small-list sortPoints">
@@ -224,7 +181,7 @@
                   />
                   Пластик
                 </div>
-                <div>{{ dataObjectReportsStatistics[0].sum_amount }} кг</div>
+                <div>0,0 кг</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -408,8 +365,12 @@
 
 <script>
 import { url } from "@/main.js";
+import ActualEventScroller from './/components//ActualEventScroller.vue'
 
 export default {
+  components: {
+    ActualEventScroller,
+  },
   data() {
     return {
       url: url,

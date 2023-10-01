@@ -29,7 +29,7 @@
             <p>Описание</p>
             {{ dataObject.description }}
           </div>
-          <ActualEventScroller :objectId="this.id" />
+          <ActualEventScroller :objectId="this.id" :eventUrl="`${url}/review/actual_events/nature_object/${this.id}/?page_size=4`"/>
           <div v-if="sortPoints.length > 0" class="object-sortPoints">
             <p>Точка сортировки</p>
             <div class="small-list sortPoints">
