@@ -80,8 +80,8 @@ fetchNearestSortPoints(urlNextNearestSortPoints.value);
                 {{ sortPoint.schedule }}
               </div>
             </div>
-            <div class="parameter-object status">
-              {{ sortPoint.locality }}
+            <div style="text-align: left;">
+              {{ sortPoint.adress }}
             </div>
           </div>
         <div

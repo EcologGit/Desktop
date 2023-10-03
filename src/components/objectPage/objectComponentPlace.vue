@@ -30,7 +30,7 @@
             {{ dataObject.description }}
           </div>
           <ActualEventScroller :eventUrl="`${url}/review/actual_events/nature_object/${this.id}/?page_size=4`"/>
-          <NearestSortPointScroller :sortPointsUrl="`${url}/review/nearest_nature_objects_to_sort_point/${this.id}/?page_size=4`"/>
+          <NearestSortPointScroller :sortPointsUrl="`${url}/review/nearest_sort_points/nature_object/${this.id}/?page_size=4`"/>
         </div>
         <div class="content-part right">
           <div class="object-coordinates">
