@@ -54,37 +54,7 @@
             <p>Описание</p>
             {{ dataObject.description }}
           </div>
-          <div class="object-events" v-if="nearObjects.length > 0">
-            <p>Объекты</p>
-            <div class="small-list events">
-              <div
-                class="event-small-card"
-                v-for="nearObject in nearObjects"
-                v-bind:key="nearObject.pk"
-              >
-                <img
-                  class="small-card-img"
-                  v-bind:src="url + nearObject.photo"
-                  alt=""
-                />
-                <div class="small-card-name">
-                  <p class="small-card-p">{{ nearObject.name }}</p>
-                </div>
-                <div class="parameters-object">
-                  <div class="parameter-object date">
-                    <img
-                      class="icon-margin"
-                      width="12"
-                      height="20"
-                      src="../../assets/imgs/map.png"
-                      alt=""
-                    />
-                    {{ nearObject.locality }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <PlaceScroller :placeUrl="`${url}/review/event_nature_objects/${this.id}`"/>
           <div class="object-sortPoints" v-if="sortPoints.length > 0">
             <p>Точка сортировки</p>
             <div class="small-list sortPoints">
@@ -324,8 +294,12 @@
 
 <script>
 import { url } from "@/main.js";
+import PlaceScroller from ".//components//PlaceScroller.vue"
 
 export default {
+  components: {
+    PlaceScroller
+  },
   data() {
     return {
       sortPoints: this.fetchSortPoints(),
