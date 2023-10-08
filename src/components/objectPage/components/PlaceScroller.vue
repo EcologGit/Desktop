@@ -4,7 +4,7 @@ import sliderTouch from "..//..//ui//sliderTouch//sliderTouch.vue";
 import "..//..//ui//sliderTouch//styles.css";
 import { url } from "@/main.js";
 
-const props = defineProps(["placeUrl"]);
+const props = defineProps(["placeUrl", "title"]);
 
 const places = ref([]);
 const urlNextPlace = ref(props.placeUrl);
@@ -47,7 +47,7 @@ fetchPlace(urlNextPlace.value);
 
 <template>
   <div class="object-events" v-if="places.length > 0">
-    <p>Точки сортировки</p>
+    <p>{{ props.title }}</p>
     <sliderTouch :setIsLoadReady="setIsLoadReady">
       <template v-slot:sliderContent>
         <div

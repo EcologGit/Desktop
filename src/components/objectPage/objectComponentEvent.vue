@@ -54,7 +54,7 @@
             <p>Описание</p>
             {{ dataObject.description }}
           </div>
-          <PlaceScroller :placeUrl="`${url}/review/event_nature_objects/${this.id}`"/>
+          <PlaceScroller :placeUrl="`${url}/review/event_nature_objects/${this.id}`" title='Объекты'/>
           <div class="object-sortPoints" v-if="sortPoints.length > 0">
             <p>Точка сортировки</p>
             <div class="small-list sortPoints">
