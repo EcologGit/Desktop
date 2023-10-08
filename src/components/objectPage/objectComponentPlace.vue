@@ -184,109 +184,7 @@
           </div>
         </div>
       </section>
-      <section class="object-reports">
-        <p>Отчеты</p>
-        <div
-          class="object-report-card"
-          v-for="report in reports"
-          v-bind:key="report.created_at"
-        >
-          <div class="object-report-info">
-            <div class="object-report-user-info">
-              <div class="object-report-user-img-name" @click="navigateTo(1)">
-                <img
-                  src="../../assets/imgs/default_user_photo_small.png"
-                  alt="User"
-                  class="user-photo"
-                />
-                {{ report.user_id.public_name }}
-              </div>
-
-              <div class="date-and-time">
-                <div class="date">{{ report.created_at }}</div>
-
-                <div class="time">Time</div>
-              </div>
-            </div>
-            <div class="object-report-locality">
-              <img
-                class="icon-margin"
-                width="11"
-                height="18"
-                src="../../assets/imgs/map.png"
-                alt=""
-              />Locality
-            </div>
-            <div class="object-report-route">
-              <img
-                class="icon-margin"
-                width="18"
-                height="18"
-                src="../../assets/imgs/places.png"
-                alt=""
-              />Route
-            </div>
-          </div>
-          <div class="report-result">
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/plastic_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />0,0 кг
-            </div>
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/glass_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />
-              0,0 кг
-            </div>
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/batteries_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />
-              0,0 кг
-            </div>
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/light_bulbs_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />
-              0,0 кг
-            </div>
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/paper_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />
-              0,0 кг
-            </div>
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/metal_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />
-              0,0 кг
-            </div>
-          </div>
-          <div class="object-result-imgs">
-            <img src="../../assets/imgs/default_activity.png" alt="" />
-            <img src="../../assets/imgs/default_activity.png" alt="" />
-            <img src="../../assets/imgs/default_activity.png" alt="" />
-            <img src="../../assets/imgs/default_activity.png" alt="" />
-          </div>
-          <div class="object-result-desc">
-            {{ report.description }}
-          </div>
-        </div>
-      </section>
+      <ReportReviewScroller :reportUrl='`review/reports/nature_object/${this.$route.params.id}`' title='Отчёты' :pageSize='10'/>
     </section>
   </main>
 </template>
@@ -294,15 +192,16 @@
 import { url } from "@/main.js";
 import ActualEventScroller from ".//components//ActualEventScroller.vue"
 import NearestSortPointScroller from ".//components//NearestSortPointScroller.vue"
+import ReportReviewScroller from '..//widgets//scrollers//ReportReviewScroller//ReportReviewScroller.vue'
 
 export default {
   components: {
+    ReportReviewScroller,
     ActualEventScroller,
     NearestSortPointScroller,
   },
   data() {
     return {
-      reports: this.fetchReports(),
       url: url,
       dataObject: this.fetchDataObjectAPI(),
       dataObjectReportsStatistics: [],
@@ -326,18 +225,6 @@ export default {
           this.dataObject = data.object_info;
           this.dataObjectReportsStatistics = data.reports_statistic;
           //TODO: добавить Map по dataObjectReportsStatistics
-        })
-        .catch((error) => {
-          this.answer = "Ошибка! Нет доступа к API. " + error;
-        });
-    },
-    async fetchReports() {
-      await fetch(
-        `${url}/review/reports/nature_object/${this.$route.params.id}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          this.reports = data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

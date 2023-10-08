@@ -48,7 +48,7 @@ const mouseDownHandler = (event) => {
       ref="sliderTouch"
       @mousedown="mouseDownHandler"
     >
-      <slot name="sliderContent" :isLoadReady="true"></slot>
+      <slot name="sliderContent"></slot>
     </div>
   </div>
 </template>
