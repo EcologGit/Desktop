@@ -2,6 +2,8 @@
 import { baseApi } from "..//..//..//shared//api//base//BaseApi.js";
 import ScrollLoader from "..//..//..//ui//loaders//scrollLoader//ScrollLoader.vue";
 import { ref, onMounted } from "vue";
+import moment from "moment";
+import { wasteDictImagesDict } from "..//..//..//..//consts//waste//wasteImages.js";
 
 const props = defineProps(["reportUrl", "title", "pageSize"]);
 const isLoading = ref(false);
@@ -9,13 +11,33 @@ const reports = ref([]);
 const nextUrl = ref(props.reportUrl);
 const containerReprots = ref(null);
 const loadBottom = ref(null);
+const wasteTypes = ref([]);
+
+function getWasteByPk(pk) {
+  return wasteTypes.value.find((key) => key.pk === pk);
+}
+
+function getSrcImageByPk(pk) {
+  const nameStatus = getWasteByPk(pk)?.name;
+  if (nameStatus) {
+    return require(`@/${wasteDictImagesDict[nameStatus]}`);
+  }
+  return "";
+}
 
 function fetchReports() {
   isLoading.value = true;
   baseApi
     .get(nextUrl.value, { params: { page_size: props.pageSize } })
     .then((response) => {
-      reports.value = reports.value.concat(response.data.results);
+      const preparedData = response.data.results.map((key) => {
+        return {
+          ...key,
+          date: moment(key.created_at).format("DD.MM.YYYY"),
+          time: moment(key.created_at).format("hh:mm"),
+        };
+      });
+      reports.value = reports.value.concat(preparedData);
       nextUrl.value = response.data.next;
     })
     .catch(() => {})
@@ -24,18 +46,24 @@ function fetchReports() {
     });
 }
 
+function getWasteTypesDict() {
+  baseApi.get("/review/statuses-waste-types-dict/").then((response) => {
+    wasteTypes.value = wasteTypes.value.concat(response.data.results);
+  });
+}
+
 const observerCallback = (entries, observer) => {
   entries.forEach(() => {
     if (nextUrl.value && !isLoading.value) {
       fetchReports();
-    }
-    else if (!nextUrl.value) {
+    } else if (!nextUrl.value) {
       observer.disconnect();
     }
   });
 };
 
 fetchReports();
+getWasteTypesDict();
 onMounted(() => {
   const observer = new IntersectionObserver(observerCallback);
   observer.observe(loadBottom.value);
@@ -62,59 +90,24 @@ onMounted(() => {
           </div>
 
           <div class="date-and-time">
-            <div class="date">{{ report.created_at }}</div>
+            <div class="date">{{ report.date }}</div>
 
-            <div class="time">Time</div>
+            <div class="time">{{ report.time }}</div>
           </div>
         </div>
       </div>
       <div class="report-result">
-        <div class="result-type">
+        <div
+          class="result-type"
+          v-for="result in report.results"
+          v-bind:key="result.waste_id"
+        >
           <img
-            src="../../../../assets/imgs/plastic_trash_type.png"
+            :src="getSrcImageByPk(result.waste_id)"
             alt=""
             class="cirlce-img"
-          />0,0 кг
-        </div>
-        <div class="result-type">
-          <img
-            src="../../../../assets/imgs/glass_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
-        </div>
-        <div class="result-type">
-          <img
-            src="../../../../assets/imgs/batteries_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
-        </div>
-        <div class="result-type">
-          <img
-            src="../../../../assets/imgs/light_bulbs_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
-        </div>
-        <div class="result-type">
-          <img
-            src="../../../../assets/imgs/paper_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
-        </div>
-        <div class="result-type">
-          <img
-            src="../../../../assets/imgs/metal_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
+          />{{ result?.amount }}
+          {{ getWasteByPk(result.waste_id)?.unit_of_waste }}
         </div>
       </div>
       <div class="object-result-imgs"></div>
