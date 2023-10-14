@@ -6,7 +6,10 @@
         <p>Alpha version</p>
         <p>2023 г.</p>
       </div>
+      <div>
       <liveInternetCounter/>
+      <ramblerCounter/>
+    </div>
       <div class="footer-links">
         <div class="block">
           <a href="#" class="footer-link">Обзор</a>
@@ -40,9 +43,11 @@
 
 <script>
 import liveInternetCounter from "./liveInternetCounter.vue";
+import ramblerCounter from './ramblerCounter.vue';
 export default {
   components: {
-    liveInternetCounter
+    liveInternetCounter,
+    ramblerCounter,
   },
   props: {},
   data() {
