@@ -71,7 +71,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="object-reports" ref="containerReprots">
+  <section class="object-reports" ref="containerReprots" v-show='reports.length > 0'>
     <p>{{ props.title }}</p>
     <div
       class="object-report-card"

@@ -72,43 +72,8 @@
             />
             Добавить в отметки
           </button>
-          <div class="object-points">
-            <p>Рейтинг</p>
-            <div class="list-points">
-              <div class="point">
-                <div class="rate">
-                  <img
-                    src="../../assets/imgs/circle_bus.png"
-                    alt=""
-                    class="cirlce-img"
-                  />
-                  Доступность
-                </div>
-                <div>{{ dataObject.avg_availability }}</div>
-              </div>
-              <div class="point">
-                <div class="rate">
-                  <img
-                    src="../../assets/imgs/circle_flower.png"
-                    alt=""
-                    class="cirlce-img"
-                  />
-                  Красота
-                </div>
-                <div>{{ dataObject.avg_beauty }}</div>
-              </div>
-              <div class="point">
-                <div class="rate">
-                  <img
-                    src="../../assets/imgs/circle_sortPoint.png"
-                    alt=""
-                    class="cirlce-img"
-                  />
-                  Чистота
-                </div>
-                <div>{{ dataObject.avg_purity }}</div>
-              </div>
-            </div>
+          <div class="object-points" v-if='dataObject.avg_availability'>
+            <RatingBlock :availability='dataObject.avg_availability' :beauty='dataObject.avg_beauty' :purity='dataObject.avg_purity'/>
           </div>
           <div class="object-points">
             <p>Собранные отходы</p>
@@ -193,12 +158,14 @@ import { url } from "@/main.js";
 import ActualEventScroller from ".//components//ActualEventScroller.vue"
 import NearestSortPointScroller from ".//components//NearestSortPointScroller.vue"
 import ReportReviewScroller from '..//widgets//scrollers//ReportReviewScroller//ReportReviewScroller.vue'
+import RatingBlock from '..//widgets//statistic//rating//RatingBlock.vue'
 
 export default {
   components: {
     ReportReviewScroller,
     ActualEventScroller,
     NearestSortPointScroller,
+    RatingBlock,
   },
   data() {
     return {
