@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { url } from "@/main.js";
+import { baseApi } from '../shared/api/base/BaseApi.js'
 
 export default {
   inject: ["isAuthenticated"],
@@ -91,24 +91,17 @@ export default {
       var urlencoded = new URLSearchParams();
       urlencoded.append("username", this.username);
       urlencoded.append("password", this.password);
-      var requestOptions = {
-        method: "POST",
-        redirect: "follow",
-        body: urlencoded,
-      };
-
-      await fetch(`${url}/users/api/browser_token/`, requestOptions)
-        .then((response) => response.text())
+      await baseApi.post(`/users/api/browser_token/`, urlencoded)
         .then((result) => {
-          result = JSON.parse(result);
+          const data = result.data;
           if (
-            result["access"] != null &&
-            result["access"] != undefined &&
-            result["access"] != ""
+            data["access"] != null &&
+            data["access"] != undefined &&
+            data["access"] != ""
           ) {
-            localStorage.setItem('access_token', result["access"]);
+            localStorage.setItem('access_token', data["access"]);
             this.isAuthenticated.value = true;
-            this.navigateTo(result['id']);
+            this.navigateTo(data['id']);
           } else {
             return false;
           }

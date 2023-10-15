@@ -7,7 +7,6 @@
 <script>
 import { ref } from "vue";
 import { baseApi } from "./components/shared/api/base/BaseApi.js"
-import { url } from '@/main'
 
 
 let authenticated = ref(false);
@@ -35,7 +34,7 @@ export default {
   methods: {
     getAuthenticated() {},
     authenticate() {
-      baseApi.post(`${url}/users/api/browser_refresh/`).then(response => {
+      baseApi.post(`/users/api/browser_refresh/`).then(response => {
         this.id = response.data.id;
       })
     },
