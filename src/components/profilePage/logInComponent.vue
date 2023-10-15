@@ -64,7 +64,7 @@
 import { url } from "@/main.js";
 
 export default {
-  inject: ["isAuthenticated", "tokenAuthenticated"],
+  inject: ["isAuthenticated"],
 
   data() {
     return {
@@ -96,7 +96,6 @@ export default {
         redirect: "follow",
         body: urlencoded,
       };
-      this.isAuthenticated.value = true;
 
       await fetch(`${url}/users/api/browser_token/`, requestOptions)
         .then((response) => response.text())
@@ -107,8 +106,9 @@ export default {
             result["access"] != undefined &&
             result["access"] != ""
           ) {
-            this.tokenAuthenticated.value = result["access"];
-            this.navigateTo(1);
+            localStorage.setItem('access', result["access"]);
+            this.isAuthenticated.value = true;
+            this.navigateTo(result['id']);
           } else {
             return false;
           }
