@@ -9,6 +9,7 @@
       <div>
       <liveInternetCounter/>
       <ramblerCounter/>
+      <mailCounter/>
     </div>
       <div class="footer-links">
         <div class="block">
@@ -44,10 +45,12 @@
 <script>
 import liveInternetCounter from "./liveInternetCounter.vue";
 import ramblerCounter from './ramblerCounter.vue';
+import mailCounter from './mailCounter.vue'
 export default {
   components: {
     liveInternetCounter,
     ramblerCounter,
+    mailCounter,
   },
   props: {},
   data() {
