@@ -106,7 +106,7 @@ export default {
             result["access"] != undefined &&
             result["access"] != ""
           ) {
-            localStorage.setItem('access', result["access"]);
+            localStorage.setItem('access_token', result["access"]);
             this.isAuthenticated.value = true;
             this.navigateTo(result['id']);
           } else {
