@@ -1,8 +1,9 @@
 import axios from "axios";
-import { url } from "@/main";
+
+const url = 'http://127.0.0.1:8000/django_api';
+
 export const baseApi = axios.create({
-  baseURL: "http://81.163.30.36/django_api",
-  timeout: 5000,
+  baseURL: url,
 });
 
 export const setAuthToken = (config) => {
@@ -15,12 +16,8 @@ export const setAuthToken = (config) => {
 
 export const updateAuthToken = async (error) => {
   const originalRequest = error.config;
-  if (
-    error.response.status === 401 &&
-    originalRequest &&
-    !originalRequest._isRetry
-  ) {
-    originalRequest._isRetry = true;
+  if (error.response.status === 401 && !originalRequest._retry) {
+    error._retry = false;
     try {
       const response = await axios.post(`${url}/users/api/browser_refresh/`);
       localStorage.setItem("access_token", response.data.access);
@@ -29,7 +26,10 @@ export const updateAuthToken = async (error) => {
       console.log();
     }
   }
+  return Promise.reject(error);
 };
 
 baseApi.interceptors.request.use(setAuthToken);
-baseApi.interceptors.response.use(null, updateAuthToken);
+baseApi.interceptors.response.use(function (response) {
+  return response;
+}, updateAuthToken);
