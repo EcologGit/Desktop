@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = 'http://127.0.0.1:8000/django_api';
+const url = "http://127.0.0.1:8000/django_api";
 
 export const baseApi = axios.create({
   baseURL: url,
@@ -19,7 +19,14 @@ export const updateAuthToken = async (error) => {
   if (error.response.status === 401 && !originalRequest._retry) {
     error._retry = false;
     try {
-      const response = await axios.post(`${url}/users/api/browser_refresh/`);
+      const config = {
+        method: "post",
+        withCredentials: true
+      };
+      const response = await axios.request(
+        `${url}/users/api/browser_refresh/`,
+        config
+      );
       localStorage.setItem("access_token", response.data.access);
       return baseApi.request(originalRequest);
     } catch (e) {
