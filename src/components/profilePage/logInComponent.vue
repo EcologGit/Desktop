@@ -64,7 +64,7 @@
 import { baseApi } from '../shared/api/base/BaseApi.js'
 
 export default {
-  inject: ["isAuthenticated"],
+  inject: ["isAuthenticated", "userId"],
 
   data() {
     return {
@@ -101,6 +101,7 @@ export default {
           ) {
             localStorage.setItem('access_token', data["access"]);
             this.isAuthenticated.value = true;
+            this.userId.value = result.data.id;
             this.navigateTo(data['id']);
           } else {
             return false;

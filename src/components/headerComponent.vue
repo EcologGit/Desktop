@@ -95,7 +95,7 @@
       </router-link>
 
       <router-link
-        :to="authenticated ? { name: 'profileReports', params: { id: 1 } } : ''"
+        :to="userId.value ? { name: 'profileReports', params: { id: userId.value } } : ''"
         class="a-header profile"
         @click="changePage(authenticated)"
         :class="authenticated ? '' : 'disabled'"
@@ -135,7 +135,7 @@
 
 <script>
 export default {
-  inject: ["isAuthenticated"],
+  inject: ["isAuthenticated", "userId"],
 
   props: {
     title: String,

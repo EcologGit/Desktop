@@ -11,13 +11,13 @@ import { baseApi } from "./components/shared/api/base/BaseApi.js"
 
 let authenticated = ref(false);
 let authenticatedToken = ref("");
+let id = ref(null)
 export default {
   name: "App",
 
   data() {
     return {
       dataPlaceList: [],
-      id: this.authenticate(),
     };
   },
   provide() {
@@ -26,7 +26,7 @@ export default {
       tokenAuthenticated: authenticatedToken,
       sortName: "Сортировка",
       placeList: this.dataPlaceList,
-      userId: this.id,
+      userId: id,
     };
   },
 
@@ -35,7 +35,7 @@ export default {
     getAuthenticated() {},
     authenticate() {
       baseApi.post(`/users/api/browser_refresh/`).then(response => {
-        this.id = response.data.id;
+        id.value = response.data.id;
       })
     },
     countTaskOpen(id) {
