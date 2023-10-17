@@ -129,7 +129,7 @@
 </template>
 
 <script>
-import { url } from "@/main.js";
+import { baseApi } from "..//shared//api//base//BaseApi.js"
 
 export default {
   inject: ["isAuthenticated", "tokenAuthenticated"],
@@ -178,22 +178,9 @@ export default {
       event.target.classList.add("active");
     },
     async fetchDataProfileAPI() {
-      var myHeaders = new Headers();
-      myHeaders.append(
-        "Authorization",
-        `Bearer ${this.tokenAuthenticated.value}`
-      );
-      console.log(myHeaders);
-
-      var requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow",
-      };
-      await fetch(`${url}/user_profiles/profile_info/1/`, requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          this.dataProfile = data;
+      await baseApi.get(`/user_profiles/profile_info/1/`)
+        .then((response) => {
+          this.dataProfile = response.data;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
