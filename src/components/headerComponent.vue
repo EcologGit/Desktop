@@ -68,14 +68,14 @@
       </router-link>
 
       <router-link
-        :to="authenticated ? '/marks/places' : ''"
+        :to="userId.value ? '/marks/places' : ''"
         class="a-header marks"
-        :class="authenticated ? '' : 'disabled'"
-        @click="changePage(authenticated)"
+        :class="userId.value ? '' : 'disabled'"
+        @click="changePage(userId.value)"
       >
         <img
           class="a-img"
-          @click="changePage(authenticated)"
+          @click="changePage(userId.value)"
           v-show="visiblePage != 'marks'"
           width="11"
           height="18"
@@ -84,21 +84,21 @@
         />
         <img
           class="a-img"
-          @click="changePage(authenticated)"
+          @click="changePage(userId.value)"
           v-show="visiblePage == 'marks'"
           width="11"
           height="18"
           src="../assets/imgs/favorite.png"
           alt="Иконка Отметки"
         />
-        <p :class="authenticated ? '' : 'disabled'">Отметки</p>
+        <p :class="userId.value ? '' : 'disabled'">Отметки</p>
       </router-link>
 
       <router-link
         :to="userId.value ? { name: 'profileReports', params: { id: userId.value } } : ''"
         class="a-header profile"
         @click="changePage(authenticated)"
-        :class="authenticated ? '' : 'disabled'"
+        :class="userId.value ? '' : 'disabled'"
       >
         <img
           class="a-img"
@@ -118,7 +118,7 @@
           src="../assets/imgs/profile.png"
           alt="Иконка Профиль"
         />
-        <p :class="authenticated ? '' : 'disabled'">Профиль</p>
+        <p :class="userId.value ? '' : 'disabled'">Профиль</p>
       </router-link>
       <div>
         <a class="a-circle-icon" style="border: none" @click="navigateTo()">

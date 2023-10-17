@@ -132,7 +132,7 @@
 import { baseApi } from "..//shared//api//base//BaseApi.js"
 
 export default {
-  inject: ["isAuthenticated", "tokenAuthenticated"],
+  inject: ["isAuthenticated", "tokenAuthenticated", "userId"],
 
   data() {
     return {
@@ -178,7 +178,7 @@ export default {
       event.target.classList.add("active");
     },
     async fetchDataProfileAPI() {
-      await baseApi.get(`/user_profiles/profile_info/1/`)
+      await baseApi.get(`/user_profiles/profile_info/${this.userId.value}/`)
         .then((response) => {
           this.dataProfile = response.data;
         })
