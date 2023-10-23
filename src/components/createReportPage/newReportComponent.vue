@@ -1,4 +1,3 @@
-
 <template>
   <main class="main">
     <section class="newReport">
@@ -14,16 +13,29 @@
                   type="radio"
                   name="radio"
                   value="place"
+                  @change="setDataByTrashPlace('place')"
                   checked
                 />
                 <label for="place">Место</label>
               </div>
               <div class="form_toggle-item report-toggle item-2">
-                <input id="route" type="radio" name="radio" value="route" />
+                <input
+                  id="route"
+                  type="radio"
+                  name="radio"
+                  value="route"
+                  @change="setDataByTrashPlace('route')"
+                />
                 <label for="route">Маршрут</label>
               </div>
               <div class="form_toggle-item report-toggle item-3">
-                <input id="event" type="radio" name="radio" value="event" />
+                <input
+                  id="event"
+                  type="radio"
+                  name="radio"
+                  value="event"
+                  @change="setDataByTrashPlace('event')"
+                />
                 <label for="event">Мероприятие</label>
               </div>
             </div>
@@ -32,11 +44,14 @@
         <div class="name-object">
           <div class="name-object-label">Название*</div>
           <div class="report-inputs">
-            <input
-              class="input settings report-input"
-              placeholder="Укажите объект, на котором проходила уборка"
-              type="text"
-            />
+            <select class="input settings report-input">
+              <option
+                v-for="item in getDataByTrashPlace(nameTrashPlaceSelectData)"
+                :key="item.pk"
+              >
+                {{ item.name }}
+              </option>
+            </select>
           </div>
         </div>
         <div class="sortPoints-object">
@@ -54,26 +69,46 @@
             </button>
           </div>
           <div class="report-inputs">
-            <input
+            <select
               class="input settings report-input"
               placeholder="Укажите точку сортировки, куда были сданы отходы"
               type="text"
-            />
+            >
+              <option v-for="item in allSortPoints" :key="item.pk">
+                {{ item.name }}
+              </option>
+            </select>
           </div>
         </div>
       </div>
       <div class="photo-newReport">
         <p class="photo-label">Фото*</p>
-        <button class="single-button signup-button-photo" @click="fetchData()">
+        <button
+          class="single-button signup-button-photo"
+          @click="openFilePicker"
+        >
           <img
             class="icon-margin"
             width="18"
             height="14"
             src="../../assets/imgs/photo_white.png"
+            style="cursor: pointer"
             alt=""
           />
           Добавить фото
+          <input
+            type="file"
+            ref="fileInput"
+            style="display: none"
+            @change="handleFileChange"
+          />
         </button>
+        <div>
+        <p class="photo-label" style="font-size: medium" v-if="photo">
+          {{ photo }}
+          <span @click="deleteFile" style="cursor: pointer">&cross;</span>
+        </p>
+      </div>
       </div>
       <div class="desc-newReport">
         <p class="desc-newReport-label">Отчет*</p>
@@ -241,41 +276,91 @@
 </template>
 
 <script>
-import { url } from "@/main.js";
+import { reportUrls } from "@/components/apiUrls/report/reportUrls.js";
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
+import { ref } from "vue";
 
 export default {
-  data() {
-    return {
-      dataObject: this.fetchDataObjectAPI(),
-      visibleMore: false,
-      id: this.$route.params.id,
-      objectType: this.$route.params.id,
-    };
-  },
-  methods: {
-    newFunc() {},
-    async fetchDataObjectAPI() {
-      await fetch(`${url}/review/places/1`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.dataObject = data.object_info;
-        })
-        .catch((error) => {
-          this.answer = "Ошибка! Нет доступа к API. " + error;
+  setup() {
+    const allEvents = ref([]);
+    const allRoutes = ref([]);
+    const allPlaces = ref([]);
+    const allSortPoints = ref([]);
+    const fileInput = ref(null);
+    const photo = ref(null);
+
+    function getAllSortPoints() {
+      return baseApi.get(reportUrls.getAllSortPointsName).then((result) => {
+        allSortPoints.value = result.data.results;
+      });
+    }
+
+    function getAllEvents() {
+      return baseApi
+        .get(reportUrls.getAllEventsName, { page_size: 1000000 })
+        .then((result) => {
+          allEvents.value = result.data.results;
         });
-    },
-  },
-  computed: {
-    calcNotes() {
-      return this.notes.length * 5;
-    },
-  },
-  watch: {
-    inputValue(value) {
-      if (value.length === 5) {
-        this.notes = [];
-      }
-    },
+    }
+    function getAllPlaces() {
+      return baseApi
+        .get(reportUrls.getAllPlacesName, { page_size: 1000000 })
+        .then((result) => {
+          allPlaces.value = result.data.results;
+        });
+    }
+    function getAllRoutes() {
+      return baseApi
+        .get(reportUrls.getAllRoutesName, { page_size: 1000000 })
+        .then((result) => {
+          allRoutes.value = result.data.results;
+        });
+    }
+    function openFilePicker() {
+      fileInput.value.click();
+    }
+    function handleFileChange(event) {
+      photo.value = event.target.files[0].name;
+      //this.imageUrl = URL.createObjectURL(file);
+    }
+
+    const nameTrashPlaceSelectData = ref("place");
+
+    const trashDictSelect = {
+      event: allEvents,
+      route: allRoutes,
+      place: allPlaces,
+    };
+
+    function getDataByTrashPlace(name) {
+      return trashDictSelect[name].value;
+    }
+
+    function deleteFile() {
+      fileInput.value.value = '';
+      photo.value = '';
+    }
+
+    function setDataByTrashPlace(name) {
+      nameTrashPlaceSelectData.value = name;
+    }
+
+    getAllEvents();
+    getAllRoutes();
+    getAllPlaces();
+    getAllSortPoints();
+
+    return {
+      getDataByTrashPlace,
+      setDataByTrashPlace,
+      nameTrashPlaceSelectData,
+      allSortPoints,
+      fileInput,
+      openFilePicker,
+      handleFileChange,
+      photo,
+      deleteFile,
+    };
   },
 };
 </script>
