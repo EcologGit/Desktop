@@ -956,7 +956,6 @@ button {
   font-weight: 400;
   font-size: 14px;
   line-height: 13px;
-
 }
 
 .footer-link:first-child {
@@ -966,11 +965,22 @@ button {
   margin-bottom: 20px;
 }
 
+.about-project {
+  display: flex;
+  gap: 12px;
+}
+
 .info-version>p:last-child {
   margin: 0;
 }
 
 
+.footer-info {
+  color: #ffff;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 13px;
+}
 
 .parameters {
   padding-top: 16px;

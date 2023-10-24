@@ -1,16 +1,30 @@
 <template>
   <footer class="footer">
     <div class="footer-wripping">
-      <div class="info-version">
-        <p>Полезный туризм</p>
-        <p>Alpha version</p>
-        <p>2023 г.</p>
+      <div class="about-project">
+        <div class="info-version">
+          <a class="footer-info">О проекте</a>
+          <p>Полезный туризм</p>
+          <p>Alpha version</p>
+          <p>2023 г.</p>
+        </div>
+        <div class="info-version">
+          <a href="#" class="footer-info">Контакты</a>
+          <a href="https://vk.com/public223131648" class="footer-link"
+            >ВКонтакте</a
+          >
+          <a href="https://t.me/aura_eco_tourism" class="footer-link"
+            >Telegram</a
+          >
+        </div>
       </div>
+
       <div>
-      <liveInternetCounter/>
-      <ramblerCounter/>
-      <mailCounter/>
-    </div>
+        <liveInternetCounter />
+        <ramblerCounter />
+        <mailCounter />
+      </div>
+
       <div class="footer-links">
         <div class="block">
           <a href="#" class="footer-link">Обзор</a>
@@ -44,8 +58,8 @@
 
 <script>
 import liveInternetCounter from "./liveInternetCounter.vue";
-import ramblerCounter from './ramblerCounter.vue';
-import mailCounter from './mailCounter.vue'
+import ramblerCounter from "./ramblerCounter.vue";
+import mailCounter from "./mailCounter.vue";
 export default {
   components: {
     liveInternetCounter,
