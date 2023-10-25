@@ -1,6 +1,7 @@
 import {
     createApp
 } from 'vue';
+
 import App from './App.vue';
 import headerComponent from './components/headerComponent.vue';
 import footerComponent from './components/footerComponent.vue';
@@ -32,15 +33,16 @@ import objectComponentPlace from "./components/objectPage/objectComponentPlace.v
 import reportComponent from "./components/reportPage/reportComponent.vue";
 import newReportComponent from "./components/createReportPage/newReportComponent.vue";
 
-
-
 import router from "./router";
+import VueGtag from "vue-gtag";
 
 
 
-
-
-const app = createApp(App);
+const app = createApp(App).use(VueGtag, {
+    config: {
+        id: "G-E3E2FZ63QD"
+    }
+});
 app.use(router);
 
 export const url = 'http://81.163.30.36/django_api';
