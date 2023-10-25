@@ -3,13 +3,7 @@
   <header class="header">
     <router-link to="/" class="name-page" @click="changePage">
       <div class="logo">
-        <img
-          class="cirlce-img"
-          src="../assets/imgs/logo.png"
-          alt="Logo Aura"
-          style="margin-right: 12px"
-        />
-        <p class="logo-name">{{ title }}</p>
+        <img src="../assets/imgs/logo_main.png" alt="Logo Aura" height="50" />
       </div>
     </router-link>
     <nav class="navs navs-header nav-titles">
@@ -95,7 +89,11 @@
       </router-link>
 
       <router-link
-        :to="userId.value ? { name: 'profileReports', params: { id: userId.value } } : ''"
+        :to="
+          userId.value
+            ? { name: 'profileReports', params: { id: userId.value } }
+            : ''
+        "
         class="a-header profile"
         @click="changePage(authenticated)"
         :class="userId.value ? '' : 'disabled'"
