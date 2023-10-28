@@ -266,7 +266,7 @@
             "
           >
             <div></div>
-            <div style='justify-self: center;'>
+            <div style="justify-self: center">
               <div
                 v-show="isLoadingSendPublication"
                 class="animation-logo logo-animation"
@@ -303,7 +303,7 @@ import { ref } from "vue";
 import { wasteDictImagesDict } from "..//..//consts//waste//wasteImages.js";
 import "./style.css";
 import "../ui/loaders/scrollLoader/style.css";
-import { useRouter } from 'vue-router'
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
@@ -316,7 +316,7 @@ export default {
     const wasteSelectValue = ref([]);
     const modalIsOpen = ref(false);
     const isLoadingSendPublication = ref(false);
-    const router = useRouter()
+    const router = useRouter();
 
     const nameObj = ref(null);
     const nameSortPoint = ref(null);
@@ -423,11 +423,11 @@ export default {
 
     function getGatheredWaste(wastes) {
       return Object.entries(wastes).map(([key, value]) => {
-          return {
-            waste_id: key,
-            amount: value,
-          };
-        })
+        return {
+          waste_id: key,
+          amount: value,
+        };
+      });
     }
 
     function publicReport() {
@@ -440,35 +440,29 @@ export default {
         description: description.value,
         rate: rating.value,
         type_obj: nameTrashPlaceSelectData.value,
-        report_status: 'Черновик',
+        report_status: "Черновик",
         results: getGatheredWaste(gatheredWastes.value),
       };
-      Object.keys(data).map(key => {
-        if (['results', 'rate'].includes(key)) {
-          console.log(key);
-          formData.append(key, JSON.stringify(data[key]))
+      Object.keys(data).map((key) => {
+        if (["results", "rate"].includes(key)) {
+          formData.append(key, JSON.stringify(data[key]));
+        } else {
+          formData.append(key, data[key]);
         }
-        else {
-          formData.append(key, data[key])
-        }
-      })
-      baseApi.post(reportUrls.createReport, formData)
-      .then(
-        (response) => {
-          console.log(response.data)
-        }
-      )
-      .catch(
-        (error) => {
+      });
+      baseApi
+        .post(reportUrls.createReport, formData)
+        .then((response) => {
+          router.push(`review/report/${response.data.id}/`);
+        })
+        .catch((error) => {
           if (error.response.status === 401) {
-            router.push({name: 'login'});
+            router.push({ name: "login" });
           }
-          
-        }
-      )
-      .finally(() => {
-        isLoadingSendPublication.value = false;
-      })
+        })
+        .finally(() => {
+          isLoadingSendPublication.value = false;
+        });
     }
 
     getAllEvents();
