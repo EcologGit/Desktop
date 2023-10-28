@@ -13,7 +13,7 @@
                   type="radio"
                   name="radio"
                   value="place"
-                  @change="setDataByTrashPlace('place')"
+                  @change="setDataByTrashPlace('nature_object')"
                   checked
                 />
                 <label for="place">Место</label>
@@ -44,10 +44,11 @@
         <div class="name-object">
           <div class="name-object-label">Название*</div>
           <div class="report-inputs">
-            <select class="input settings report-input">
+            <select class="input settings report-input" v-model="nameObj">
               <option
                 v-for="item in getDataByTrashPlace(nameTrashPlaceSelectData)"
                 :key="item.pk"
+                :value="item.pk"
               >
                 {{ item.name }}
               </option>
@@ -73,8 +74,13 @@
               class="input settings report-input"
               placeholder="Укажите точку сортировки, куда были сданы отходы"
               type="text"
+              v-model="nameSortPoint"
             >
-              <option v-for="item in allSortPoints" :key="item.pk">
+              <option
+                v-for="item in allSortPoints"
+                :key="item.pk"
+                :value="item.pk"
+              >
                 {{ item.name }}
               </option>
             </select>
@@ -105,7 +111,7 @@
         </button>
         <div>
           <p class="photo-label" style="font-size: medium" v-if="photo">
-            {{ photo }}
+            {{ photo?.name }}
             <span @click="deleteFile" style="cursor: pointer">&cross;</span>
           </p>
         </div>
@@ -116,6 +122,7 @@
           name=""
           placeholder="Расскажите о том, как прошла уборка"
           cols="30"
+          v-model="description"
           rows="5"
         ></textarea>
       </div>
@@ -137,7 +144,14 @@
                 />
                 Доступность
               </div>
-              <input class="input-number" min="0" type="number" />
+              <input
+                class="input-number"
+                min="0"
+                type="number"
+                @change="
+                  (event) => setRating('availability', event.target.value)
+                "
+              />
             </div>
             <div class="point">
               <div class="rate">
@@ -148,7 +162,12 @@
                 />
                 Красота
               </div>
-              <input class="input-number" min="0" type="number" />
+              <input
+                class="input-number"
+                min="0"
+                type="number"
+                @change="(event) => setRating('beauty', event.target.value)"
+              />
             </div>
             <div class="point">
               <div class="rate">
@@ -159,7 +178,12 @@
                 />
                 Чистота
               </div>
-              <input class="input-number" min="0" type="number" />
+              <input
+                class="input-number"
+                min="0"
+                type="number"
+                @change="(event) => setRating('purity', event.target.value)"
+              />
             </div>
           </div>
         </div>
@@ -232,26 +256,43 @@
       </div>
     </section>
     <div class="modal-background" v-if="modalIsOpen">
-    <div class="modal-content" style="width: 30%; height: 30%">
-      <div style="width: 100%">
-        <div style="display: flex; width: 100%; justify-content: right">
-          <span style="cursor: pointer; margin-right: 20px; font-size: xx-large" @click="closeModal"
-            >&#10006;</span
+      <div class="modal-content" style="width: 30%; height: 30%">
+        <div style="width: 100%">
+          <div
+            style="
+              display: grid;
+              width: 100%;
+              grid-template-columns: 1fr 6fr 1fr;
+            "
           >
+            <div></div>
+            <div style='justify-self: center;'>
+              <div
+                v-show="isLoadingSendPublication"
+                class="animation-logo logo-animation"
+              ></div>
+            </div>
+
+            <span
+              style="cursor: pointer; margin-right: 20px; font-size: xx-large"
+              @click="closeModal"
+              >&#10006;</span
+            >
+          </div>
+          <p style="display: flex; justify-content: center; font-size: x-large">
+            Вы уверены?
+          </p>
         </div>
-        <p style="display: flex; justify-content: center; font-size: x-large">
-          Вы уверены?
-        </p>
-      </div>
-      <div class="modal-buttons-new-report-block">
-        <button class="modal-button-new-report">Да</button>
-        <button class="modal-button-new-report" @click="closeModal">
-          Отмена
-        </button>
+        <div class="modal-buttons-new-report-block">
+          <button class="modal-button-new-report" @click="publicReport">
+            Да
+          </button>
+          <button class="modal-button-new-report" @click="closeModal">
+            Отмена
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-
   </main>
 </template>
 
@@ -261,6 +302,8 @@ import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 import { ref } from "vue";
 import { wasteDictImagesDict } from "..//..//consts//waste//wasteImages.js";
 import "./style.css";
+import "../ui/loaders/scrollLoader/style.css";
+import { useRouter } from 'vue-router'
 
 export default {
   setup() {
@@ -272,8 +315,14 @@ export default {
     const wasteTypes = ref([]);
     const wasteSelectValue = ref([]);
     const modalIsOpen = ref(false);
+    const isLoadingSendPublication = ref(false);
+    const router = useRouter()
 
+    const nameObj = ref(null);
+    const nameSortPoint = ref(null);
     const photo = ref(null);
+    const description = ref(null);
+    const rating = ref({});
     const gatheredWastes = ref([]);
 
     function getAllSortPoints() {
@@ -307,7 +356,7 @@ export default {
       fileInput.value.click();
     }
     function handleFileChange(event) {
-      photo.value = event.target.files[0].name;
+      photo.value = event.target.files[0];
       //this.imageUrl = URL.createObjectURL(file);
     }
     function getWasteByPk(pk) {
@@ -333,6 +382,7 @@ export default {
     }
     function closeModal() {
       modalIsOpen.value = false;
+      isLoadingSendPublication.value = false;
     }
 
     const nameTrashPlaceSelectData = ref("place");
@@ -340,20 +390,21 @@ export default {
     const trashDictSelect = {
       event: allEvents,
       route: allRoutes,
-      place: allPlaces,
+      nature_object: allPlaces,
     };
 
     function getDataByTrashPlace(name) {
-      return trashDictSelect[name].value;
+      return trashDictSelect[name]?.value;
     }
 
     function deleteFile() {
       fileInput.value.value = "";
-      photo.value = "";
+      photo.value = null;
     }
 
     function setDataByTrashPlace(name) {
       nameTrashPlaceSelectData.value = name;
+      nameObj.value = null;
     }
 
     function deleteWaste(item) {
@@ -364,6 +415,60 @@ export default {
         ...wasteSelectValue.value.slice(0, indArr),
         ...wasteSelectValue.value.slice(indArr + 1, lenArr),
       ];
+    }
+
+    function setRating(nameParam, newValue) {
+      rating.value[nameParam] = newValue;
+    }
+
+    function getGatheredWaste(wastes) {
+      return Object.entries(wastes).map(([key, value]) => {
+          return {
+            waste_id: key,
+            amount: value,
+          };
+        })
+    }
+
+    function publicReport() {
+      isLoadingSendPublication.value = true;
+      const formData = new FormData();
+      const data = {
+        id_obj: nameObj.value,
+        point_id: nameSortPoint.value,
+        photo: photo.value,
+        description: description.value,
+        rate: rating.value,
+        type_obj: nameTrashPlaceSelectData.value,
+        report_status: 'Черновик',
+        results: getGatheredWaste(gatheredWastes.value),
+      };
+      Object.keys(data).map(key => {
+        if (['results', 'rate'].includes(key)) {
+          console.log(key);
+          formData.append(key, JSON.stringify(data[key]))
+        }
+        else {
+          formData.append(key, data[key])
+        }
+      })
+      baseApi.post(reportUrls.createReport, formData)
+      .then(
+        (response) => {
+          console.log(response.data)
+        }
+      )
+      .catch(
+        (error) => {
+          if (error.response.status === 401) {
+            router.push({name: 'login'});
+          }
+          
+        }
+      )
+      .finally(() => {
+        isLoadingSendPublication.value = false;
+      })
     }
 
     getAllEvents();
@@ -392,6 +497,13 @@ export default {
       modalIsOpen,
       openModal,
       closeModal,
+      isLoadingSendPublication,
+      nameObj,
+      nameSortPoint,
+      description,
+      rating,
+      setRating,
+      publicReport,
     };
   },
 };
