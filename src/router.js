@@ -66,7 +66,7 @@ export default createRouter({
                 },
 
                 {
-                    path: '/:id',
+                    path: 'report/:id/',
                     name: 'report',
                     component: reportComponent,
                 },
