@@ -106,6 +106,29 @@ img {
   margin-bottom: 82px;
 }
 
+.main-img {
+  position: relative;
+  text-align: center;
+}
+
+.img-title {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  font-size: 37px;
+}
+
+.img-text {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 500;
+  font-size: 22px;
+}
+
 button {
   cursor: pointer;
 }
@@ -894,7 +917,7 @@ button {
   display: flex;
   flex-direction: column;
   padding: 32px;
-  gap: 32px;
+  gap: 26px;
   background: #FFFFFF;
   border-radius: 25px;
   font-weight: 700;
@@ -903,6 +926,7 @@ button {
 }
 
 .about-text>p {
+  text-align: justify;
   font-weight: 400;
   font-size: 14px;
   line-height: 19px;
@@ -956,7 +980,6 @@ button {
   font-weight: 400;
   font-size: 14px;
   line-height: 13px;
-
 }
 
 .footer-link:first-child {
@@ -966,11 +989,22 @@ button {
   margin-bottom: 20px;
 }
 
+.about-project {
+  display: flex;
+  gap: 40px;
+}
+
 .info-version>p:last-child {
   margin: 0;
 }
 
 
+.footer-info {
+  color: #ffff;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 13px;
+}
 
 .parameters {
   padding-top: 16px;

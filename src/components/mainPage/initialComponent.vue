@@ -1,6 +1,10 @@
 <template>
   <main class="main initial">
-    <img src="../../assets/imgs/initial_img.png" alt="" />
+    <div class="main-img">
+      <img src="../../assets/imgs/initial_img.png" alt="" />
+      <div class="img-title">Управляй Аурой своих путешествий</div>
+      <div class="img-text">Приведи в порядок свою планету</div>
+    </div>
     <router-link to="/profile/signup">
       <button class="single-button initial">
         <img
@@ -30,16 +34,14 @@
         <div class="about-text">
           О нас
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu
-            et venenatis auctor eget scelerisque ac rhoncus. Porttitor turpis
-            sed libero elit faucibus quam. Hac tortor purus, netus nunc, aenean.
-            Hac urna mauris, euismod placerat sodales volutpat. Aliquet enim
-            convallis ipsum orci et elementum rhoncus, mauris nibh. Pellentesque
-            gravida id vitae arcu. Blandit sit fermentum lorem tincidunt
-            ultrices amet viverra. Mauris eget in nec elit in. Enim sed eget
-            pellentesque non dapibus in mattis. Nisl amet porttitor gravida
-            pellentesque mi praesent suspendisse porta. In lorem ornare nisi,
-            non ac sagittis, viverra diam. Auctor in convallis in viverra.
+            Мы – молодая команда неравнодушных к окружающему миру
+            единомышленников. Каждый из нас пытается сделать этот мир немного
+            лучше. В AuraSolutions мы объединили свои силы для того, чтобы
+            создавать современные технологические продукты, которые будут
+            находить отклик в каждом осознанном человеке. В нашей работе мы
+            открыты для сотрудничества и обсуждения вопросов, Вы всегда сможете
+            связаться с нами. Мы всегда готовы к диалогу и с нетерпением ждем
+            Ваших идей.
           </p>
         </div>
       </div>
@@ -47,16 +49,16 @@
         <div class="about-text project">
           О проекте
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu
-            et venenatis auctor eget scelerisque ac rhoncus. Porttitor turpis
-            sed libero elit faucibus quam. Hac tortor purus, netus nunc, aenean.
-            Hac urna mauris, euismod placerat sodales volutpat. Aliquet enim
-            convallis ipsum orci et elementum rhoncus, mauris nibh. Pellentesque
-            gravida id vitae arcu. Blandit sit fermentum lorem tincidunt
-            ultrices amet viverra. Mauris eget in nec elit in. Enim sed eget
-            pellentesque non dapibus in mattis. Nisl amet porttitor gravida
-            pellentesque mi praesent suspendisse porta. In lorem ornare nisi,
-            non ac sagittis, viverra diam. Auctor in convallis in viverra.
+            Проект «Аура» представляет собой первый некоммерческий агрегатор
+            объектов экологической направленности, включающих в себя
+            туристические маршруты, объекты, события и точки сортировки мусора.
+            В текущей момент Вы можете участвовать в уборке представленных на
+            сервисе объектов и оставлять отчеты о своих успехах, а также
+            делиться о них со своими друзьями. В ближайшее время наш функционал
+            расширится, и Вы сможете бронировать объекты, связанные с
+            экологическим туризмом, а также добавлять их самостоятельно,
+            организовывать на них мероприятия и участвовать в них.
+            Присоединяйтесь и улучшайте свою Ауру!
           </p>
         </div>
         <img src="../../assets/imgs/aboutProject_img.png" alt="" />
@@ -66,16 +68,16 @@
         <div class="about-text">
           Об экотуризме
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris eu
-            et venenatis auctor eget scelerisque ac rhoncus. Porttitor turpis
-            sed libero elit faucibus quam. Hac tortor purus, netus nunc, aenean.
-            Hac urna mauris, euismod placerat sodales volutpat. Aliquet enim
-            convallis ipsum orci et elementum rhoncus, mauris nibh. Pellentesque
-            gravida id vitae arcu. Blandit sit fermentum lorem tincidunt
-            ultrices amet viverra. Mauris eget in nec elit in. Enim sed eget
-            pellentesque non dapibus in mattis. Nisl amet porttitor gravida
-            pellentesque mi praesent suspendisse porta. In lorem ornare nisi,
-            non ac sagittis, viverra diam. Auctor in convallis in viverra.
+            Экотуризм в России предоставляет непередаваемые возможности для
+            путешественников, желающих насладиться красотой природы и
+            экологически чистыми уголками нашей страны. Данный вид отдыха
+            позволяет не только прикоснуться к природе, но и сохранить её
+            богатство природы для будущих поколений, парки, заповедники,
+            экологические отели и туристические маршруты являются точками
+            соприкосновения с ней. Мы хотим внести в это взаимодействие принцип
+            «Приведи в порядок свою планету», чтобы отдых на свежем воздухе нес
+            пользу не только людям, но и окружающему их миру. Присоединяйтесь к
+            нам вместе с «Аурой»!
           </p>
         </div>
       </div>
