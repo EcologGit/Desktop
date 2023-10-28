@@ -11,7 +11,7 @@
                 class="input settings"
                 placeholder="Введите имя"
                 type="text"
-                v-model="name"
+                v-model="public_name"
                 required
               />
             </div>
@@ -69,7 +69,7 @@
                 class="input settings"
                 placeholder="Никнейм"
                 type="text"
-                v-model="nickname"
+                v-model="username"
                 required
               />
             </div>
@@ -91,14 +91,20 @@
                     id="men"
                     type="radio"
                     name="radio"
-                    v-model="sex"
+                    @change="setSex('M')"
                     required
                     checked
                   />
                   <label for="men">Мужской</label>
                 </div>
                 <div class="form_toggle-item item-2">
-                  <input id="fid-2" type="radio" name="radio" value="woman" />
+                  <input
+                    id="fid-2"
+                    type="radio"
+                    name="radio"
+                    value="woman"
+                    @change="setSex('F')"
+                  />
                   <label for="fid-2">Женский</label>
                 </div>
               </div>
@@ -125,7 +131,10 @@
             </div>
           </div>
         </div>
-        <button class="single-button signup-button-photo">
+        <button
+          class="single-button signup-button-photo"
+          @click="openFilePicker"
+        >
           <img
             class="icon-margin"
             width="18"
@@ -134,7 +143,19 @@
             alt=""
           />
           Добавить фото
+          <input
+            type="file"
+            ref="fileInput"
+            style="display: none"
+            @change="handleFileChange"
+          />
         </button>
+        <div>
+          <p class="photo-label" style="font-size: medium" v-if="photo">
+            {{ photo?.name }}
+            <span @click="deleteFile" style="cursor: pointer">&cross;</span>
+          </p>
+        </div>
       </div>
       <div class="active-buttons">
         <div class="signup-button">
@@ -169,21 +190,24 @@
 </template>
 
 <script>
-import { url } from "@/main.js";
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
+import { userUrls } from "@/components/apiUrls/users/usersUrls.js";
 
 export default {
   data() {
     return {
-      name: "",
+      public_name: "",
       surname: "",
       phone: "",
       email: "",
       password: "",
-      nickname: "",
+      username: "",
       dob: "",
-      sex: "",
+      sex: "M",
       activity: "",
       place: "",
+      photo: "",
+      fileInput: null,
     };
   },
   methods: {
@@ -197,15 +221,42 @@ export default {
         target.parentElement.children[0].setAttribute("type", "text");
       }
     },
+    setSex(value) {
+      this.sex = value;
+    },
+    handleFileChange(event) {
+      this.photo = event.target.files[0];
+      //this.imageUrl = URL.createObjectURL(file);
+    },
+    openFilePicker() {
+      this.$refs.fileInput.click();
+    },
+    deleteFile() {
+      this.$refs.fileInput.value = "";
+      this.photo = null;
+    },
     async postSignIn() {
-      var requestOptions = {
-        method: "POST",
-        redirect: "follow",
+      const formData = new FormData();
+      const data = {
+        public_name: this.public_name,
+        surname: this.surname,
+        phone: this.phone,
+        email: this.email,
+        password: this.password,
+        username: this.username,
+        sex: this.sex,
+        photo: this.photo,
       };
-
-      await fetch(`${url}/users/api/browser_refresh/`, requestOptions)
-        .then((response) => response.text())
-        .then(() => console.log("true"))
+      Object.keys(data).map((key) => {
+        formData.append(key, data[key]);
+      });
+      await baseApi
+        .post(userUrls.createUser, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then(() => this.$router.push({ name: "login" }))
         .catch((error) => console.log("error", error));
     },
   },
