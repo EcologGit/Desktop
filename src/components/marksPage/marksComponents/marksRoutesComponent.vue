@@ -1,116 +1,20 @@
 <template>
   <section class="cards marks routes">
-    <div class="card marks">
+    <div
+      class="card marks"
+      v-for="route in routesFavoritesData"
+      :key="route.pk"
+    >
       <img
-        src="../../../assets/imgs/default_marks.png"
+        :src="`${url}${route?.routes?.photo}`"
         alt=""
         class="card-child card-img marks"
       />
       <div class="card-child card-content marks">
         <div class="card-content-wrapping marks">
-          <div class="card-title">Голубые озера Подмосковья</div>
-          <div class="coordinates">
-            <div class="coordinate">
-              <img
-                class="icon-margin"
-                width="18"
-                height="18"
-                src="../../../assets/imgs/start.png"
-                alt=""
-              />
-              Start
-            </div>
-            <div class="coordinate">
-              <img
-                class="icon-margin"
-                width="18"
-                height="18"
-                src="../../../assets/imgs/finish.png"
-                alt=""
-              />
-              Finish
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card marks">
-      <img
-        src="../../../assets/imgs/default_marks.png"
-        alt=""
-        class="card-child card-img marks"
-      />
-      <div class="card-child card-content marks">
-        <div class="card-content-wrapping marks">
-          <div class="card-title">Голубые озера Подмосковья</div>
-          <div class="coordinates">
-            <div class="coordinate">
-              <img
-                class="icon-margin"
-                width="18"
-                height="18"
-                src="../../../assets/imgs/start.png"
-                alt=""
-              />
-              Start
-            </div>
-            <div class="coordinate">
-              <img
-                class="icon-margin"
-                width="18"
-                height="18"
-                src="../../../assets/imgs/finish.png"
-                alt=""
-              />
-              Finish
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card marks">
-      <img
-        src="../../../assets/imgs/default_marks.png"
-        alt=""
-        class="card-child card-img marks"
-      />
-      <div class="card-child card-content marks">
-        <div class="card-content-wrapping marks">
-          <div class="card-title">Голубые озера Подмосковья</div>
-          <div class="coordinates">
-            <div class="coordinate">
-              <img
-                class="icon-margin"
-                width="18"
-                height="18"
-                src="../../../assets/imgs/start.png"
-                alt=""
-              />
-              Start
-            </div>
-            <div class="coordinate">
-              <img
-                class="icon-margin"
-                width="18"
-                height="18"
-                src="../../../assets/imgs/finish.png"
-                alt=""
-              />
-              Finish
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card marks">
-      <img
-        src="../../../assets/imgs/default_marks.png"
-        alt=""
-        class="card-child card-img marks"
-      />
-      <div class="card-child card-content marks">
-        <div class="card-content-wrapping marks">
-          <div class="card-title">Голубые озера Подмосковья</div>
+          <router-link :to="`/review/routes/${route?.routes?.pk}`">
+            <div class="card-title active-title">{{ route?.routes?.name }}</div></router-link
+          >
           <div class="coordinates">
             <div class="coordinate">
               <img
@@ -140,14 +44,26 @@
 </template>
 
 <script>
+import { favoritesUrls } from "@/components/apiUrls/favorites/favoritesUrls.js";
+import { baseApi, url } from "@/components/shared/api/base/BaseApi.js";
 export default {
+  inject: ["userId"],
   data() {
     return {
       visibleCards: "places",
       visibleDropdown: false,
+      url: url,
+      routesFavoritesData: this.getRouteFavorite(),
     };
   },
   methods: {
+    getRouteFavorite() {
+      baseApi
+        .get(favoritesUrls.getFavoritesForUser("routes", this.userId.value))
+        .then((response) => {
+          this.routesFavoritesData = response.data.results;
+        });
+    },
     changeCard(event) {
       let target =
         event.target.className == "icon-btn"

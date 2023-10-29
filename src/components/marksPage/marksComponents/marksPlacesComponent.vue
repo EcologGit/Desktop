@@ -1,14 +1,16 @@
 <template>
   <section v-show="visibleCards == 'places'" class="cards marks">
-    <div class="card marks">
+    <div class="card marks" v-for="place in placeFavoritesData" :key="place.pk">
       <img
-        src="../../../assets/imgs/default_marks.png"
+        :src="`${url}${place?.places?.photo}`"
         alt=""
         class="card-child card-img marks"
       />
       <div class="card-child card-content marks">
         <div class="card-content-wrapping marks">
-          <div class="card-title">Щуровский лесопарк</div>
+          <router-link :to="`/review/places/${place?.places?.pk}`">
+            <div class="card-title active-title">{{ place?.places?.name }}</div>
+          </router-link>
           <div class="coordinates">
             <div class="coordinate">
               <img
@@ -18,79 +20,7 @@
                 src="../../../assets/imgs/map.png"
                 alt=""
               />
-              Коломна
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card marks">
-      <img
-        src="../../../assets/imgs/default_marks.png"
-        alt=""
-        class="card-child card-img marks"
-      />
-      <div class="card-child card-content marks">
-        <div class="card-content-wrapping marks">
-          <div class="card-title">Щуровский лесопарк</div>
-          <div class="coordinates">
-            <div class="coordinate">
-              <img
-                class="icon-margin"
-                width="11"
-                height="18"
-                src="../../../assets/imgs/map.png"
-                alt=""
-              />
-              Коломна
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card marks">
-      <img
-        src="../../../assets/imgs/default_marks.png"
-        alt=""
-        class="card-child card-img marks"
-      />
-      <div class="card-child card-content marks">
-        <div class="card-content-wrapping marks">
-          <div class="card-title">Щуровский лесопарк</div>
-          <div class="coordinates">
-            <div class="coordinate">
-              <img
-                class="icon-margin"
-                width="11"
-                height="18"
-                src="../../../assets/imgs/map.png"
-                alt=""
-              />
-              Коломна
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card marks">
-      <img
-        src="../../../assets/imgs/default_marks.png"
-        alt=""
-        class="card-child card-img marks"
-      />
-      <div class="card-child card-content marks">
-        <div class="card-content-wrapping marks">
-          <div class="card-title">Щуровский лесопарк</div>
-          <div class="coordinates">
-            <div class="coordinate">
-              <img
-                class="icon-margin"
-                width="11"
-                height="18"
-                src="../../../assets/imgs/map.png"
-                alt=""
-              />
-              Коломна
+              {{ place?.places?.locality }}
             </div>
           </div>
         </div>
@@ -100,14 +30,27 @@
 </template>
 
 <script>
+import { favoritesUrls } from "@/components/apiUrls/favorites/favoritesUrls.js";
+import { baseApi, url } from "@/components/shared/api/base/BaseApi.js";
+
 export default {
+  inject: ["userId"],
   data() {
     return {
       visibleCards: "places",
       visibleDropdown: false,
+      placeFavoritesData: this.getPlaceFavorite(),
+      url: url,
     };
   },
   methods: {
+    getPlaceFavorite() {
+      baseApi
+        .get(favoritesUrls.getFavoritesForUser("places", this.userId.value))
+        .then((response) => {
+          this.placeFavoritesData = response.data.results;
+        });
+    },
     changeCard(event) {
       let target =
         event.target.className == "icon-btn"

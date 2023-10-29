@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://81.163.30.36/django_api";
+export const url = "http://81.163.30.36/django_api";
 
 export const baseApi = axios.create({
   baseURL: url,
