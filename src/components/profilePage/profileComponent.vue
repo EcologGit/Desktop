@@ -129,7 +129,8 @@
 </template>
 
 <script>
-import { baseApi } from "..//shared//api//base//BaseApi.js"
+import { baseApi } from "..//shared//api//base//BaseApi.js";
+import { userUrls } from "@/components/apiUrls/users/usersUrls.js";
 export default {
   inject: ["isAuthenticated", "tokenAuthenticated", "userId"],
 
@@ -177,7 +178,8 @@ export default {
       event.target.classList.add("active");
     },
     async fetchDataProfileAPI() {
-      await baseApi.get(`/user_profiles/profile_info/${this.$route.params.id}/`)
+      await baseApi
+        .get(`/user_profiles/profile_info/${this.$route.params.id}/`)
         .then((response) => {
           this.dataProfile = response.data;
         })
@@ -186,9 +188,18 @@ export default {
         });
     },
     logout() {
-      this.isAuthenticated.value = false;
-      this.tokenAuthenticated.value = "";
-      this.$router.push("/");
+      const config = {
+        method: "post",
+        withCredentials: true
+      };
+      baseApi.request(userUrls.logoutUser, config)
+      .then(() => {
+        this.userId.value = null;
+        localStorage.removeItem('access_token');
+      })
+      .finally(() => {
+        this.$router.push("/");
+      });
     },
   },
 };
