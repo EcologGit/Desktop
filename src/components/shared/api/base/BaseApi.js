@@ -4,6 +4,7 @@ export const url = "http://81.163.30.36/django_api";
 
 export const baseApi = axios.create({
   baseURL: url,
+  withCredentials: true,
 });
 
 export const setAuthToken = (config) => {

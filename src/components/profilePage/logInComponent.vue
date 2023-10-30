@@ -91,7 +91,9 @@ export default {
       var urlencoded = new URLSearchParams();
       urlencoded.append("username", this.username);
       urlencoded.append("password", this.password);
-      await baseApi.post(`/users/api/browser_token/`, urlencoded)
+      await baseApi.post(`/users/api/browser_token/`, urlencoded, {
+        withCredentials: true,
+      })
         .then((result) => {
           const data = result.data;
           if (
