@@ -53,13 +53,7 @@
                   </div>
                 </div>
               </div>
-              <a class="a-circle-icon">
-                <img
-                  class="cirlce-img"
-                  src="../../../assets/imgs/circle_favorite_default.png"
-                  alt=""
-                />
-              </a>
+              <SmallFavoriteButton :isSelected='event.is_favourite' :objType='objectType'  :objId='event.event_id'/>
             </div>
             <div class="card-desc">
               {{ event.description }}
@@ -81,12 +75,19 @@
 
 <script>
 import { url } from "@/main.js";
+import  SmallFavoriteButton  from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue"
+import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js"
+import { baseApi } from "@/components/shared/api/base/BaseApi.js"
 
 export default {
+  components: {
+    SmallFavoriteButton,
+  },
   data() {
     return {
       url: url,
       visibleCards: "places",
+      objectType: objectTypes.events,
       visibleDropdown: false,
       dataEventsList: this.fetchDataEventsAPI(),
       sortEventsList: [],
@@ -115,11 +116,10 @@ export default {
       });
     },
     async fetchDataEventsAPI() {
-      await fetch(`${url}/review/events/`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.dataEventsList = data.results;
-          this.sortEventsList = data.results;
+      await baseApi.get(`/review/events/`)
+        .then((response) => {
+          this.dataEventsList = response.data.results;
+          this.sortEventsList = response.data.results;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
