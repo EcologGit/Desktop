@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <router-link to="/" class="name-page" @click="changePage('home')">
+    <router-link to="/" class="name-page" @click="setVisiblePage('home')">
       <div class="logo">
         <img src="../assets/imgs/logo_main.png" alt="Logo Aura" height="50" />
       </div>
@@ -61,7 +61,8 @@
 
 <script>
 import NavItem from "@/components/widgets/nav/NavItem.vue";
-import { ref, provide } from "vue";
+import { ref, provide, watch } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
   components: {
@@ -73,12 +74,32 @@ export default {
         val.value = newVal;
       };
     };
+    const route = useRoute();
     const visiblePage = ref("home");
     const hoveringPage = ref("home");
     const setVisiblePage = setNewVal(visiblePage);
     const setHoveringPage = setNewVal(hoveringPage);
-    provide("visiblePage", { visiblePage, setVisiblePage });
+    provide("visiblePage", { visiblePage });
     provide("hoveringPage", { hoveringPage, setHoveringPage });
+
+    watch(
+      () => route.path,
+      async () => {
+        const currentPath = route.path;
+        if (currentPath === "/profile/login") {
+          visiblePage.value = "login";
+        } else {
+          const pathArr = currentPath.split("/").filter((key) => !!key);
+          if (pathArr) {
+            setVisiblePage(pathArr[0]);
+          }
+        }
+      }
+    );
+
+    return {
+      setVisiblePage,
+    };
   },
   inject: ["userId"],
   props: {

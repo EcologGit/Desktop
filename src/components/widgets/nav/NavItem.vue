@@ -19,7 +19,7 @@ const props = defineProps({
     default: false,
   },
 });
-const { visiblePage, setVisiblePage } = inject("visiblePage");
+const { visiblePage } = inject("visiblePage");
 const { hoveringPage, setHoveringPage } = inject("hoveringPage");
 
 const getSrc = (src) => {
@@ -30,9 +30,6 @@ const mousemoveHandlerNavItems = (newHoveringIcon) => {
 };
 const mouseOutHandlerNavItems = () => {
   setHoveringPage("");
-};
-const changePage = (newPage) => {
-  setVisiblePage(newPage);
 };
 </script>
 
