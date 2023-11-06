@@ -41,7 +41,12 @@
                   </div>
                 </div>
               </div>
-              <SmallFavoriteButton :isSelected='sortPoint.is_favourite' :objType='objectType'  :objId='sortPoint.point_id'/>
+              <SmallFavoriteButton
+                :isSelected="!!sortPoint.is_favourite"
+                :objType="objectType"
+                :objId="sortPoint.point_id"
+                :isHidden="!userId"
+              />
             </div>
             <div class="card-desc">
               {{ sortPoint.description }}
@@ -66,9 +71,9 @@
 
 <script>
 import { url } from "@/main.js";
-import  SmallFavoriteButton  from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue"
-import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js"
-import { baseApi } from "@/components/shared/api/base/BaseApi.js"
+import SmallFavoriteButton from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue";
+import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 
 export default {
   props: {
@@ -77,12 +82,14 @@ export default {
   components: {
     SmallFavoriteButton,
   },
+  inject: ["userId"],
   data() {
     return {
       url: url,
       objectType: objectTypes.sort_points,
       dataSortPointsList: this.fetchDataPlaceAPI(),
       sortSortPointsList: [],
+      userId: this.userId.value,
     };
   },
   mounted() {
@@ -111,7 +118,8 @@ export default {
       this.placeList.filter((el) => el.id == id);
     },
     async fetchDataPlaceAPI() {
-      await baseApi.get(`/review/sortPoints/`)
+      await baseApi
+        .get(`/review/sortPoints/`)
         .then((response) => {
           this.dataSortPointsList = response.data.results;
           this.sortSortPointsList = response.data.results;

@@ -54,7 +54,12 @@
                   </div>
                 </div>
               </div>
-              <SmallFavoriteButton :isSelected='route.is_favourite' :objType='objectType'  :objId='route.route_id'/>
+              <SmallFavoriteButton
+                :isSelected="!!route.is_favourite"
+                :objType="objectType"
+                :objId="route.route_id"
+                :isHidden="!userId"
+              />
             </div>
             <div class="card-desc">
               {{ route.name }}
@@ -94,9 +99,9 @@
 
 <script>
 import { url } from "@/main.js";
-import  SmallFavoriteButton  from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue"
-import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js"
-import { baseApi } from "@/components/shared/api/base/BaseApi.js"
+import SmallFavoriteButton from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue";
+import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 
 export default {
   props: {
@@ -105,12 +110,14 @@ export default {
   components: {
     SmallFavoriteButton,
   },
+  inject: ["userId"],
   data() {
     return {
       url: url,
       objectType: objectTypes.routes,
       dataRoutesList: this.fetchDataRoutesAPI(),
       sortRoutesList: [],
+      userId: this.userId.value,
     };
   },
   mounted() {
@@ -139,7 +146,8 @@ export default {
       this.dataRoutesList.filter((el) => el.id == id);
     },
     async fetchDataRoutesAPI() {
-      await baseApi.get(`${url}/review/routes/`)
+      await baseApi
+        .get(`${url}/review/routes/`)
         .then((response) => {
           this.dataRoutesList = response.data.results;
           this.sortRoutesList = response.data.results;

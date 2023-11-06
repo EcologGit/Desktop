@@ -2,9 +2,17 @@
 import { defineProps, ref } from "vue";
 import { smallFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
 import { favoritesUrls } from "@/components/apiUrls/favorites/favoritesUrls.js";
-import { baseApi } from "@/components/shared/api/base/BaseApi.js"
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 
-const props = defineProps(["isSelected", "objType", "objId"]);
+const props = defineProps({
+  isSelected: Boolean,
+  objType: String,
+  objId: Number,
+  isHidden: {
+    type: Boolean,
+    default: false,
+  },
+});
 const isSelected = ref(props.isSelected);
 const upHere = ref(false);
 const favoriteLink = favoritesUrls.createFavorite(props.objType, props.objId);
@@ -26,10 +34,9 @@ const getImgSrc = () => {
 
 const handleClick = () => {
   if (!isSelected.value) {
-    baseApi.post(favoriteLink)
-  }
-  else {
-    baseApi.delete(favoriteLink)
+    baseApi.post(favoriteLink);
+  } else {
+    baseApi.delete(favoriteLink);
   }
   isSelected.value = !isSelected.value;
 };
@@ -51,6 +58,7 @@ const handleMouseLeave = () => {
     @mousemove="handleMouseOver"
     @mouseleave="handleMouseLeave"
     alt="Добавить в избранное"
+    v-show='!props.isHidden'
   >
     <img class="cirlce-img" :src="getImgSrc()" />
   </button>

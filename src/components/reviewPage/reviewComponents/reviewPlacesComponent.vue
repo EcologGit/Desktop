@@ -29,7 +29,12 @@
                   {{ place.locality }}
                 </div>
               </div>
-              <SmallFavoriteButton :isSelected='place.is_favourite' :objType='objectType'  :objId='place.object_id'/>
+              <SmallFavoriteButton
+                :isSelected="!!place.is_favourite"
+                :objType="objectType"
+                :objId="place.object_id"
+                :isHidden="!userId"
+              />
             </div>
             <div class="card-desc">
               {{ place.description }}
@@ -69,23 +74,25 @@
 
 <script>
 import { url } from "@/main.js";
-import  SmallFavoriteButton  from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue"
-import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js"
-import { baseApi } from "@/components/shared/api/base/BaseApi.js"
+import SmallFavoriteButton from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue";
+import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 
 export default {
   components: {
-    SmallFavoriteButton
+    SmallFavoriteButton,
   },
   created() {
     // > Внедряемое свойство: 5
   },
+  inject: ["userId"],
   data() {
     return {
       url: url,
       dataPlaceList: this.fetchDataPlaceAPI(),
       sortPlaceList: [],
-      objectType: objectTypes.places
+      objectType: objectTypes.places,
+      userId: this.userId.value,
     };
   },
   mounted() {
@@ -108,7 +115,8 @@ export default {
       this.placeList.filter((el) => el.id == id);
     },
     async fetchDataPlaceAPI() {
-      await baseApi.get(`/review/places/`)
+      await baseApi
+        .get(`/review/places/`)
         .then((response) => {
           this.dataPlaceList = response.data.results;
           this.sortPlaceList = this.dataPlaceList;

@@ -53,7 +53,12 @@
                   </div>
                 </div>
               </div>
-              <SmallFavoriteButton :isSelected='event.is_favourite' :objType='objectType'  :objId='event.event_id'/>
+              <SmallFavoriteButton
+                :isSelected="!!event.is_favourite"
+                :objType="objectType"
+                :objId="event.event_id"
+                :isHidden="!userId"
+              />
             </div>
             <div class="card-desc">
               {{ event.description }}
@@ -75,14 +80,15 @@
 
 <script>
 import { url } from "@/main.js";
-import  SmallFavoriteButton  from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue"
-import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js"
-import { baseApi } from "@/components/shared/api/base/BaseApi.js"
+import SmallFavoriteButton from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue";
+import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 
 export default {
   components: {
     SmallFavoriteButton,
   },
+  inject: ["userId"],
   data() {
     return {
       url: url,
@@ -91,6 +97,7 @@ export default {
       visibleDropdown: false,
       dataEventsList: this.fetchDataEventsAPI(),
       sortEventsList: [],
+      userId: this.userId.value,
     };
   },
   mounted() {
@@ -116,7 +123,8 @@ export default {
       });
     },
     async fetchDataEventsAPI() {
-      await baseApi.get(`/review/events/`)
+      await baseApi
+        .get(`/review/events/`)
         .then((response) => {
           this.dataEventsList = response.data.results;
           this.sortEventsList = response.data.results;
