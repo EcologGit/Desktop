@@ -29,13 +29,7 @@
                   {{ place.locality }}
                 </div>
               </div>
-              <a class="a-circle-icon">
-                <img
-                  class="cirlce-img"
-                  src="../../../assets/imgs/circle_favorite_default.png"
-                  alt=""
-                />
-              </a>
+              <SmallFavoriteButton :isSelected='place.is_favourite' :objType='objectType'  :objId='place.object_id'/>
             </div>
             <div class="card-desc">
               {{ place.description }}
@@ -75,17 +69,23 @@
 
 <script>
 import { url } from "@/main.js";
+import  SmallFavoriteButton  from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue"
+import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js"
+import { baseApi } from "@/components/shared/api/base/BaseApi.js"
 
 export default {
+  components: {
+    SmallFavoriteButton
+  },
   created() {
     // > Внедряемое свойство: 5
   },
-
   data() {
     return {
       url: url,
       dataPlaceList: this.fetchDataPlaceAPI(),
       sortPlaceList: [],
+      objectType: objectTypes.places
     };
   },
   mounted() {
@@ -108,10 +108,9 @@ export default {
       this.placeList.filter((el) => el.id == id);
     },
     async fetchDataPlaceAPI() {
-      await fetch(`${url}/review/places/`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.dataPlaceList = data.results;
+      await baseApi.get(`/review/places/`)
+        .then((response) => {
+          this.dataPlaceList = response.data.results;
           this.sortPlaceList = this.dataPlaceList;
         })
         .catch((error) => {

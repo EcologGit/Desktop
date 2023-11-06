@@ -1703,7 +1703,9 @@ textarea {
   color: #D3F36B;
 }
 
-
+.active-title:hover {
+  color: #D3F36B;
+}
 
 
 
