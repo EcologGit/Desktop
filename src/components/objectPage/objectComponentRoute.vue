@@ -89,15 +89,15 @@
               </div>
             </div>
           </div>
-          <button class="adding">
-            <img
-              width="11"
-              height="18"
-              src="../../assets/imgs/favorite_white.png"
-              alt=""
-            />
-            Добавить в отметки
-          </button>
+          <FavoriteButton
+          :isSelected='false'
+          :objType='event'
+          :objId='1'
+          :isHidden='false'
+          :favoriteButtonState='bigFavoriteButtonStates'
+          :classButton="adding"
+          :classImg='``'
+          />
           <div class="object-points">
             <p>Рейтинг</p>
             <div class="list-points">
@@ -334,11 +334,14 @@
 import { url } from "@/main.js";
 import ActualEventScroller from './/components//ActualEventScroller.vue'
 import NearestSortPointScroller from './/components//NearestSortPointScroller.vue'
+import { bigFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
+import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 
 export default {
   components: {
     ActualEventScroller,
     NearestSortPointScroller,
+    FavoriteButton,
   },
   data() {
     return {
@@ -348,6 +351,7 @@ export default {
       visibleMore: false,
       id: this.$route.params.id,
       objectType: this.$route.params.objectType,
+      bigFavoriteButtonStates: bigFavoriteButtonStates,
     };
   },
   methods: {

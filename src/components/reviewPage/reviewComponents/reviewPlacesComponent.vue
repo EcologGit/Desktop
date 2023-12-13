@@ -29,7 +29,7 @@
                   {{ place.locality }}
                 </div>
               </div>
-              <SmallFavoriteButton
+              <FavoriteButton
                 :isSelected="!!place.is_favourite"
                 :objType="objectType"
                 :objId="place.object_id"
@@ -74,13 +74,13 @@
 
 <script>
 import { url } from "@/main.js";
-import SmallFavoriteButton from "@/components/widgets/favorite/smallFavoriteButton/SmallFavoriteButton.vue";
+import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 
 export default {
   components: {
-    SmallFavoriteButton,
+    FavoriteButton,
   },
   created() {
     // > Внедряемое свойство: 5

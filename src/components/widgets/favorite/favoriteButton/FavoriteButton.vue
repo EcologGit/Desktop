@@ -12,13 +12,25 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  favoriteButtonState: {
+    type: Array,
+    default: smallFavoriteButtonStates
+  },
+  classButton: {
+    type: String,
+    default: 'a-circle-icon'
+  },
+  classImg: {
+    type: String,
+    default: 'cirlce-img'
+  }
 });
 const isSelected = ref(props.isSelected);
 const upHere = ref(false);
 const favoriteLink = favoritesUrls.createFavorite(props.objType, props.objId);
 
 const getIconSrcByState = (state) => {
-  return require(`@/${smallFavoriteButtonStates[state]}`);
+  return require(`@/${props.favoriteButtonState[state]}`);
 };
 
 const getImgSrc = () => {
@@ -52,7 +64,7 @@ const handleMouseLeave = () => {
 
 <template>
   <button
-    class="a-circle-icon"
+    :class="props.classButton"
     style="background: none; border: none"
     @click="handleClick"
     @mousemove="handleMouseOver"
@@ -60,6 +72,6 @@ const handleMouseLeave = () => {
     alt="Добавить в избранное"
     v-show='!props.isHidden'
   >
-    <img class="cirlce-img" :src="getImgSrc()" />
+    <img :class="props.classImg" :src="getImgSrc()" />
   </button>
 </template>

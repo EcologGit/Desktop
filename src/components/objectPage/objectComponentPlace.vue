@@ -63,15 +63,15 @@
               </div>
             </div>
           </div>
-          <button class="adding">
-            <img
-              width="11"
-              height="18"
-              src="../../assets/imgs/favorite_white.png"
-              alt=""
-            />
-            Добавить в отметки
-          </button>
+          <FavoriteButton
+          :isSelected='false'
+          :objType='event'
+          :objId='1'
+          :isHidden='false'
+          :favoriteButtonState='bigFavoriteButtonStates'
+          :classButton="adding"
+          :classImg='``'
+          />
           <div class="object-points" v-if='dataObject.avg_availability'>
             <RatingBlock :availability='dataObject.avg_availability' :beauty='dataObject.avg_beauty' :purity='dataObject.avg_purity'/>
           </div>
@@ -159,6 +159,8 @@ import ActualEventScroller from ".//components//ActualEventScroller.vue"
 import NearestSortPointScroller from ".//components//NearestSortPointScroller.vue"
 import ReportReviewScroller from '..//widgets//scrollers//ReportReviewScroller//ReportReviewScroller.vue'
 import RatingBlock from '..//widgets//statistic//rating//RatingBlock.vue'
+import { bigFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
+import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 
 export default {
   components: {
@@ -166,6 +168,7 @@ export default {
     ActualEventScroller,
     NearestSortPointScroller,
     RatingBlock,
+    FavoriteButton,
   },
   data() {
     return {
@@ -175,6 +178,7 @@ export default {
       visibleMore: false,
       id: this.$route.params.id,
       objectType: this.$route.params.objectType,
+      bigFavoriteButtonStates: bigFavoriteButtonStates,
     };
   },
   methods: {

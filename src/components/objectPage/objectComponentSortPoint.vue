@@ -149,15 +149,15 @@
               </div>
             </div>
           </div>
-          <button class="adding">
-            <img
-              width="11"
-              height="18"
-              src="../../assets/imgs/favorite_white.png"
-              alt=""
-            />
-            Добавить в отметки
-          </button>
+          <FavoriteButton
+          :isSelected='false'
+          :objType='event'
+          :objId='1'
+          :isHidden='false'
+          :favoriteButtonState='bigFavoriteButtonStates'
+          :classButton="adding"
+          :classImg='``'
+          />
           <div class="object-points">
             <p>Рейтинг</p>
             <div class="list-points">
@@ -392,8 +392,13 @@
 
 <script>
 import { url } from "@/main.js";
+import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
+import { bigFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
 
 export default {
+  components: {
+    FavoriteButton,
+  },
   data() {
     return {
       url: url,
@@ -403,6 +408,7 @@ export default {
       objectType: this.$route.params.objectType,
       nearObjects: this.fetchNearObject(),
       dataObjectReportsStatistics: [],
+      bigFavoriteButtonStates: bigFavoriteButtonStates,
     };
   },
   methods: {

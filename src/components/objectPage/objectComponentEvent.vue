@@ -160,15 +160,15 @@
               </div>
             </div>
           </div>
-          <button class="adding">
-            <img
-              width="11"
-              height="18"
-              src="../../assets/imgs/favorite_white.png"
-              alt=""
-            />
-            Добавить в отметки
-          </button>
+          <FavoriteButton
+          :isSelected='false'
+          :objType='event'
+          :objId='1'
+          :isHidden='false'
+          :favoriteButtonState='bigFavoriteButtonStates'
+          :classButton="adding"
+          :classImg='``'
+          />
         </div>
       </section>
       <section class="object-reports">
@@ -295,10 +295,13 @@
 <script>
 import { url } from "@/main.js";
 import PlaceScroller from ".//components//PlaceScroller.vue"
+import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
+import { bigFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
 
 export default {
   components: {
-    PlaceScroller
+    PlaceScroller,
+    FavoriteButton,
   },
   data() {
     return {
@@ -309,6 +312,7 @@ export default {
       visibleMore: false,
       id: this.$route.params.id,
       objectType: this.$route.params.objectType,
+      bigFavoriteButtonStates: bigFavoriteButtonStates,
     };
   },
   methods: {
