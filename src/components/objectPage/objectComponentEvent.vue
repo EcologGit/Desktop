@@ -54,7 +54,10 @@
             <p>Описание</p>
             {{ dataObject.description }}
           </div>
-          <PlaceScroller :placeUrl="`${url}/review/event_nature_objects/${this.id}`" title='Объекты'/>
+          <PlaceScroller
+            :placeUrl="`${url}/review/event_nature_objects/${this.id}`"
+            title="Объекты"
+          />
           <div class="object-sortPoints" v-if="sortPoints.length > 0">
             <p>Точка сортировки</p>
             <div class="small-list sortPoints">
@@ -160,15 +163,17 @@
               </div>
             </div>
           </div>
-          <FavoriteButton
-          :isSelected='false'
-          :objType='event'
-          :objId='1'
-          :isHidden='false'
-          :favoriteButtonState='bigFavoriteButtonStates'
-          :classButton="adding"
-          :classImg='``'
-          />
+          <div v-if="dataObject.is_favorite !== undefined && userId.value">
+            <FavoriteButton
+              :isSelected="dataObject.is_favorite"
+              objType="events"
+              :objId="id"
+              :isHidden="false"
+              :favoriteButtonState="bigFavoriteButtonStates"
+              classButton="adding"
+              :classImg="``"
+            />
+          </div>
         </div>
       </section>
       <section class="object-reports">
@@ -294,11 +299,13 @@
 
 <script>
 import { url } from "@/main.js";
-import PlaceScroller from ".//components//PlaceScroller.vue"
+import PlaceScroller from ".//components//PlaceScroller.vue";
 import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 import { bigFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 
 export default {
+  inject: ["userId"],
   components: {
     PlaceScroller,
     FavoriteButton,
@@ -353,10 +360,10 @@ export default {
     },
     newFunc() {},
     async fetchDataObjectAPI() {
-      await fetch(`${url}/review/events/${this.$route.params.id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.dataObject = data;
+      await baseApi
+        .get(`${url}/review/events/${this.$route.params.id}`)
+        .then((response) => {
+          this.dataObject = response.data;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

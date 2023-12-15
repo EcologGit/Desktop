@@ -63,15 +63,17 @@
               </div>
             </div>
           </div>
+          <div v-if='dataObject.is_favorite !== undefined && userId.value'>
           <FavoriteButton
-          :isSelected='false'
-          :objType='event'
-          :objId='1'
+          :isSelected='dataObject.is_favorite'
+          objType='places'
+          :objId='id'
           :isHidden='false'
           :favoriteButtonState='bigFavoriteButtonStates'
-          :classButton="adding"
+          :classButton="`adding`"
           :classImg='``'
           />
+        </div>
           <div class="object-points" v-if='dataObject.avg_availability'>
             <RatingBlock :availability='dataObject.avg_availability' :beauty='dataObject.avg_beauty' :purity='dataObject.avg_purity'/>
           </div>
@@ -161,8 +163,10 @@ import ReportReviewScroller from '..//widgets//scrollers//ReportReviewScroller//
 import RatingBlock from '..//widgets//statistic//rating//RatingBlock.vue'
 import { bigFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
 import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 
 export default {
+  inject: ["userId"],
   components: {
     ReportReviewScroller,
     ActualEventScroller,
@@ -190,11 +194,11 @@ export default {
     },
     newFunc() {},
     async fetchDataObjectAPI() {
-      await fetch(`${url}/review/places/${this.$route.params.id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.dataObject = data.object_info;
-          this.dataObjectReportsStatistics = data.reports_statistic;
+      await baseApi.get(`${url}/review/places/${this.$route.params.id}`)
+        .then((response) => {
+          this.dataObject = response.data.object_info;
+          this.dataObjectReportsStatistics = response.data.reports_statistic;
+          this.dataObject.is_favorite = response.data.is_favorite;
           //TODO: добавить Map по dataObjectReportsStatistics
         })
         .catch((error) => {

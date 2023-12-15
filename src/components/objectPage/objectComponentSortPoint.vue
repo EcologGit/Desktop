@@ -55,7 +55,7 @@
                   alt=""
                 />
                 <div class="small-card-name">
-                  <p class="small-card-p">{{ nearObject.name }}</p>
+                  <p class="small-card-p">{{ nearObject?.name }}</p>
                 </div>
                 <div class="parameters-object">
                   <div class="parameter-object date">
@@ -149,15 +149,17 @@
               </div>
             </div>
           </div>
-          <FavoriteButton
-          :isSelected='false'
-          :objType='event'
-          :objId='1'
-          :isHidden='false'
-          :favoriteButtonState='bigFavoriteButtonStates'
-          :classButton="adding"
-          :classImg='``'
-          />
+          <div v-if="dataObject.is_favorite !== undefined && userId.value">
+            <FavoriteButton
+              :isSelected="dataObject.is_favorite"
+              objType="sort_points"
+              :objId="id"
+              :isHidden="false"
+              :favoriteButtonState="bigFavoriteButtonStates"
+              :classButton="adding"
+              :classImg="``"
+            />
+          </div>
           <div class="object-points">
             <p>Рейтинг</p>
             <div class="list-points">
@@ -208,7 +210,7 @@
                   />
                   Пластик
                 </div>
-                <div>{{ dataObjectReportsStatistics[0].name }} кг</div>
+                <div>{{ dataObjectReportsStatistics[0]?.name }} кг</div>
               </div>
               <div class="point">
                 <div class="rate">
@@ -394,8 +396,10 @@
 import { url } from "@/main.js";
 import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 import { bigFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 
 export default {
+  inject: ["userId"],
   components: {
     FavoriteButton,
   },
@@ -424,11 +428,11 @@ export default {
         });
     },
     async fetchDataObjectAPI() {
-      await fetch(`${url}/review/sortPoints/${this.$route.params.id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.dataObject = data;
-          this.dataObjectReportsStatistics = data.wast_types;
+      await baseApi
+        .get(`${url}/review/sortPoints/${this.$route.params.id}`)
+        .then((response) => {
+          this.dataObject = response.data;
+          this.dataObjectReportsStatistics = response.data.wast_types;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

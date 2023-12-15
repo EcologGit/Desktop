@@ -89,15 +89,17 @@
               </div>
             </div>
           </div>
+          <div v-if='dataObject.is_favorite !== undefined && userId.value'>
           <FavoriteButton
-          :isSelected='false'
-          :objType='event'
-          :objId='1'
+          :isSelected='dataObject.is_favorite'
+          objType='routes'
+          :objId='id'
           :isHidden='false'
           :favoriteButtonState='bigFavoriteButtonStates'
-          :classButton="adding"
+          classButton='adding'
           :classImg='``'
           />
+        </div>
           <div class="object-points">
             <p>Рейтинг</p>
             <div class="list-points">
@@ -336,8 +338,10 @@ import ActualEventScroller from './/components//ActualEventScroller.vue'
 import NearestSortPointScroller from './/components//NearestSortPointScroller.vue'
 import { bigFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
 import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 
 export default {
+  inject: ["userId"],
   components: {
     ActualEventScroller,
     NearestSortPointScroller,
@@ -357,11 +361,11 @@ export default {
   methods: {
     newFunc() {},
     async fetchDataObjectAPI() {
-      await fetch(`${url}/review/routes/${this.$route.params.id}`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.dataObject = data.object_info;
-          this.dataObjectReportsStatistics = data.reports_statistic;
+      await baseApi.get(`${url}/review/routes/${this.$route.params.id}`)
+        .then((response) => {
+          this.dataObject = response.data.object_info;
+          this.dataObjectReportsStatistics = response.data.reports_statistic;
+          this.dataObject.is_favorite = response.data.is_favorite
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
