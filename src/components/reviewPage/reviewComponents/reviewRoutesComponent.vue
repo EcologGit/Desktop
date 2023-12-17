@@ -65,31 +65,8 @@
               {{ route.name }}
             </div>
           </div>
-          <div class="card-rating">
-            <div class="rating">
-              <img
-                src="../../../assets/imgs/circle_bus.png"
-                alt=""
-                class="cirlce-img"
-              />
-              {{ route.bus }}
-            </div>
-            <div class="rating">
-              <img
-                src="../../../assets/imgs/circle_sortPoint.png"
-                alt=""
-                class="cirlce-img"
-              />
-              {{ route.trash }}
-            </div>
-            <div class="rating">
-              <img
-                src="../../../assets/imgs/circle_flower.png"
-                alt=""
-                class="cirlce-img"
-              />
-              {{ route.flowers }}
-            </div>
+          <div v-if="route.avg_availability">
+            <CardRating :rating="route" />
           </div>
         </div>
       </div>
@@ -102,6 +79,7 @@ import { url } from "@/main.js";
 import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
+import CardRating from "..//..//widgets//statistic//cardRating//CardRating.vue";
 
 export default {
   props: {
@@ -109,6 +87,7 @@ export default {
   },
   components: {
     FavoriteButton,
+    CardRating,
   },
   inject: ["userId"],
   data() {

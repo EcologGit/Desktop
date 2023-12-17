@@ -40,31 +40,8 @@
               {{ place.description }}
             </div>
           </div>
-          <div class="card-rating">
-            <div class="rating">
-              <img
-                src="../../../assets/imgs/circle_bus.png"
-                alt=""
-                class="cirlce-img"
-              />
-              {{ place.avg_availability }}
-            </div>
-            <div class="rating">
-              <img
-                src="../../../assets/imgs/circle_sortPoint.png"
-                alt=""
-                class="cirlce-img"
-              />
-              {{ place.avg_beauty }}
-            </div>
-            <div class="rating">
-              <img
-                src="../../../assets/imgs/circle_flower.png"
-                alt=""
-                class="cirlce-img"
-              />
-              {{ place.avg_purity }}
-            </div>
+          <div v-if="place.avg_availability">
+            <CardRating :rating="place" />
           </div>
         </div>
       </div>
@@ -77,10 +54,11 @@ import { url } from "@/main.js";
 import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
-
+import CardRating from "..//..//widgets//statistic//cardRating//CardRating.vue";
 export default {
   components: {
     FavoriteButton,
+    CardRating,
   },
   created() {
     // > Внедряемое свойство: 5

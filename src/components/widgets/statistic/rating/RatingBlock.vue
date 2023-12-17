@@ -14,7 +14,7 @@ const props = defineProps(["availability", "beauty", "purity"]);
         />
         Доступность
       </div>
-      <div>{{ props.availability }}</div>
+      <div>{{ props.availability.toFixed(2) }}</div>
     </div>
     <div class="point">
       <div class="rate">
@@ -25,7 +25,7 @@ const props = defineProps(["availability", "beauty", "purity"]);
         />
         Красота
       </div>
-      <div>{{ props.beauty }}</div>
+      <div>{{ props.beauty.toFixed(2) }}</div>
     </div>
     <div class="point">
       <div class="rate">
@@ -36,7 +36,7 @@ const props = defineProps(["availability", "beauty", "purity"]);
         />
         Чистота
       </div>
-      <div>{{ props.purity }}</div>
+      <div>{{ props.purity.toFixed(2) }}</div>
     </div>
   </div>
 </template>
