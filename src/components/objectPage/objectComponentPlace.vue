@@ -77,78 +77,9 @@
           <div class="object-points" v-if='dataObject.avg_availability'>
             <RatingBlock :availability='dataObject.avg_availability' :beauty='dataObject.avg_beauty' :purity='dataObject.avg_purity'/>
           </div>
-          <div class="object-points">
-            <p>Собранные отходы</p>
-            <div class="list-points">
-              <div class="point">
-                <div class="rate">
-                  <img
-                    src="../../assets/imgs/plastic_trash_type.png"
-                    alt=""
-                    class="cirlce-img"
-                  />
-                  Пластик
-                </div>
-                <!-- <div>{{ dataObjectReportsStatistics[0].sum_amount }} кг</div> -->
-                <div>{{ 0.0 }} кг</div>
-              </div>
-              <div class="point">
-                <div class="rate">
-                  <img
-                    src="../../assets/imgs/glass_trash_type.png"
-                    alt=""
-                    class="cirlce-img"
-                  />
-                  Стекло
-                </div>
-                <div>0,0 кг</div>
-              </div>
-              <div class="point">
-                <div class="rate">
-                  <img
-                    src="../../assets/imgs/batteries_trash_type.png"
-                    alt=""
-                    class="cirlce-img"
-                  />
-                  Батарейки
-                </div>
-                <div>0,0 кг</div>
-              </div>
-              <div class="point">
-                <div class="rate">
-                  <img
-                    src="../../assets/imgs/light_bulbs_trash_type.png"
-                    alt=""
-                    class="cirlce-img"
-                  />
-                  Лампочка
-                </div>
-                <div>0,0 кг</div>
-              </div>
-              <div class="point">
-                <div class="rate">
-                  <img
-                    src="../../assets/imgs/paper_trash_type.png"
-                    alt=""
-                    class="cirlce-img"
-                  />
-                  Макулатура
-                </div>
-                <div>0,0 кг</div>
-              </div>
-              <div class="point">
-                <div class="rate">
-                  <img
-                    src="../../assets/imgs/metal_trash_type.png"
-                    alt=""
-                    class="cirlce-img"
-                  />
-                  Металл
-                </div>
-                <div>0,0 кг</div>
-              </div>
-            </div>
-          </div>
+          <GatheredWastes
+          :gatheredWastes='dataObject.reports_statistic'
+          />
         </div>
       </section>
       <ReportReviewScroller :reportUrl='`review/reports/nature_object/${this.$route.params.id}`' title='Отчёты' :pageSize='10'/>
@@ -164,6 +95,7 @@ import RatingBlock from '..//widgets//statistic//rating//RatingBlock.vue'
 import { bigFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
 import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
+import GatheredWastes from '../widgets/statistic/gatheredWastes/GatheredWastes.vue'
 
 export default {
   inject: ["userId"],
@@ -173,12 +105,12 @@ export default {
     NearestSortPointScroller,
     RatingBlock,
     FavoriteButton,
+    GatheredWastes,
   },
   data() {
     return {
       url: url,
       dataObject: this.fetchDataObjectAPI(),
-      dataObjectReportsStatistics: [],
       visibleMore: false,
       id: this.$route.params.id,
       objectType: this.$route.params.objectType,
@@ -197,7 +129,7 @@ export default {
       await baseApi.get(`${url}/review/places/${this.$route.params.id}`)
         .then((response) => {
           this.dataObject = response.data.object_info;
-          this.dataObjectReportsStatistics = response.data.reports_statistic;
+          this.dataObject.reports_statistic = response.data.reports_statistic
           this.dataObject.is_favorite = response.data.is_favorite;
           //TODO: добавить Map по dataObjectReportsStatistics
         })
