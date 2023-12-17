@@ -96,7 +96,7 @@ onMounted(() => {
           </div>
         </div>
       </div>
-      <div class="report-result">
+      <div class="report-result" v-if='report?.results?.length'>
         <div
           class="result-type"
           v-for="result in report.results"
@@ -110,7 +110,6 @@ onMounted(() => {
           {{ getWasteByPk(result.waste_id)?.unit_of_waste }}
         </div>
       </div>
-      <div class="object-result-imgs"></div>
       <div class="object-result-desc">
         {{ report.description }}
       </div>

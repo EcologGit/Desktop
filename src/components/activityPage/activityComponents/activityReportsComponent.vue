@@ -5,199 +5,78 @@
       v-for="activity in dataActivity"
       v-bind:key="activity.pk"
     >
-      <div class="card-header activity">
-        <div class="user-date">
-          <div class="user-info">
-            <img
-              src="../../../assets/imgs/default_user_photo_small.png"
-              alt="User"
-              class="user-photo"
-            />
-            {{ activity.user_id.username }}
+      <div class="card-header activity" :style="{ gap: '32px' }">
+        <div>
+          <div class="user-date">
+            <div class="user-info">
+              <img
+                src="../../../assets/imgs/default_user_photo_small.png"
+                alt="User"
+                class="user-photo"
+              />
+              {{ activity.user_id.username }}
+            </div>
+            <div class="date-and-time">
+              <div class="date">{{ activity.date }}</div>
+              <div class="time">{{ activity.time }}</div>
+            </div>
           </div>
-          <div class="date-report">{{ activity.created_at }}</div>
+          <div class="coordinates">
+            <div class="coordinate">
+              <img
+                class="icon-margin"
+                width="11"
+                height="18"
+                src="../../../assets/imgs/map.png"
+                alt=""
+              />
+              {{ activity.obj.locality }}
+            </div>
+            <div
+              class="coordinate"
+              v-if="objectTypesSmallImage[activity.obj.type_obj]"
+            >
+              <img
+                class="icon-margin"
+                width="18"
+                height="18"
+                :src="
+                  require(`@/${objectTypesSmallImage[activity.obj.type_obj]}`)
+                "
+                alt=""
+              />
+              {{ activity.obj.name }}
+            </div>
+            <div class="coordinate">
+              <img
+                class="icon-margin"
+                width="18"
+                height="18"
+                :src="require(`@/${objectTypesSmallImage['sort_point']}`)"
+                alt=""
+              />
+              {{ activity.obj.sort_point }}
+            </div>
+          </div>
         </div>
-        <div class="coordinates">
-          <div class="coordinate">
+        <div class="card-rating" v-if="activity.results?.length">
+          <div
+            class="rating"
+            v-for="result in activity.results"
+            :key="result.waste_id"
+          >
             <img
-              class="icon-margin"
-              width="11"
-              height="18"
-              src="../../../assets/imgs/map.png"
+              :src="getSrcImageByPk(result.waste_id)"
               alt=""
+              class="cirlce-img"
             />
-            {{ activity.obj.locality }}
-          </div>
-          <div class="coordinate">
-            <img
-              class="icon-margin"
-              width="18"
-              height="18"
-              src="../../../assets/imgs/places.png"
-              alt=""
-            />
-            {{ activity.obj.name }}
+            {{ result.amount }}
+            {{ getWasteByPk(result.waste_id)?.unit_of_waste }}
           </div>
         </div>
-      </div>
-      <div class="card-content activity">
-        <div class="card-imgs">
-          <img
-            class="card-img activity"
-            src="../../../assets/imgs/default_activity.png"
-            alt=""
-          />
-          <img
-            class="card-img activity"
-            src="../../../assets/imgs/default_activity.png"
-            alt=""
-          />
-          <img
-            class="card-img activity"
-            src="../../../assets/imgs/default_activity.png"
-            alt=""
-          />
-          <img
-            class="card-img activity"
-            src="../../../assets/imgs/default_activity.png"
-            alt=""
-          />
-        </div>
-        <div class="card-desc">
+
+        <div class="card-desc" :style="{ margin: '0px' }">
           {{ activity.description }}
-        </div>
-      </div>
-      <div class="card-rating">
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/plastic_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          кг
-        </div>
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/paper_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          кг
-        </div>
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/metal_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          кг
-        </div>
-      </div>
-    </div>
-    <div class="card activity">
-      <div class="card-header activity">
-        <div class="user-date">
-          <div class="user-info">
-            <img
-              src="../../../assets/imgs/default_user_photo_small.png"
-              alt="User"
-              class="user-photo"
-            />
-            Николай Ростов
-          </div>
-          <div class="date-report">01.01.2022 12:43</div>
-        </div>
-        <div class="coordinates">
-          <div class="coordinate activity">
-            <img
-              class="icon-margin"
-              width="11"
-              height="18"
-              src="../../../assets/imgs/map.png"
-              alt=""
-            />
-            Воскресенск
-          </div>
-          <div class="coordinate activity">
-            <img
-              class="icon-margin"
-              width="18"
-              height="18"
-              src="../../../assets/imgs/places.png"
-              alt=""
-            />
-            Карьер “Песчаный”
-          </div>
-        </div>
-      </div>
-      <div class="card-content activity">
-        <div class="card-imgs">
-          <img
-            class="card-img activity"
-            src="../../../assets/imgs/default_activity.png"
-            alt=""
-          />
-          <img
-            class="card-img activity"
-            src="../../../assets/imgs/default_activity.png"
-            alt=""
-          />
-          <img
-            class="card-img activity"
-            src="../../../assets/imgs/default_activity.png"
-            alt=""
-          />
-          <img
-            class="card-img activity"
-            src="../../../assets/imgs/default_activity.png"
-            alt=""
-          />
-        </div>
-        <div class="card-desc">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi diam
-          vulputate hendrerit proin vulputate faucibus eu elementum. Sit pretium
-          sed in congue molestie turpis sodales risus. Nunc quam cum felis,
-          elementum amet fermentum. Tristique ipsum pulvinar dignissim ultricies
-          nulla nulla fusce lectus. Urna, in fusce dictumst ipsum facilisis
-          malesuada tempus, at. Auctor viverra et vestibulum nibh congue augue
-          sagittis ac. Et mus mollis amet vel faucibus ultricies mattis. Sed
-          aliquam eu, blandit morbi pellentesque leo imperdiet. Consectetur
-          pharetra morbi tellus facilisi pellentesque id. Pharetra, elit
-          interdum eget risus ut. Tristique nibh habitant aenean ac nec eget
-          venenatis. Eget in morbi elementum id egestas quisque. Orci id quis
-          consectetur volutpat vitae convallis faucibus ut. Egestas ornare
-          pretium non accumsan volutpat scelerisque. Mauris mattis mauris
-          pulvinar sit. Purus arcu, aenean ut sapien viverra molestie vitae sem
-          semper. In fames et ut tellus. Et volutpat, hendrerit eget ullamcorper
-          purus imperdiet. Vitae non iaculis netus in egestas tempor nibh.
-          Elementum, eget cras in vitae lectus laoreet in egestas. Arcu neque,
-          aliquet urna, consectetur. Maecenas purus, ut a volutpat lacus.
-        </div>
-      </div>
-      <div class="card-rating">
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/plastic_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          3,6 кг
-        </div>
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/paper_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          2,2 кг
-        </div>
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/metal_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          15,8 кг
         </div>
       </div>
     </div>
@@ -206,13 +85,19 @@
 
 <script>
 import { url } from "@/main.js";
+import { wasteDictImagesDict } from "..//..//..//consts//waste//wasteImages.js";
+import { baseApi } from "..//..//shared//api//base//BaseApi.js";
+import { objectTypesSmallImage } from "../../../consts/contentTypeDicts/contentTypeDicts.js";
+import moment from "moment";
 
 export default {
   data() {
     return {
       url: url,
-
       dataActivity: this.fetchDataActivity(),
+      wasteDictImagesDict: wasteDictImagesDict,
+      wasteTypes: this.getWasteTypesDict(),
+      objectTypesSmallImage: objectTypesSmallImage,
     };
   },
   methods: {
@@ -220,12 +105,34 @@ export default {
       await fetch(`${url}/activities/reports/`)
         .then((response) => response.json())
         .then((data) => {
-          this.dataActivity = data.results;
-          console.log(data.results);
+          const preparedData = data.results.map((key) => {
+            return {
+              ...key,
+              date: moment(key.created_at).format("DD.MM.YYYY"),
+              time: moment(key.created_at).format("hh:mm"),
+            };
+          });
+          this.dataActivity = preparedData;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
         });
+    },
+    async getWasteTypesDict() {
+      baseApi.get("/review/statuses-waste-types-dict/").then((response) => {
+        this.wasteTypes = response.data;
+      });
+    },
+    getWasteByPk(pk) {
+      if (!this.wasteTypes.results) return null;
+      return this.wasteTypes.results.find((key) => key.pk === pk);
+    },
+    getSrcImageByPk(pk) {
+      const nameStatus = this.getWasteByPk(pk)?.name;
+      if (nameStatus) {
+        return require(`@/${wasteDictImagesDict[nameStatus]}`);
+      }
+      return "";
     },
   },
 };
