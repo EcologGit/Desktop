@@ -1,176 +1,51 @@
 <template>
   <section class="statistics">
-    <div class="statistics-card collected-trash">
-      Собранный отходы
-      <div class="card-rating profile">
-        <div class="rating profile">
-          <div>
-            <img
-              src="../../../assets/imgs/plastic_trash_type.png"
-              alt=""
-              class="cirlce-img"
-            />
-            Пластик
-          </div>
-          <div class="value-trash">0,0 кг</div>
-        </div>
-        <div class="rating profile">
-          <div>
-            <img
-              src="../../../assets/imgs/glass_trash_type.png"
-              alt=""
-              class="cirlce-img"
-            />
-            Стекло
-          </div>
-          <div class="value-trash">0,0 кг</div>
-        </div>
-        <div class="rating profile">
-          <div>
-            <img
-              src="../../../assets/imgs/batteries_trash_type.png"
-              alt=""
-              class="cirlce-img"
-            />
-            Батарейки
-          </div>
-          <div class="value-trash">0,0 кг</div>
-        </div>
-        <div class="rating profile">
-          <div>
-            <img
-              src="../../../assets/imgs/light_bulbs_trash_type.png"
-              alt=""
-              class="cirlce-img"
-            />
-            Лампочки
-          </div>
-          <div class="value-trash">0,0 кг</div>
-        </div>
-        <div class="rating profile">
-          <div>
-            <img
-              src="../../../assets/imgs/paper_trash_type.png"
-              alt=""
-              class="cirlce-img"
-            />
-            Макулатура
-          </div>
-          <div class="value-trash">0,0 кг</div>
-        </div>
-        <div class="rating profile">
-          <div>
-            <img
-              src="../../../assets/imgs/metal_trash_type.png"
-              alt=""
-              class="cirlce-img"
-            />
-            Металл
-          </div>
-          <div class="value-trash">0,0 кг</div>
-        </div>
-      </div>
-    </div>
+    <GatheredWastesStatisticCounter
+      :gathered_waste="statisticData.gathered_waste"
+    />
     <div class="second-column">
-      <div class="statistics-card object-counter">
-        Счетчик объектов
-        <div class="card-rating profile">
-          <div class="rating profile">
-            <div>
-              <img
-                src="../../../assets/imgs/circle_places.png"
-                alt=""
-                class="cirlce-img"
-              />
-              Места
-            </div>
-            <div class="value-trash">0</div>
-          </div>
-          <div class="rating profile">
-            <div>
-              <img
-                src="../../../assets/imgs/circle_routes.png"
-                alt=""
-                class="cirlce-img"
-              />
-              Маршруты
-            </div>
-            <div class="value-trash">0</div>
-          </div>
-          <div class="rating profile">
-            <div>
-              <img
-                src="../../../assets/imgs/circle_events.png"
-                alt=""
-                class="cirlce-img"
-              />
-              Мероприятия
-            </div>
-            <div class="value-trash">0</div>
-          </div>
-          <div class="rating profile">
-            <div>
-              <img
-                src="../../../assets/imgs/circle_sortPoint.png"
-                alt=""
-                class="cirlce-img"
-              />
-              Точки сортировки
-            </div>
-            <div class="value-trash">0</div>
-          </div>
-        </div>
-      </div>
-      <div class="statistics-card activity">
-        Активность
-        <div class="card-rating profile">
-          <div class="rating profile">
-            <div>
-              <img
-                src="../../../assets/imgs/circle_reports.png"
-                alt=""
-                class="cirlce-img"
-              />
-              Отчеты
-            </div>
-            <div class="value-trash">0</div>
-          </div>
-          <div class="rating profile">
-            <div>
-              <img
-                src="../../../assets/imgs/circle_grade.png"
-                alt=""
-                class="cirlce-img"
-              />
-              Оценки
-            </div>
-            <div class="value-trash">0</div>
-          </div>
-          <div class="rating profile">
-            <div>
-              <img
-                src="../../../assets/imgs/circle_photos.png"
-                alt=""
-                class="cirlce-img"
-              />
-              Фотографии
-            </div>
-            <div class="value-trash">0</div>
-          </div>
-        </div>
-      </div>
+      <ObjectCounter
+        :place_count="statisticData.place"
+        :route_count="statisticData.route"
+        :event_count="statisticData.event"
+        :sort_point_count="statisticData.sort_points"
+      />
+      <ActivityStatistic
+        :photo_count="statisticData.photo_count"
+        :rates_count="statisticData.rates_count"
+        :report_count="statisticData.report_count"
+      />
     </div>
   </section>
 </template>
 
 <script>
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
+import { userProfilesUrls } from "../../../components/apiUrls/userProfiles/userProfilesUrls.js";
+import ObjectCounter from "../../widgets/statistic/objectCounter/ObjectCounter.vue";
+import ActivityStatistic from "../../widgets/statistic/activityStatistic/ActivityStatistic.vue";
+import GatheredWastesStatisticCounter from "../../widgets/statistic/gatheredWastes/GatheredWastesStatisticCounter.vue";
+
 export default {
+  components: {
+    ObjectCounter,
+    ActivityStatistic,
+    GatheredWastesStatisticCounter
+  },
   data() {
     return {
       visibleCards: "reports",
+      statisticData: this.getStatisticData(),
     };
   },
   methods: {
+    getStatisticData() {
+      baseApi
+        .get(userProfilesUrls.getStatistics(this.$route.params.id))
+        .then((response) => {
+          this.statisticData = response.data;
+        });
+    },
     changeCard(event) {
       let target =
         event.target.className == "icon-btn"
