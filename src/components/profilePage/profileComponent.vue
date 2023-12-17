@@ -71,7 +71,7 @@
       </section>
       <section class="buttons profile">
         <router-link
-          :to="{ name: 'profileReports', params: { id: 1 } }"
+          :to="{ name: 'profileReports', params: { id: userId.value } }"
           class="links-width"
         >
           <button class="btn-profile active" @click="changeCard">
@@ -97,7 +97,7 @@
           </button>
         </router-link>
         <router-link
-          :to="{ name: 'profileStatistics', params: { id: 1 } }"
+          :to="{ name: 'profileStatistics', params: { id: userId.value } }"
           class="links-width"
         >
           <button class="btn-profile btn-statistics" @click="changeCard">
