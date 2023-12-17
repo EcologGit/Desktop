@@ -176,123 +176,7 @@
           </div>
         </div>
       </section>
-      <section class="object-reports">
-        <p>Отчеты</p>
-        <div class="object-report-card">
-          <div class="object-report-info">
-            <div class="object-report-user-info">
-              <div class="object-report-user-img-name">
-                <img
-                  src="../../assets/imgs/default_user_photo_small.png"
-                  alt="User"
-                  class="user-photo"
-                />
-                Username
-              </div>
-
-              <div class="date-and-time">
-                <div class="date">Date</div>
-
-                <div class="time">Time</div>
-              </div>
-            </div>
-            <div class="object-report-locality">
-              <img
-                class="icon-margin"
-                width="11"
-                height="18"
-                src="../../assets/imgs/map.png"
-                alt=""
-              />Locality
-            </div>
-            <div class="object-report-route">
-              <img
-                class="icon-margin"
-                width="18"
-                height="18"
-                src="../../assets/imgs/places.png"
-                alt=""
-              />Route
-            </div>
-          </div>
-          <div class="report-result">
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/plastic_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />0,0 кг
-            </div>
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/glass_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />
-              0,0 кг
-            </div>
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/batteries_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />
-              0,0 кг
-            </div>
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/light_bulbs_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />
-              0,0 кг
-            </div>
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/paper_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />
-              0,0 кг
-            </div>
-            <div class="result-type">
-              <img
-                src="../../assets/imgs/metal_trash_type.png"
-                alt=""
-                class="cirlce-img"
-              />
-              0,0 кг
-            </div>
-          </div>
-          <div class="object-result-imgs">
-            <img src="../../assets/imgs/default_activity.png" alt="" />
-            <img src="../../assets/imgs/default_activity.png" alt="" />
-            <img src="../../assets/imgs/default_activity.png" alt="" />
-            <img src="../../assets/imgs/default_activity.png" alt="" />
-          </div>
-          <div class="object-result-desc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi diam
-            vulputate hendrerit proin vulputate faucibus eu elementum. Sit
-            pretium sed in congue molestie turpis sodales risus. Nunc quam cum
-            felis, elementum amet fermentum. Tristique ipsum pulvinar dignissim
-            ultricies nulla nulla fusce lectus. Urna, in fusce dictumst ipsum
-            facilisis malesuada tempus, at. Auctor viverra et vestibulum nibh
-            congue augue sagittis ac. Et mus mollis amet vel faucibus ultricies
-            mattis. Sed aliquam eu, blandit morbi pellentesque leo imperdiet.
-            Consectetur pharetra morbi tellus facilisi pellentesque id.
-            Pharetra, elit interdum eget risus ut. Tristique nibh habitant
-            aenean ac nec eget venenatis. Eget in morbi elementum id egestas
-            quisque. Orci id quis consectetur volutpat vitae convallis faucibus
-            ut. Egestas ornare pretium non accumsan volutpat scelerisque. Mauris
-            mattis mauris pulvinar sit. Purus arcu, aenean ut sapien viverra
-            molestie vitae sem semper. In fames et ut tellus. Et volutpat,
-            hendrerit eget ullamcorper purus imperdiet. Vitae non iaculis netus
-            in egestas tempor nibh. Elementum, eget cras in vitae lectus laoreet
-            in egestas. Arcu neque, aliquet urna, consectetur. Maecenas purus,
-            ut a volutpat lacus.
-          </div>
-        </div>
-      </section>
+      <ReportReviewScroller :reportUrl='`review/reports/event/${this.$route.params.id}`' title='Отчёты' :pageSize='10'/>
     </section>
   </main>
 </template>
@@ -303,12 +187,14 @@ import PlaceScroller from ".//components//PlaceScroller.vue";
 import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 import { bigFavoriteButtonStates } from "@/consts/favorite/favoriteButtonStates.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
+import ReportReviewScroller from '..//widgets//scrollers//ReportReviewScroller//ReportReviewScroller.vue'
 
 export default {
   inject: ["userId"],
   components: {
     PlaceScroller,
     FavoriteButton,
+    ReportReviewScroller,
   },
   data() {
     return {
