@@ -79,7 +79,10 @@
             alt="Иконка Обзор"
           />Опубликовать</a
         >
-        <a href="#" class="a-action-post">
+        <router-link
+           :to='`/report/edit/${report.pk}`'
+        >
+        <a class="a-action-post">
           <img
             class="a-img"
             width="18"
@@ -88,6 +91,7 @@
             alt="Иконка Обзор"
           />Редактировать</a
         >
+      </router-link>
       </div>
     </div>
   </section>

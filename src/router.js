@@ -39,6 +39,7 @@ import objectComponentPlace from "./components/objectPage/objectComponentPlace.v
 import reportComponent from "./components/reportPage/reportComponent.vue";
 
 import newReportComponent from "./components/createReportPage/newReportComponent.vue";
+import reportEditPage from "./components/reportPage/reportEditPage.vue";
 
 
 export default createRouter({
@@ -103,9 +104,17 @@ export default createRouter({
             name: 'newReport',
             component: newReportComponent,
         },
-
-
-
+        {
+            path: '/report/',
+            name: 'report',
+            children: [
+                {
+                    path: 'edit/:id',
+                    name: 'edit',
+                    component: reportEditPage,
+                }
+            ]
+        },
         {
             path: '/activity/',
             component: activityPageComponent,
