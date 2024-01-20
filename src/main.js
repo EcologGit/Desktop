@@ -43,7 +43,7 @@ const app = createApp(App);
 
 app.use(router);
 
-export const url = 'https://localhost:8000/django_api';
+export const url = 'http://81.163.30.36/django_api';
 
 app.component('header-component', headerComponent);
 app.component('footer-component', footerComponent);
