@@ -33,11 +33,7 @@ import objectComponentPlace from "./components/objectPage/objectComponentPlace.v
 import reportComponent from "./components/reportPage/reportComponent.vue";
 import newReportComponent from "./components/createReportPage/newReportComponent.vue";
 import router from "./router";
-import VueGtag from "vue-gtag";
 
-import {
-    initYandexMetrika
-} from 'yandex-metrika-vue3';
 
 
 
@@ -45,20 +41,9 @@ import {
 
 const app = createApp(App);
 
-app.use(VueGtag, {
-    config: {
-        id: "G-E3E2FZ63QD"
-    }
-})
-
-app.use(initYandexMetrika, {
-    id: 95365232,
-    env: process.env.NODE_ENV,
-});
-
 app.use(router);
 
-export const url = 'http://81.163.30.36/django_api';
+export const url = 'https://localhost:8000/django_api';
 
 app.component('header-component', headerComponent);
 app.component('footer-component', footerComponent);
