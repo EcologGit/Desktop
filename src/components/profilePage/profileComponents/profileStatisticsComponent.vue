@@ -35,17 +35,17 @@ export default {
   data() {
     return {
       visibleCards: "reports",
-      statisticData: this.getStatisticData(),
+      statisticData: [],
     };
   },
-  methods: {
-    getStatisticData() {
-      baseApi
+  mounted() {
+    baseApi
         .get(userProfilesUrls.getStatistics(this.$route.params.id))
         .then((response) => {
           this.statisticData = response.data;
         });
-    },
+  },
+  methods: {
     changeCard(event) {
       let target =
         event.target.className == "icon-btn"

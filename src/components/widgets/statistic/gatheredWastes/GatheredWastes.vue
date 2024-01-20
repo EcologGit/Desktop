@@ -2,7 +2,6 @@
 import { wasteDictImagesDict } from '../../../../consts/waste/wasteImages.js'
 const props = defineProps(['gatheredWastes']);
 
-console.log(props)
 </script>
 
 <template>

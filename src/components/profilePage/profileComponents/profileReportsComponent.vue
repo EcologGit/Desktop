@@ -1,6 +1,6 @@
 <template>
   <section class="cards">
-    <div class="card profile">
+    <div class="card profile" v-for="report in userReports" :key="report.id">
       <div class="card-header profile">
         <div class="user-date">
           <div class="user-info">
@@ -9,9 +9,9 @@
               alt="User"
               class="user-photo"
             />
-            Евгений Базаров
+            {{ report?.user_id?.public_name }}
           </div>
-          <div class="date-report">01.01.2022 12:43</div>
+          <div class="date-report">{{ report.date }} {{ report.time }}</div>
         </div>
         <div class="coordinates">
           <div class="coordinate">
@@ -22,7 +22,7 @@
               src="../../../assets/imgs/map.png"
               alt=""
             />
-            Город
+            {{ report?.obj?.locality }}
           </div>
           <div class="coordinate">
             <img
@@ -32,7 +32,7 @@
               src="../../../assets/imgs/places.png"
               alt=""
             />
-            Имя места
+            {{ report?.obj?.name }}
           </div>
         </div>
       </div>
@@ -60,76 +60,15 @@
           />
         </div>
         <div class="card-desc">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi diam
-          vulputate hendrerit proin vulputate faucibus eu elementum. Sit pretium
-          sed in congue molestie turpis sodales risus. Nunc quam cum felis,
-          elementum amet fermentum. Tristique ipsum pulvinar dignissim ultricies
-          nulla nulla fusce lectus. Urna, in fusce dictumst ipsum facilisis
-          malesuada tempus, at. Auctor viverra et vestibulum nibh congue augue
-          sagittis ac. Et mus mollis amet vel faucibus ultricies mattis. Sed
-          aliquam eu, blandit morbi pellentesque leo imperdiet. Consectetur
-          pharetra morbi tellus facilisi pellentesque id. Pharetra, elit
-          interdum eget risus ut. Tristique nibh habitant aenean ac nec eget
-          venenatis. Eget in morbi elementum id egestas quisque. Orci id quis
-          consectetur volutpat vitae convallis faucibus ut. Egestas ornare
-          pretium non accumsan volutpat scelerisque. Mauris mattis mauris
-          pulvinar sit. Purus arcu, aenean ut sapien viverra molestie vitae sem
-          semper. In fames et ut tellus. Et volutpat, hendrerit eget ullamcorper
-          purus imperdiet. Vitae non iaculis netus in egestas tempor nibh.
-          Elementum, eget cras in vitae lectus laoreet in egestas. Arcu neque,
-          aliquet urna, consectetur. Maecenas purus, ut a volutpat lacus.
+          {{ report?.description }}
         </div>
       </div>
-      <div class="card-rating">
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/plastic_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
-        </div>
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/glass_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
-        </div>
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/batteries_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
-        </div>
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/light_bulbs_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
-        </div>
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/paper_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
-        </div>
-        <div class="rating">
-          <img
-            src="../../../assets/imgs/metal_trash_type.png"
-            alt=""
-            class="cirlce-img"
-          />
-          0,0 кг
-        </div>
-      </div>
+      <div v-show='report.results'>
+      <GatheredWastesHorizontal
+        :wasteTypesDict="wasteTypesDict"
+        :gatheredWastes="report.results"
+      />
+    </div>
       <div class="post-action">
         <a href="#" class="a-action-post">
           <img
@@ -155,11 +94,41 @@
 </template>
 
 <script>
+import { baseApi } from "@/components/shared/api/base/BaseApi.js";
+import { userProfilesUrls } from "../../../components/apiUrls/userProfiles/userProfilesUrls.js";
+import GatheredWastesHorizontal from "../../widgets/statistic/gatheredWastes/GatheredWastesHorizontal.vue";
+import moment from "moment";
+
 export default {
   data() {
     return {
       visibleCards: "reports",
+      userReports: [],
+      wasteTypesDict: [],
     };
+  },
+  components: {
+    GatheredWastesHorizontal,
+  },
+  mounted() {
+    baseApi
+      .get(userProfilesUrls.getUserReports(this.$route.params.id))
+      .then((res) => {
+        this.userReports = res.data.results.map((val) => {
+          return {
+            ...val,
+            date: moment(val.created_at).format("DD.MM.YYYY"),
+            time: moment(val.created_at).format("hh:mm"),
+          };
+        });
+      })
+      .catch((err) => console.log(err));
+    baseApi
+      .get("/review/statuses-waste-types-dict/")
+      .then((res) => {
+        this.wasteTypesDict = res.data.results;
+      })
+      .catch((err) => console.log(err));
   },
   methods: {
     changeCard(event) {
