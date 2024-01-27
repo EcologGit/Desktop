@@ -13,8 +13,8 @@
                   type="radio"
                   name="radio"
                   value="place"
-                  @change="setDataByTrashPlace('nature_object')"
-                  checked
+                  @change="setDataByTrashPlace('places')"
+                  :checked="nameTrashPlaceSelectData == 'places'"
                 />
                 <label for="place">Место</label>
               </div>
@@ -24,7 +24,8 @@
                   type="radio"
                   name="radio"
                   value="route"
-                  @change="setDataByTrashPlace('route')"
+                  @change="setDataByTrashPlace('routes')"
+                  :checked="nameTrashPlaceSelectData == 'routes'"
                 />
                 <label for="route">Маршрут</label>
               </div>
@@ -34,7 +35,8 @@
                   type="radio"
                   name="radio"
                   value="event"
-                  @change="setDataByTrashPlace('event')"
+                  @change="setDataByTrashPlace('events')"
+                  :checked="nameTrashPlaceSelectData == 'events'"
                 />
                 <label for="event">Мероприятие</label>
               </div>
@@ -109,9 +111,9 @@
             @change="handleFileChange"
           />
         </button>
-        <div>
-          <p class="photo-label" style="font-size: medium" v-if="photo">
-            {{ photo?.name }}
+        <div :style="{width: '100%', justifyContent: 'center', display: 'flex'}">
+          <p class="photo-label" style="font-size: medium" v-show="photo">
+            <img ref='image' class="card-img profile scope-image" style="cursor: pointer" @click='zoomImage'>
             <span @click="deleteFile" style="cursor: pointer">&cross;</span>
           </p>
         </div>
@@ -304,7 +306,7 @@
 <script>
 import { reportUrls } from "@/components/apiUrls/report/reportUrls.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { wasteDictImagesDict } from "..//..//consts//waste//wasteImages.js";
 import "./style.css";
 import "../ui/loaders/scrollLoader/style.css";
@@ -323,6 +325,10 @@ export default {
     const isLoadingSendPublication = ref(false);
     const router = useRouter();
     const route = useRoute();
+    const image = ref(null);
+    const widthImage = ref(null);
+    const heightImage = ref(null);
+    const isZoomed = ref(false);
 
     const nameObj = ref(null);
     const nameSortPoint = ref(null);
@@ -363,6 +369,14 @@ export default {
     }
     function handleFileChange(event) {
       photo.value = event.target.files[0];
+      const blobUrl = URL.createObjectURL(photo.value);
+      const newImage = new Image();
+      image.value.src = blobUrl;
+      newImage.onload = function() {
+              widthImage.value = this.width;
+              heightImage.value = this.height;
+            }
+      newImage.src = blobUrl;
       //this.imageUrl = URL.createObjectURL(file);
     }
     function getWasteByPk(pk) {
@@ -392,21 +406,23 @@ export default {
       isLoadingSendPublication.value = false;
     }
 
-    const nameTrashPlaceSelectData = ref("place");
-
-    const trashDictSelect = {
-      event: allEvents,
-      route: allRoutes,
-      nature_object: allPlaces,
-    };
+    const nameTrashPlaceSelectData = ref("places");
 
     function getDataByTrashPlace(name) {
-      return trashDictSelect[name]?.value;
+      switch (name) {
+        case "events":
+          return allEvents.value;
+        case "routes":
+          return allRoutes.value;
+        case "places":
+          return allPlaces.value;
+      }
     }
 
     function deleteFile() {
       fileInput.value.value = "";
       photo.value = null;
+      image.value.src = null;
     }
 
     function setDataByTrashPlace(name) {
@@ -463,7 +479,6 @@ export default {
     function saveReport() {
       isLoadingSendPublication.value = true;
       const formData = preparedData();
-      console.log(formData);
       baseApi
         .patch(reportUrls.updateReport(route.params.id), formData)
         .then((response) => {
@@ -484,11 +499,25 @@ export default {
         .get(reportUrls.getReportData(route.params.id))
         .then((res) => {
           const data = res.data;
-          nameObj.value = data.obj.name;
+          nameObj.value = data.obj.pk;
           nameSortPoint.value = data.point_id.pk;
-          baseApi.get(data.photo).then((res) => {
+          nameTrashPlaceSelectData.value = data.obj.type_obj;
+          baseApi({
+            url: data.photo,
+            method: 'GET',
+            responseType: 'blob',
+          }).then((res) => {
             const headers = res.headers;
-            photo.value = new File([res.data], '2121.jpg', {type: headers.get('content-type')})
+            const newFile = new File([res.data], '1.png', {type: headers.get('content-type')})
+            photo.value = newFile;
+            const blobUrl = URL.createObjectURL(res.data)
+            image.value.src = blobUrl;
+            const newImage = new Image();
+            newImage.onload = function() {
+              widthImage.value = this.width;
+              heightImage.value = this.height;
+            }
+            newImage.src = blobUrl;
           });
           description.value = data.description;
           data.results.forEach((val) => {
@@ -504,12 +533,37 @@ export default {
         });
     }
 
+    const zoomImage = () => {
+      if (!isZoomed.value) {
+        image.value.style.position = 'fixed';
+        const koeff = widthImage.value / heightImage.value;
+        const windowWidth = window.screen.width;
+        const windowHeight = window.screen.height;
+        const windowKoeff = windowHeight / windowWidth;
+        image.value.style.width = `${70 * koeff * windowKoeff}%`;
+        image.value.style.height = `${70}%`
+        image.value.style.top = '0px';
+        image.value.style.left = '0px';
+      }
+      else {
+        image.value.style.position = 'static';
+        image.value.style.width = `190px`;
+        image.value.style.height = `190px`
+        image.value.style.top = '0px';
+        image.value.style.left = '0px';
+      }
+      isZoomed.value = !isZoomed.value;
+    }
+
+    onMounted(() => {
+      getReportData();
+    }) 
+
     getAllEvents();
     getAllRoutes();
     getAllPlaces();
     getAllSortPoints();
     getWasteTypesDict();
-    getReportData();
 
     return {
       getDataByTrashPlace,
@@ -538,6 +592,8 @@ export default {
       rate,
       setRating,
       saveReport,
+      image,
+      zoomImage
     };
   },
 };

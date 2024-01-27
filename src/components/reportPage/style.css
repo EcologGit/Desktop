@@ -58,3 +58,8 @@
     width: 100%;
     justify-content: center;
 }
+
+.scope-image {
+    transition: width 1s;
+    background-color: #24282C;
+}

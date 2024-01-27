@@ -13,7 +13,7 @@
                   type="radio"
                   name="radio"
                   value="place"
-                  @change="setDataByTrashPlace('nature_object')"
+                  @change="setDataByTrashPlace('places')"
                   checked
                 />
                 <label for="place">Место</label>
@@ -24,7 +24,7 @@
                   type="radio"
                   name="radio"
                   value="route"
-                  @change="setDataByTrashPlace('route')"
+                  @change="setDataByTrashPlace('routes')"
                 />
                 <label for="route">Маршрут</label>
               </div>
@@ -34,7 +34,7 @@
                   type="radio"
                   name="radio"
                   value="event"
-                  @change="setDataByTrashPlace('event')"
+                  @change="setDataByTrashPlace('events')"
                 />
                 <label for="event">Мероприятие</label>
               </div>
@@ -385,16 +385,17 @@ export default {
       isLoadingSendPublication.value = false;
     }
 
-    const nameTrashPlaceSelectData = ref("place");
-
-    const trashDictSelect = {
-      event: allEvents,
-      route: allRoutes,
-      nature_object: allPlaces,
-    };
+    const nameTrashPlaceSelectData = ref("places");
 
     function getDataByTrashPlace(name) {
-      return trashDictSelect[name]?.value;
+      switch (name) {
+        case 'events':
+          return allEvents.value
+        case 'routes':
+          return allRoutes.value
+        case 'places':
+          return allPlaces.value
+      }
     }
 
     function deleteFile() {
