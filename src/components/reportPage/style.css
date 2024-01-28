@@ -61,5 +61,15 @@
 
 .scope-image {
     transition: width 1s;
-    background-color: #24282C;
+    background-color: #24282C;  
+}
+
+.scope-image-modal-content {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

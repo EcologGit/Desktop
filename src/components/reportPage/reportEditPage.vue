@@ -111,11 +111,18 @@
             @change="handleFileChange"
           />
         </button>
-        <div :style="{width: '100%', justifyContent: 'center', display: 'flex'}">
-          <p class="photo-label" style="font-size: medium" v-show="photo">
-            <img ref='image' class="card-img profile scope-image" style="cursor: pointer" @click='zoomImage'>
-            <span @click="deleteFile" style="cursor: pointer">&cross;</span>
-          </p>
+        <div :class="{ 'modal-background': isZoomed }" v-show='photo'>
+          <div :class="{ 'scope-image-modal-content': isZoomed }">
+            <img
+              ref="image"
+              class="card-img profile scope-image"
+              style="cursor: pointer"
+              @click="zoomImage"
+            />
+            <span @click="deleteFile" style="cursor: pointer" v-show="!isZoomed"
+              >&cross;</span
+            >
+          </div>
         </div>
       </div>
       <div class="desc-newReport">
@@ -241,7 +248,11 @@
       </div>
       <div class="required-fields">* – поля, обязательные к заполнению</div>
       <div class="buttons-newReport">
-        <button class="newReport-publish" @click="openModal">
+        <button
+          class="newReport-publish"
+          @click="openModal"
+          v-if="statusReport == reportStatuses.DRAFT"
+        >
           <img
             class="a-img"
             width="18"
@@ -250,7 +261,12 @@
             alt="Зарегистрироваться"
           />ОПУБЛИКОВАТЬ
         </button>
-        <div class="text-button">
+        <div
+          class="text-button"
+          style="cursor: pointer"
+          @click="() => saveReport(reportStatuses.DRAFT)"
+          v-if="statusReport == reportStatuses.DRAFT"
+        >
           <img
             class="a-img"
             width="18"
@@ -291,7 +307,10 @@
           </p>
         </div>
         <div class="modal-buttons-new-report-block">
-          <button class="modal-button-new-report" @click="saveReport">
+          <button
+            class="modal-button-new-report"
+            @click="() => saveReport(reportStatuses.PUBLISHED)"
+          >
             Да
           </button>
           <button class="modal-button-new-report" @click="closeModal">
@@ -311,6 +330,7 @@ import { wasteDictImagesDict } from "..//..//consts//waste//wasteImages.js";
 import "./style.css";
 import "../ui/loaders/scrollLoader/style.css";
 import { useRouter, useRoute } from "vue-router";
+import { reportStatuses } from "../../consts/report/reportConst.js";
 
 export default {
   setup() {
@@ -336,6 +356,7 @@ export default {
     const description = ref(null);
     const rate = ref({});
     const gatheredWastes = ref({});
+    const statusReport = ref(null);
 
     function getAllSortPoints() {
       return baseApi.get(reportUrls.getAllSortPointsName).then((result) => {
@@ -372,10 +393,10 @@ export default {
       const blobUrl = URL.createObjectURL(photo.value);
       const newImage = new Image();
       image.value.src = blobUrl;
-      newImage.onload = function() {
-              widthImage.value = this.width;
-              heightImage.value = this.height;
-            }
+      newImage.onload = function () {
+        widthImage.value = this.width;
+        heightImage.value = this.height;
+      };
       newImage.src = blobUrl;
       //this.imageUrl = URL.createObjectURL(file);
     }
@@ -454,7 +475,7 @@ export default {
       });
     }
 
-    function preparedData() {
+    function preparedData(status) {
       const formData = new FormData();
       const data = {
         id_obj: nameObj.value,
@@ -463,7 +484,7 @@ export default {
         description: description.value,
         rate: rate.value,
         type_obj: nameTrashPlaceSelectData.value,
-        report_status: "Черновик",
+        report_status: status,
         results: getGatheredWaste(gatheredWastes.value),
       };
       Object.keys(data).map((key) => {
@@ -476,9 +497,9 @@ export default {
       return formData;
     }
 
-    function saveReport() {
+    function saveReport(status) {
       isLoadingSendPublication.value = true;
-      const formData = preparedData();
+      const formData = preparedData(status);
       baseApi
         .patch(reportUrls.updateReport(route.params.id), formData)
         .then((response) => {
@@ -500,23 +521,26 @@ export default {
         .then((res) => {
           const data = res.data;
           nameObj.value = data.obj.pk;
+          statusReport.value = data.status_id_r;
           nameSortPoint.value = data.point_id.pk;
           nameTrashPlaceSelectData.value = data.obj.type_obj;
           baseApi({
             url: data.photo,
-            method: 'GET',
-            responseType: 'blob',
+            method: "GET",
+            responseType: "blob",
           }).then((res) => {
             const headers = res.headers;
-            const newFile = new File([res.data], '1.png', {type: headers.get('content-type')})
+            const newFile = new File([res.data], "1.png", {
+              type: headers.get("content-type"),
+            });
             photo.value = newFile;
-            const blobUrl = URL.createObjectURL(res.data)
+            const blobUrl = URL.createObjectURL(res.data);
             image.value.src = blobUrl;
             const newImage = new Image();
-            newImage.onload = function() {
+            newImage.onload = function () {
               widthImage.value = this.width;
               heightImage.value = this.height;
-            }
+            };
             newImage.src = blobUrl;
           });
           description.value = data.description;
@@ -535,29 +559,27 @@ export default {
 
     const zoomImage = () => {
       if (!isZoomed.value) {
-        image.value.style.position = 'fixed';
         const koeff = widthImage.value / heightImage.value;
         const windowWidth = window.screen.width;
         const windowHeight = window.screen.height;
         const windowKoeff = windowHeight / windowWidth;
         image.value.style.width = `${70 * koeff * windowKoeff}%`;
-        image.value.style.height = `${70}%`
-        image.value.style.top = '0px';
-        image.value.style.left = '0px';
-      }
-      else {
-        image.value.style.position = 'static';
+        image.value.style.height = `${70}%`;
+        image.value.style.top = "0px";
+        image.value.style.left = "0px";
+      } else {
+        image.value.style.position = "static";
         image.value.style.width = `190px`;
-        image.value.style.height = `190px`
-        image.value.style.top = '0px';
-        image.value.style.left = '0px';
+        image.value.style.height = `190px`;
+        image.value.style.top = "0px";
+        image.value.style.left = "0px";
       }
       isZoomed.value = !isZoomed.value;
-    }
+    };
 
     onMounted(() => {
       getReportData();
-    }) 
+    });
 
     getAllEvents();
     getAllRoutes();
@@ -593,7 +615,10 @@ export default {
       setRating,
       saveReport,
       image,
-      zoomImage
+      zoomImage,
+      reportStatuses,
+      statusReport,
+      isZoomed,
     };
   },
 };
