@@ -6,12 +6,13 @@
           src="../../assets/imgs/profile_photo.png"
           alt=""
           class="card-img"
+          ref='profilePhoto'
         />
         <div class="card-child card-content">
           <div class="card-content-wrapping">
             <div class="card-header">
               <div class="user-info">
-                <div class="card-name profile">Евгений Базаров</div>
+                <div class="card-name profile">{{ dataProfile.first_name }} {{ dataProfile.last_name }}</div>
                 <div class="card-nameId">@{{ dataProfile.username }}</div>
               </div>
             </div>
@@ -26,7 +27,7 @@
                     alt=""
                     style="margin-left: 3px; margin-right: 11px"
                   />
-                  Одинцово
+                  {{ dataProfile.locality }}
                 </div>
                 <div class="dob">
                   <img
@@ -36,7 +37,7 @@
                     src="../../assets/imgs/dob.png"
                     alt=""
                   />
-                  08.09.1997
+                  {{ dataProfile.birth_date }}
                 </div>
                 <div class="status">
                   <img
@@ -46,7 +47,7 @@
                     src="../../assets/imgs/status.png"
                     alt=""
                   />
-                  Студент
+                  {{ dataProfile.kind_of_activity }}
                 </div>
               </div>
               <div class="btns-circle-icon">
@@ -137,16 +138,16 @@ export default {
   data() {
     return {
       dataProfile: this.fetchDataProfileAPI(),
-
       visibleCards: "reports",
       visibleMain: true,
+      photoProfileUrl: null
     };
   },
   methods: {
     navigateTo() {
       this.visibleMain = false;
       this.$router.push({
-        name: "settings",
+        name: "settings", params: {id : this.$route.params.id}
       });
     },
     changeCard(event) {
@@ -182,6 +183,7 @@ export default {
         .get(`/user_profiles/profile_info/${this.$route.params.id}/`)
         .then((response) => {
           this.dataProfile = response.data;
+          this.photoProfileUrl = response.data.photo;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
@@ -202,5 +204,18 @@ export default {
       });
     },
   },
+  watch: {
+    photoProfileUrl(oldValue, newValue) {
+      if (newValue) {
+        baseApi.get(newValue)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+    }
+  }
 };
 </script>

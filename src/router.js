@@ -167,7 +167,7 @@ export default createRouter({
                 },
                 {
                     name: 'settings',
-                    path: 'settings',
+                    path: 'settings/:id',
                     component: settingsComponent,
                 },
                 {

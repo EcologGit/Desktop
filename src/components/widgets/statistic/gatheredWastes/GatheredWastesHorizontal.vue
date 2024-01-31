@@ -18,7 +18,6 @@ import { wasteDictImagesDict } from "..//..//..//..//consts//waste//wasteImages.
 
 function getWasteByPk(pk, wasteTypes) {
   if (!wasteTypes || !pk) return null;
-  console.log(wasteTypes.find((key) => key.pk === pk))
   return wasteTypes.find((key) => key.pk === pk);
 }
 

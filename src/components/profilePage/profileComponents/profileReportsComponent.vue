@@ -62,13 +62,13 @@
         <div class="card-desc">
           {{ report?.description }}
         </div>
+        <div v-show="report.results">
+          <GatheredWastesHorizontal
+            :wasteTypesDict="wasteTypesDict"
+            :gatheredWastes="report.results"
+          />
+        </div>
       </div>
-      <div v-show='report.results'>
-      <GatheredWastesHorizontal
-        :wasteTypesDict="wasteTypesDict"
-        :gatheredWastes="report.results"
-      />
-    </div>
       <div class="post-action">
         <a href="#" class="a-action-post">
           <img
@@ -79,19 +79,17 @@
             alt="Иконка Обзор"
           />Опубликовать</a
         >
-        <router-link
-           :to='`/report/edit/${report.pk}`'
-        >
-        <a class="a-action-post">
-          <img
-            class="a-img"
-            width="18"
-            height="18"
-            src="../../../assets/imgs/edit.png"
-            alt="Иконка Обзор"
-          />Редактировать</a
-        >
-      </router-link>
+        <router-link :to="`/report/edit/${report.pk}`">
+          <a class="a-action-post">
+            <img
+              class="a-img"
+              width="18"
+              height="18"
+              src="../../../assets/imgs/edit.png"
+              alt="Иконка Обзор"
+            />Редактировать</a
+          >
+        </router-link>
       </div>
     </div>
   </section>
