@@ -758,7 +758,7 @@ button {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .personal-info>div,
@@ -773,14 +773,14 @@ button {
   margin-top: 16px;
 }
 
-.login-options>div:last-child {
+/* .login-options>div:last-child {
   font-weight: 400;
   font-size: 14px;
   line-height: 19px;
   display: flex;
   align-items: center;
   text-align: justify;
-}
+} */
 
 .personal-dob>input {
   text-align: center;
@@ -939,7 +939,6 @@ button {
 
 .footer {
   padding: 32px 128px;
-
   background-color: #24282C;
 }
 
@@ -1707,7 +1706,17 @@ textarea {
   color: #AEC756;
 }
 
+.centered-all-content {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
 
+.centered-content-column {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
 
 
 

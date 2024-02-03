@@ -25,6 +25,7 @@ import profilePageComponent from "./components/profilePage/profileComponent.vue"
 import profileReportsComponent from "./components/profilePage/profileComponents/profileReportsComponent.vue";
 import profileStatisticsComponent from "./components/profilePage/profileComponents/profileStatisticsComponent.vue";
 import settingsComponent from "./components/profilePage/settingsComponent.vue";
+import ChangePasswordComponent from "./components/profilePage/ChangePasswordComponent.vue";
 import logInComponent from "./components/profilePage/logInComponent.vue";
 import signUpComponent from "./components/profilePage/signUpComponent.vue";
 
@@ -169,6 +170,11 @@ export default createRouter({
                     name: 'settings',
                     path: 'settings/:id',
                     component: settingsComponent,
+                },
+                {
+                    name: 'changePassword',
+                    path: 'changePassword/:id',
+                    component: ChangePasswordComponent 
                 },
                 {
                     name: 'signup',

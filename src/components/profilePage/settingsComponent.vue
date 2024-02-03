@@ -99,7 +99,7 @@
               class="input settings"
               type="tel"
               placeholder="+7 (123) 456-78-90"
-              :value='dataProfile.phone_number' 
+              :value="dataProfile.phone_number"
               @change="(e) => setData('phone_number', e.target.value)"
             />
           </div>
@@ -113,39 +113,11 @@
               @change="(e) => setData('email', e.target.value)"
             />
           </div>
-          <div class="personal-oldPassword">
-            Старый пароль
-            <div class="password-wrapping">
-              <input
-                class="input settings"
-                type="password"
-                placeholder="Введите старый пароль"
-              />
-              <a
-                class="password-control setting-password"
-                @click="show_hide_password($event)"
-              ></a>
-            </div>
-          </div>
-          <div class="personal-newPassword">
-            Новый пароль
-            <div class="password-wrapping">
-              <input
-                class="input settings"
-                type="password"
-                placeholder="Введите новый пароль"
-              />
-              <a
-                class="password-control setting-password"
-                @click="show_hide_password($event)"
-              ></a>
-            </div>
-          </div>
-          <div class="rules-password">
-            Пароль должен содержать хотя бы одну заглавную и одну строчную
-            букву, а также одну цифру. Длина пароля должна быть не менее 8
-            символов. Недопустимо использование пробелов.
-          </div>
+          <router-link :to="`/profile/changePassword/${profileId}`">
+            <button class="single-button save">
+              Изменить пароль
+            </button>
+          </router-link>
         </div>
       </section>
       <button class="single-button save" @click="saveProfileData">
@@ -169,19 +141,10 @@ export default {
     return {
       visibleMore: false,
       dataProfile: this.fetchDataProfileAPI(),
+      profileId: this.$route.params.id,
     };
   },
   methods: {
-    show_hide_password(event) {
-      const target = event.target;
-      if (target.matches(".view")) {
-        target.classList.remove("view");
-        target.parentElement.children[0].setAttribute("type", "password");
-      } else {
-        target.classList.add("view");
-        target.parentElement.children[0].setAttribute("type", "text");
-      }
-    },
     async fetchDataProfileAPI() {
       await baseApi
         .get(`/user_profiles/profile_info/${this.$route.params.id}/`)
