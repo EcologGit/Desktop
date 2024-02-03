@@ -6,13 +6,15 @@
           src="../../assets/imgs/profile_photo.png"
           alt=""
           class="card-img"
-          ref='profilePhoto'
+          ref="profilePhoto"
         />
         <div class="card-child card-content">
           <div class="card-content-wrapping">
             <div class="card-header">
               <div class="user-info">
-                <div class="card-name profile">{{ dataProfile.first_name }} {{ dataProfile.last_name }}</div>
+                <div class="card-name profile">
+                  {{ dataProfile.first_name }} {{ dataProfile.last_name }}
+                </div>
                 <div class="card-nameId">@{{ dataProfile.username }}</div>
               </div>
             </div>
@@ -74,6 +76,7 @@
         <router-link
           :to="{ name: 'profileReports', params: { id: userId.value } }"
           class="links-width"
+          v-if="userId.value"
         >
           <button class="btn-profile active" @click="changeCard">
             <img
@@ -98,6 +101,7 @@
           </button>
         </router-link>
         <router-link
+          v-if="userId.value"
           :to="{ name: 'profileStatistics', params: { id: userId.value } }"
           class="links-width"
         >
@@ -140,14 +144,15 @@ export default {
       dataProfile: this.fetchDataProfileAPI(),
       visibleCards: "reports",
       visibleMain: true,
-      photoProfileUrl: null
+      photoProfileUrl: null,
     };
   },
   methods: {
     navigateTo() {
       this.visibleMain = false;
       this.$router.push({
-        name: "settings", params: {id : this.$route.params.id}
+        name: "settings",
+        params: { id: this.$route.params.id },
       });
     },
     changeCard(event) {
@@ -192,30 +197,32 @@ export default {
     logout() {
       const config = {
         method: "post",
-        withCredentials: true
+        withCredentials: true,
       };
-      baseApi.request(userUrls.logoutUser, config)
-      .then(() => {
-        this.userId.value = null;
-        localStorage.removeItem('access_token');
-      })
-      .finally(() => {
-        this.$router.push("/");
-      });
+      baseApi
+        .request(userUrls.logoutUser, config)
+        .then(() => {
+          this.$router.push("/");
+        })
+        .finally(() => {
+          this.userId.value = null;
+          localStorage.removeItem("access_token");
+        });
     },
   },
   watch: {
     photoProfileUrl(oldValue, newValue) {
       if (newValue) {
-        baseApi.get(newValue)
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+        baseApi
+          .get(newValue)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
-    }
-  }
+    },
+  },
 };
 </script>
