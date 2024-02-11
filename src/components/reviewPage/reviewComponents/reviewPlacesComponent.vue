@@ -1,4 +1,5 @@
 <template>
+  <ObjectsFilterMenu @changeFilterParams="changeFilterParams" objectName='places'/>
   <section
     class="cards"
     v-for="place in sortPlaceList"
@@ -55,10 +56,12 @@ import FavoriteButton from "@/components/widgets/favorite/favoriteButton/Favorit
 import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 import CardRating from "..//..//widgets//statistic//cardRating//CardRating.vue";
+import ObjectsFilterMenu from "./menu/objectsFilterMenu/ObjectsFilterMenu.vue";
 export default {
   components: {
     FavoriteButton,
     CardRating,
+    ObjectsFilterMenu,
   },
   created() {
     // > Внедряемое свойство: 5
@@ -109,31 +112,16 @@ export default {
         params: { objectType: "places", id: id },
       });
     },
-    async sortingAFiltering(parameters) {
-      await fetch(
-        `${url}/review/places/?ordering=${parameters.method}${parameters.ordering}&report_count=${parameters.reportCount}&admarea_name=${parameters.admareaName}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          this.sortPlaceList = data.results;
-        })
-        .catch((error) => {
-          this.answer = "Ошибка! Нет доступа к API. " + error;
-        });
-    },
-
-    searchByName(search) {
-      if (search != undefined && search != null && search != "") {
-        this.sortPlaceList = this.searchByNameAsync(search);
-      } else {
-        this.sortPlaceList = this.dataPlaceList;
+    async changeFilterParams(val) {
+      const newObj = {...val}
+      if (newObj?.method === "-" ) {
+        newObj.ordering = `${newObj.method}${newObj.ordering}`
       }
-    },
-    async searchByNameAsync(search) {
-      await fetch(`${url}/review/places/?search=${search}`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.sortPlaceList = data.results;
+      await baseApi
+        .get(`/review/places/`, { params: newObj })
+        .then((response) => {
+          this.dataPlaceList = response.data.results;
+          this.sortPlaceList = this.dataPlaceList;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

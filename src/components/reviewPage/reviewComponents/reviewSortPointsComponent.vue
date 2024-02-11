@@ -1,4 +1,8 @@
 <template>
+  <ObjectsFilterMenu
+    @changeFilterParams="changeFilterParams"
+    objectName="sortPoints"
+  />
   <section
     class="cards"
     v-for="sortPoint in sortSortPointsList"
@@ -74,6 +78,7 @@ import { url } from "@/main.js";
 import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
+import ObjectsFilterMenu from "./menu/objectsFilterMenu/ObjectsFilterMenu.vue";
 
 export default {
   props: {
@@ -81,6 +86,7 @@ export default {
   },
   components: {
     FavoriteButton,
+    ObjectsFilterMenu,
   },
   inject: ["userId"],
   data() {
@@ -128,30 +134,16 @@ export default {
           this.answer = "Ошибка! Нет доступа к API. " + error;
         });
     },
-    async sortingAFiltering(parameters) {
-      await fetch(
-        `${url}/review/sortPoints/?ordering=${parameters.method}${parameters.ordering}&report_count=${parameters.reportCount}&admarea_name=${parameters.admareaName}`
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          this.sortSortPointsList = data.results;
-        })
-        .catch((error) => {
-          this.answer = "Ошибка! Нет доступа к API. " + error;
-        });
-    },
-    searchByName(search) {
-      if (search != undefined && search != null && search != "") {
-        this.sortSortPointsList = this.searchByNameAsync(search);
-      } else {
-        this.sortSortPointsList = this.dataSortPointsList;
+    async changeFilterParams(val) {
+      const newObj = { ...val };
+      if (newObj?.method === "-") {
+        newObj.ordering = `${newObj.method}${newObj.ordering}`;
       }
-    },
-    async searchByNameAsync(search) {
-      await fetch(`${url}/review/sortPoints/?search=${search}`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.sortSortPointsList = data.results;
+      await baseApi
+        .get(`/review/sortPoints/`, { params: newObj })
+        .then((response) => {
+          this.dataSortPointsList = response.data.results;
+          this.sortSortPointsList = this.dataSortPointsList;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

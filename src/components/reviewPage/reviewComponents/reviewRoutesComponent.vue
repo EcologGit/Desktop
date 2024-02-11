@@ -1,4 +1,8 @@
 <template>
+  <ObjectsFilterMenu
+    @changeFilterParams="changeFilterParams"
+    objectName="routes"
+  />
   <section
     class="cards"
     v-for="route in sortRoutesList"
@@ -80,14 +84,13 @@ import FavoriteButton from "@/components/widgets/favorite/favoriteButton/Favorit
 import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 import CardRating from "..//..//widgets//statistic//cardRating//CardRating.vue";
+import ObjectsFilterMenu from "./menu/objectsFilterMenu/ObjectsFilterMenu.vue";
 
 export default {
-  props: {
-    // modelValue: String,
-  },
   components: {
     FavoriteButton,
     CardRating,
+    ObjectsFilterMenu,
   },
   inject: ["userId"],
   data() {
@@ -159,6 +162,21 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.sortRoutesList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    async changeFilterParams(val) {
+      const newObj = { ...val };
+      if (newObj?.method === "-") {
+        newObj.ordering = `${newObj.method}${newObj.ordering}`;
+      }
+      await baseApi
+        .get(`/review/routes/`, { params: newObj })
+        .then((response) => {
+          this.dataRoutesList = response.data.results;
+          this.sortRoutesList = this.dataRoutesList;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;

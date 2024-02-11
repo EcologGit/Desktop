@@ -1,4 +1,8 @@
 <template>
+  <ObjectsFilterMenu
+    @changeFilterParams="changeFilterParams"
+    objectName="events"
+  />
   <section
     class="cards"
     v-for="event in sortEventsList"
@@ -83,10 +87,12 @@ import { url } from "@/main.js";
 import FavoriteButton from "@/components/widgets/favorite/favoriteButton/FavoriteButton.vue";
 import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
+import ObjectsFilterMenu from "./menu/objectsFilterMenu/ObjectsFilterMenu.vue";
 
 export default {
   components: {
     FavoriteButton,
+    ObjectsFilterMenu,
   },
   inject: ["userId"],
   data() {
@@ -219,6 +225,21 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           this.sortEventsList = data.results;
+        })
+        .catch((error) => {
+          this.answer = "Ошибка! Нет доступа к API. " + error;
+        });
+    },
+    async changeFilterParams(val) {
+      const newObj = { ...val };
+      if (newObj?.method === "-") {
+        newObj.ordering = `${newObj.method}${newObj.ordering}`;
+      }
+      await baseApi
+        .get(`/review/events/`, { params: newObj })
+        .then((response) => {
+          this.dataEventsList = response.data.results;
+          this.sortEventsList = this.dataEventsList;
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
