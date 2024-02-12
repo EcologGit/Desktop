@@ -3,83 +3,85 @@
     @changeFilterParams="changeFilterParams"
     objectName="events"
   />
-  <section
-    class="cards"
-    v-for="event in sortEventsList"
-    v-bind:key="event.event_id"
-  >
-    <div class="card review">
-      <img
-        v-bind:src="url + event.photo"
-        alt=""
-        class="card-child card-img review"
-      />
-      <div class="card-child card-content review">
-        <div class="card-content-wrapping">
-          <div>
-            <div class="card-header">
-              <div class="card-info">
-                <p class="card-name" @click="navigateTo(event.event_id)">
-                  {{ event.name }}
-                </p>
-                <div class="coordinates">
-                  <div class="coordinate">
-                    <img
-                      class="icon-margin"
-                      width="11"
-                      height="18"
-                      src="../../../assets/imgs/map.png"
-                      alt=""
-                    />
-                    {{ event.adress }}
+  <VueSpin :isLoading="isLoadingCards">
+    <section
+      class="cards"
+      v-for="event in sortEventsList"
+      v-bind:key="event.event_id"
+    >
+      <div class="card review">
+        <img
+          v-bind:src="url + event.photo"
+          alt=""
+          class="card-child card-img review"
+        />
+        <div class="card-child card-content review">
+          <div class="card-content-wrapping">
+            <div>
+              <div class="card-header">
+                <div class="card-info">
+                  <p class="card-name" @click="navigateTo(event.event_id)">
+                    {{ event.name }}
+                  </p>
+                  <div class="coordinates">
+                    <div class="coordinate">
+                      <img
+                        class="icon-margin"
+                        width="11"
+                        height="18"
+                        src="../../../assets/imgs/map.png"
+                        alt=""
+                      />
+                      {{ event.adress }}
+                    </div>
+                  </div>
+                  <div class="parameters">
+                    <div class="km">
+                      <img
+                        class="icon-margin"
+                        width="18"
+                        height="16"
+                        src="../../../assets/imgs/calendar.png"
+                        alt=""
+                      />
+                      {{ event.status }}
+                    </div>
+                    <div class="time">
+                      <img
+                        class="icon-margin"
+                        width="18"
+                        height="18"
+                        src="../../../assets/imgs/clock.png  "
+                        alt=""
+                      />
+                      {{ formattingDate(event.datetime_start) }}
+                    </div>
                   </div>
                 </div>
-                <div class="parameters">
-                  <div class="km">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="16"
-                      src="../../../assets/imgs/calendar.png"
-                      alt=""
-                    />
-                    {{ event.status }}
-                  </div>
-                  <div class="time">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="18"
-                      src="../../../assets/imgs/clock.png  "
-                      alt=""
-                    />
-                    {{ formattingDate(event.datetime_start) }}
-                  </div>
-                </div>
+                <FavoriteButton
+                  :isSelected="!!event.is_favourite"
+                  :objType="objectType"
+                  :objId="event.event_id"
+                  :isHidden="!userId"
+                />
               </div>
-              <FavoriteButton
-                :isSelected="!!event.is_favourite"
-                :objType="objectType"
-                :objId="event.event_id"
-                :isHidden="!userId"
-              />
+              <div class="card-desc">
+                {{ event.description }}
+              </div>
             </div>
-            <div class="card-desc">
-              {{ event.description }}
+            <div>
+              <button
+                class="status-event"
+                :style="{ backgroundColor: '#D3F36B' }"
+              >
+                {{ formattingStyleButton(event.status) }}
+              </button>
             </div>
-          </div>
-          <div>
-            <button
-              class="status-event"
-              :style="{ backgroundColor: '#D3F36B' }"
-            >
-              {{ formattingStyleButton(event.status) }}
-            </button>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </VueSpin>
 </template>
 
 <script>
@@ -88,17 +90,20 @@ import FavoriteButton from "@/components/widgets/favorite/favoriteButton/Favorit
 import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 import ObjectsFilterMenu from "./menu/objectsFilterMenu/ObjectsFilterMenu.vue";
+import VueSpin from "@/components/ui/loaders/spin/VueSpin.vue";
 
 export default {
   components: {
     FavoriteButton,
     ObjectsFilterMenu,
+    VueSpin,
   },
   inject: ["userId"],
   data() {
     return {
       url: url,
       visibleCards: "places",
+      isLoadingCards: true,
       objectType: objectTypes.events,
       visibleDropdown: false,
       dataEventsList: this.fetchDataEventsAPI(),
@@ -129,6 +134,7 @@ export default {
       });
     },
     async fetchDataEventsAPI() {
+      this.isLoadingCards = true;
       await baseApi
         .get(`/review/events/`)
         .then((response) => {
@@ -137,6 +143,9 @@ export default {
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
+        })
+        .finally(() => {
+          this.isLoadingCards = false;
         });
     },
 
@@ -231,6 +240,9 @@ export default {
         });
     },
     async changeFilterParams(val) {
+      this.dataEventsList = [];
+      this.sortEventsList = [];
+      this.isLoadingCards = true;
       const newObj = { ...val };
       if (newObj?.method === "-") {
         newObj.ordering = `${newObj.method}${newObj.ordering}`;
@@ -243,6 +255,9 @@ export default {
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
+        })
+        .finally(() => {
+          this.isLoadingCards = false;
         });
     },
   },

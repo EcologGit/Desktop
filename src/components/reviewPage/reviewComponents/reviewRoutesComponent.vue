@@ -3,79 +3,81 @@
     @changeFilterParams="changeFilterParams"
     objectName="routes"
   />
-  <section
-    class="cards"
-    v-for="route in sortRoutesList"
-    v-bind:key="route.route_id"
-  >
-    <div class="card review">
-      <img
-        v-bind:src="url + route.photo"
-        alt=""
-        class="card-child card-img review"
-      />
-      <div class="card-child card-content review">
-        <div class="card-content-wrapping">
-          <div>
-            <div class="card-header">
-              <div class="card-info">
-                <p class="card-name" @click="navigateTo(route.route_id)">
-                  {{ route.name }}
-                </p>
-                <div class="coordinates">
-                  <div class="coordinate">
-                    <img
-                      width="11"
-                      height="18"
-                      src="../../../assets/imgs/map.png"
-                      alt=""
-                      class="icon-margin"
-                    />
-                    {{ route.locality }}
+  <VueSpin :isLoading="isLoadingCards">
+    <section
+      class="cards"
+      v-for="route in sortRoutesList"
+      v-bind:key="route.route_id"
+    >
+      <div class="card review">
+        <img
+          v-bind:src="url + route.photo"
+          alt=""
+          class="card-child card-img review"
+        />
+        <div class="card-child card-content review">
+          <div class="card-content-wrapping">
+            <div>
+              <div class="card-header">
+                <div class="card-info">
+                  <p class="card-name" @click="navigateTo(route.route_id)">
+                    {{ route.name }}
+                  </p>
+                  <div class="coordinates">
+                    <div class="coordinate">
+                      <img
+                        width="11"
+                        height="18"
+                        src="../../../assets/imgs/map.png"
+                        alt=""
+                        class="icon-margin"
+                      />
+                      {{ route.locality }}
+                    </div>
                   </div>
-                </div>
 
-                <div class="parameters">
-                  <div class="km">
-                    <img
-                      class="icon-margin"
-                      width="18"
-                      height="9"
-                      src="../../../assets/imgs/ruler.png"
-                      alt=""
-                    />
-                    {{ route.length }} км
-                  </div>
-                  <div class="time">
-                    <img
-                      class="icon-margin"
-                      width="13"
-                      height="18"
-                      src="../../../assets/imgs/hourglass.png  "
-                      alt=""
-                    />
-                    {{ route.duration }}
+                  <div class="parameters">
+                    <div class="km">
+                      <img
+                        class="icon-margin"
+                        width="18"
+                        height="9"
+                        src="../../../assets/imgs/ruler.png"
+                        alt=""
+                      />
+                      {{ route.length }} км
+                    </div>
+                    <div class="time">
+                      <img
+                        class="icon-margin"
+                        width="13"
+                        height="18"
+                        src="../../../assets/imgs/hourglass.png  "
+                        alt=""
+                      />
+                      {{ route.duration }}
+                    </div>
                   </div>
                 </div>
+                <FavoriteButton
+                  :isSelected="!!route.is_favourite"
+                  :objType="objectType"
+                  :objId="route.route_id"
+                  :isHidden="!userId"
+                />
               </div>
-              <FavoriteButton
-                :isSelected="!!route.is_favourite"
-                :objType="objectType"
-                :objId="route.route_id"
-                :isHidden="!userId"
-              />
+              <div class="card-desc">
+                {{ route.name }}
+              </div>
             </div>
-            <div class="card-desc">
-              {{ route.name }}
+            <div v-if="route.avg_availability">
+              <CardRating :rating="route" />
             </div>
-          </div>
-          <div v-if="route.avg_availability">
-            <CardRating :rating="route" />
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </VueSpin>
 </template>
 
 <script>
@@ -85,18 +87,21 @@ import { objectTypes } from "@/consts/contentTypeDicts/contentTypeDicts.js";
 import { baseApi } from "@/components/shared/api/base/BaseApi.js";
 import CardRating from "..//..//widgets//statistic//cardRating//CardRating.vue";
 import ObjectsFilterMenu from "./menu/objectsFilterMenu/ObjectsFilterMenu.vue";
+import VueSpin from "@/components/ui/loaders/spin/VueSpin.vue";
 
 export default {
   components: {
     FavoriteButton,
     CardRating,
     ObjectsFilterMenu,
+    VueSpin,
   },
   inject: ["userId"],
   data() {
     return {
       url: url,
       objectType: objectTypes.routes,
+      isLoadingCards: true,
       dataRoutesList: this.fetchDataRoutesAPI(),
       sortRoutesList: [],
       userId: this.userId.value,
@@ -128,6 +133,7 @@ export default {
       this.dataRoutesList.filter((el) => el.id == id);
     },
     async fetchDataRoutesAPI() {
+      this.isLoadingCards = true;
       await baseApi
         .get(`${url}/review/routes/`)
         .then((response) => {
@@ -136,6 +142,9 @@ export default {
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
+        })
+        .finally(() => {
+          this.isLoadingCards = false;
         });
     },
     async sortingAFiltering(parameters) {
@@ -168,6 +177,9 @@ export default {
         });
     },
     async changeFilterParams(val) {
+      this.dataRoutesList = [];
+      this.sortRoutesList = [];
+      this.isLoadingCards = true;
       const newObj = { ...val };
       if (newObj?.method === "-") {
         newObj.ordering = `${newObj.method}${newObj.ordering}`;
@@ -180,6 +192,9 @@ export default {
         })
         .catch((error) => {
           this.answer = "Ошибка! Нет доступа к API. " + error;
+        })
+        .finally(() => {
+          this.isLoadingCards = false;
         });
     },
   },
