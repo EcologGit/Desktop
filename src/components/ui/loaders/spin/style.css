@@ -1,5 +1,6 @@
 .spin-background {
   flex-grow: 1;
+  z-index: 10000;
 }
 
 .centered {

@@ -1,80 +1,89 @@
 <template>
-  <section class="cards marks events">
-    <div
-      class="card marks"
-      v-for="event in eventsFavoritesData"
-      :key="event.pk"
-    >
-      <img
-        :src="`${url}${event?.events?.photo}`"
-        alt=""
-        class="card-child card-img marks"
-      />
-      <div class="card-child card-content marks">
-        <div class="card-content-wrapping marks">
-          <router-link :to="`/review/places/${event?.events?.pk}`">
-            <div class="card-title active-title">{{ event?.events?.name }}</div>
-          </router-link>
-          <div class="coordinates">
+  <VueSpin :isLoading="isLoadingCards">
+    <section v-show="eventsFavoritesData" class="cards marks events">
+      <div
+        class="card marks"
+        v-for="event in eventsFavoritesData"
+        :key="event.pk"
+      >
+        <img
+          :src="`${url}${event?.events?.photo}`"
+          alt=""
+          class="card-child card-img marks"
+        />
+        <div class="card-child card-content marks">
+          <div class="card-content-wrapping marks">
+            <router-link :to="`/review/places/${event?.events?.pk}`">
+              <div class="card-title active-title">
+                {{ event?.events?.name }}
+              </div>
+            </router-link>
             <div class="coordinates">
-              <div class="coordinate feed">
-                <img
-                  class="icon-margin"
-                  width="11"
-                  height="18"
-                  src="../../../assets/imgs/map.png"
-                  alt=""
-                />
-                Воскресенск
+              <div class="coordinates">
+                <div class="coordinate feed">
+                  <img
+                    class="icon-margin"
+                    width="11"
+                    height="18"
+                    src="../../../assets/imgs/map.png"
+                    alt=""
+                  />
+                  Воскресенск
+                </div>
+                <div class="coordinate feed">
+                  <img
+                    class="icon-margin"
+                    width="18"
+                    height="18"
+                    src="../../../assets/imgs/places.png"
+                    alt=""
+                  />
+                  Карьер “Песчаный”
+                </div>
               </div>
-              <div class="coordinate feed">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="18"
-                  src="../../../assets/imgs/places.png"
-                  alt=""
-                />
-                Карьер “Песчаный”
-              </div>
-            </div>
-            <div class="parameters">
-              <div class="km">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="16"
-                  src="../../../assets/imgs/calendar.png"
-                  alt=""
-                />
-                29.10.2022
-              </div>
-              <div class="time">
-                <img
-                  class="icon-margin"
-                  width="18"
-                  height="18"
-                  src="../../../assets/imgs/clock.png  "
-                  alt=""
-                />
-                10:00
+              <div class="parameters">
+                <div class="km">
+                  <img
+                    class="icon-margin"
+                    width="18"
+                    height="16"
+                    src="../../../assets/imgs/calendar.png"
+                    alt=""
+                  />
+                  29.10.2022
+                </div>
+                <div class="time">
+                  <img
+                    class="icon-margin"
+                    width="18"
+                    height="18"
+                    src="../../../assets/imgs/clock.png  "
+                    alt=""
+                  />
+                  10:00
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </VueSpin>
 </template>
 
 <script>
 import { favoritesUrls } from "@/components/apiUrls/favorites/favoritesUrls.js";
 import { baseApi, url } from "@/components/shared/api/base/BaseApi.js";
+import VueSpin from "@/components/ui/loaders/spin/VueSpin.vue";
 export default {
   inject: ["userId"],
+  components: {
+    VueSpin,
+  },
   data() {
     return {
       visibleCards: "places",
+      isLoadingCards: true,
       visibleDropdown: false,
       eventsFavoritesData: this.getEventsFavorite(),
       url: url,
@@ -82,10 +91,14 @@ export default {
   },
   methods: {
     getEventsFavorite() {
+      this.isLoadingCards = true;
       baseApi
         .get(favoritesUrls.getFavoritesForUser("events", this.userId.value))
         .then((response) => {
           this.eventsFavoritesData = response.data.results;
+        })
+        .finally(() => {
+          this.isLoadingCards = false;
         });
     },
     changeCard(event) {

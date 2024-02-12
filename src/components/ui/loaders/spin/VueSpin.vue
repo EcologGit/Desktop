@@ -2,7 +2,7 @@
   <div
     :class="{
       'spin-background': isLoading && contentHasNotSizeWithoutLoading,
-      centered: isCentered,
+      centered: isCentered && isLoading,
     }"
   >
     <div :class="{ loader: isLoading }">

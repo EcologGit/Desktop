@@ -2,6 +2,7 @@
   <section class="statistics" style="margin-top: 30px">
     <GatheredWastesStatisticCounter
       :gathered_waste="generalStatistic.gathered_waste"
+      :isLoading="isLoadingGeneralStatistic"
     />
     <div class="second-column">
       <ObjectCounter
@@ -27,11 +28,16 @@ import ObjectCounter from "../../widgets/statistic/objectCounter/ObjectCounter.v
 import ActivityStatistic from "../../widgets/statistic/activityStatistic/ActivityStatistic.vue";
 import GatheredWastesStatisticCounter from "../../widgets/statistic/gatheredWastes/GatheredWastesStatisticCounter.vue";
 const generalStatistic = ref({});
+const isLoadingGeneralStatistic = ref(false);
 
 const getGeneralStatistic = () => {
+  isLoadingGeneralStatistic.value = true;
   baseApi
     .get(activitiesUrls.getGeneralStatistic)
-    .then((response) => (generalStatistic.value = response.data))
+    .then((response) => {
+      isLoadingGeneralStatistic.value = false;
+      generalStatistic.value = response.data;
+    })
     .catch((error) => console.log(error));
 };
 
