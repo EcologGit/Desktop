@@ -1,22 +1,24 @@
 <template>
-  <section class="statistics">
-    <GatheredWastesStatisticCounter
-      :gathered_waste="statisticData.gathered_waste"
-    />
-    <div class="second-column">
-      <ObjectCounter
-        :place_count="statisticData.place"
-        :route_count="statisticData.route"
-        :event_count="statisticData.event"
-        :sort_point_count="statisticData.sort_points"
+  <VueSpin :isLoading="isLoadingStatistic">
+    <section class="statistics" v-show="!isLoadingStatistic">
+      <GatheredWastesStatisticCounter
+        :gathered_waste="statisticData.gathered_waste"
       />
-      <ActivityStatistic
-        :photo_count="statisticData.photo_count"
-        :rates_count="statisticData.rates_count"
-        :report_count="statisticData.report_count"
-      />
-    </div>
-  </section>
+      <div class="second-column">
+        <ObjectCounter
+          :place_count="statisticData.place"
+          :route_count="statisticData.route"
+          :event_count="statisticData.event"
+          :sort_point_count="statisticData.sort_points"
+        />
+        <ActivityStatistic
+          :photo_count="statisticData.photo_count"
+          :rates_count="statisticData.rates_count"
+          :report_count="statisticData.report_count"
+        />
+      </div>
+    </section>
+  </VueSpin>
 </template>
 
 <script>
@@ -25,25 +27,32 @@ import { userProfilesUrls } from "../../../components/apiUrls/userProfiles/userP
 import ObjectCounter from "../../widgets/statistic/objectCounter/ObjectCounter.vue";
 import ActivityStatistic from "../../widgets/statistic/activityStatistic/ActivityStatistic.vue";
 import GatheredWastesStatisticCounter from "../../widgets/statistic/gatheredWastes/GatheredWastesStatisticCounter.vue";
+import VueSpin from "@/components/ui/loaders/spin/VueSpin.vue";
 
 export default {
   components: {
     ObjectCounter,
     ActivityStatistic,
-    GatheredWastesStatisticCounter
+    GatheredWastesStatisticCounter,
+    VueSpin,
   },
   data() {
     return {
       visibleCards: "reports",
+      isLoadingStatistic: true,
       statisticData: [],
     };
   },
   mounted() {
+    this.isLoadingStatistic = true;
     baseApi
-        .get(userProfilesUrls.getStatistics(this.$route.params.id))
-        .then((response) => {
-          this.statisticData = response.data;
-        });
+      .get(userProfilesUrls.getStatistics(this.$route.params.id))
+      .then((response) => {
+        this.statisticData = response.data;
+      })
+      .finally(() => {
+        this.isLoadingStatistic = false;
+      });
   },
   methods: {
     changeCard(event) {

@@ -1,6 +1,5 @@
 <template>
-  <VueSpin :isLoading="props.isLoading">
-    <div class="statistics-card collected-trash" v-if='!props.isLoading'>
+    <div class="statistics-card collected-trash">
       Собранный отходы
       <div class="card-rating profile">
         <div
@@ -20,11 +19,9 @@
         </div>
       </div>
     </div>
-  </VueSpin>
 </template>
 
 <script setup>
-import VueSpin from "@/components/ui/loaders/spin/VueSpin.vue";
 import { wasteDictImagesDict } from "../../../../consts/waste/wasteImages.js";
 const props = defineProps(["gathered_waste", "isLoading"]);
 </script>
