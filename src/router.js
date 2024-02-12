@@ -174,7 +174,7 @@ export default createRouter({
                 {
                     name: 'changePassword',
                     path: 'changePassword/:id',
-                    component: ChangePasswordComponent 
+                    component: ChangePasswordComponent ,
                 },
                 {
                     name: 'signup',

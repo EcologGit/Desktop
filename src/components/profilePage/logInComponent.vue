@@ -1,7 +1,7 @@
 <template>
-  <main class="main">
-    <section class="login">
-      <p class="">Вход</p>
+  <main style='width: auto'>
+    <section style='display: flex; flex-direction: column; width: auto; gap: 16px'>
+      <p>Вход</p>
       <div class="inputs">
         <div class="input">
           Почта

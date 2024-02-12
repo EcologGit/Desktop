@@ -1,5 +1,5 @@
 <template>
-  <div style="gap: 16px" class="centered-content-column">
+  <main style="gap: 16px" class="centered-content-column">
     <div
       class="personal-oldPassword centered-all-content"
       style="flex-direction: column; text-align: center"
@@ -56,7 +56,7 @@
       />
       Сохранить
     </button>
-  </div>
+  </main>
 </template>
 
 <script setup>
